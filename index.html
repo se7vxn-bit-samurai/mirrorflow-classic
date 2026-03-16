@@ -14,7 +14,7 @@ body,html{height:100%;font-family:'DM Sans',sans-serif;background:var(--bg);colo
 body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 700px at 15% 10%,var(--glow1),transparent 60%),radial-gradient(700px 600px at 85% 20%,var(--glow2),transparent 60%),radial-gradient(800px 600px at 50% 100%,rgba(122,180,255,.07),transparent 60%)}
 body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.55;background-image:radial-gradient(circle at 1px 1px,var(--dot) 0 1px,transparent 1.2px);background-size:28px 28px}
 .app{min-height:100vh;display:flex;flex-direction:column;position:relative;z-index:1}
-.hd{background:rgba(97, 98, 102, 0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);color:var(--ht);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:100}
+.hd{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);color:var(--ht);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:100}
 .hd-b{display:flex;align-items:center;gap:8px}.hd-l{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px}
 .hd h1{font-size:15px;font-weight:600}.hd-s{font-size:10px;opacity:.5}
 .hd-a{display:flex;gap:5px;align-items:center}
@@ -45,15 +45,19 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 @media(max-width:900px){.cal-dash{grid-template-columns:1fr;}}
 .cal-left{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:12px;overflow:hidden}
 .cal-mid{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:14px;overflow-y:auto;max-height:calc(100vh - 200px)}
-.cal-right{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:12px}
+.cal-right{background:var(--card);border-radius:var(--r);box-shadow:var(--sh);padding:12px;overflow-y:auto;max-height:calc(100vh - 200px)}
 .cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
 .cal-head h3{font-size:13px;font-weight:600}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px}
 .cal-dh{text-align:center;font-size:8px;font-weight:600;color:var(--tm);padding:3px 0;text-transform:uppercase}
+.cal-dh.wknd{color:var(--wknd);opacity:.7}
 .cal-d{aspect-ratio:1;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;cursor:pointer;transition:all .1s;position:relative}
 .cal-d:hover{background:var(--al);transform:scale(1.1)}
 .cal-d.empty{cursor:default}.cal-d.work{background:#eef2ff;color:#4338ca}.cal-d.off{background:#f8fafc;color:#94a3b8}
 .cal-d.today{outline:2px solid var(--accent);outline-offset:-1px}.cal-d.sel{background:var(--accent)!important;color:#fff!important}
+.cal-d.weekend-col{background:rgba(217,166,6,.06)}
+.cal-d.coverage-low{outline:2px solid #dc2626;outline-offset:-1px}
+.cal-d.coverage-low::after{content:"!";position:absolute;top:-2px;right:-2px;width:10px;height:10px;border-radius:50%;background:#dc2626;color:#fff;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center;line-height:1}
 .cal-d .cd-n{font-weight:700;font-size:11px;line-height:1}.cal-d .cd-dot{width:4px;height:4px;border-radius:50%;margin-top:1px}
 .dot-work{background:#6366f1}.dot-off{background:#cbd5e1}.dot-mix{background:linear-gradient(90deg,#6366f1 50%,#cbd5e1 50%)}
 /* Mid panel - roster list */
@@ -61,12 +65,22 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .roster-date{font-size:15px;font-weight:700;margin-bottom:4px}
 .roster-day{font-size:11px;color:var(--tm);margin-bottom:12px}
 .roster-list{display:flex;flex-direction:column;gap:4px}
-.roster-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:6px;background:var(--al);transition:background .1s}
+.roster-item{display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border-radius:6px;background:var(--al);transition:background .1s;cursor:pointer}
 .roster-item:hover{background:var(--bdr)}
 .roster-item .ri-name{font-weight:500;font-size:12px}.roster-item .ri-shift{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:500}
 .roster-item .ri-hrs{font-size:10px;color:var(--tm);margin-left:8px}
-.roster-item.off-item{opacity:.4}
+.roster-item.off-item{opacity:.4;cursor:default}
 .roster-divider{font-size:9px;text-transform:uppercase;letter-spacing:.5px;color:var(--tm);font-weight:600;margin:8px 0 4px;padding-top:8px;border-top:1px solid var(--bdr)}
+/* Quick share btn */
+.qs-btn{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid var(--bdr);border-radius:6px;background:transparent;color:var(--tm);font-family:inherit;font-size:10px;cursor:pointer;transition:all .12s;margin-left:auto}
+.qs-btn:hover{background:var(--al);color:var(--accent)}
+/* Hours threshold alert */
+.hrs-alert{color:#dc2626;font-weight:600}
+.hrs-warn{background:rgba(220,38,38,.1);border-radius:4px;padding:1px 5px;font-size:9px;color:#dc2626;font-weight:600}
+/* Coverage indicator in right panel */
+.coverage-bar{margin-top:8px;padding-top:8px;border-top:1px solid var(--bdr)}
+.cov-ok{color:var(--early);font-weight:600}
+.cov-low{color:#dc2626;font-weight:600}
 /* Right panel - summary */
 .day-stat{text-align:center;padding:10px 0;border-bottom:1px solid var(--bdr)}
 .day-stat:last-child{border-bottom:none}
@@ -218,7 +232,7 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
    (preserved from v5 — identical parsing logic)
    ═══════════════════════════════════════════════════════════════ */
 let S={wb:null,fn:"",shs:[],sh:"",raw:[],entries:[],team:"all",emp:"all",tz:true,tab:"calendar",th:"midnight",
-  month:null,months:[],mIdx:0,shiftFilter:"",compare:false,cmp2:"",calDay:null,rawSheet:"",collapsed:{},hlToday:true,srch:"",dayFilter:"",allMonths:false};
+  month:null,months:[],mIdx:0,shiftFilter:"",compare:false,cmp2:"",calDay:null,rawSheet:"",collapsed:{},hlToday:true,srch:"",dayFilter:"",allMonths:false,covMin:3,hrsMax:45};
 
 // Each theme: d=dot color, bg=page bg, c=card bg, ac=accent, al=accent light, ah=accent hover,
 // t=text, tm=muted text, bd=border, hb=header bg, ht=header text,
@@ -766,7 +780,6 @@ function rCal(el){
   if(S.team!=="all")monthEntries=monthEntries.filter(x=>x.team===S.team);
   const dateMap={};
   monthEntries.forEach(e=>{if(!e.date||e.date.getMonth()!==m||e.date.getFullYear()!==y)return;const d=e.date.getDate();if(!dateMap[d])dateMap[d]={work:0,off:0,entries:[]};if(e.isOff)dateMap[d].off++;else dateMap[d].work++;dateMap[d].entries.push(e);});
-  // Default to today if in this month, else first day with data
   if(!S.calDay||S.calDay.getMonth()!==m||S.calDay.getFullYear()!==y){
     const now=new Date();
     if(now.getMonth()===m&&now.getFullYear()===y)S.calDay=new Date(y,m,now.getDate());
@@ -775,34 +788,47 @@ function rCal(el){
   const selD=S.calDay?S.calDay.getDate():1;
   const selInfo=dateMap[selD]||{work:0,off:0,entries:[]};
   const selDate=S.calDay||new Date(y,m,1);
+  let lowCovDays=0;
+  for(let d=1;d<=last.getDate();d++){const info=dateMap[d];if(info&&info.work>0&&info.work<S.covMin)lowCovDays++;}
 
-  // ─── LEFT: Mini Calendar ───
+  // LEFT: Mini Calendar with weekend shading + coverage gaps
   let left=`<div class="cal-left"><div class="cal-head"><h3>${MOFULL[m]} ${y}</h3></div><div class="cal-grid">`;
-  ["M","T","W","T","F","S","S"].forEach(d=>{left+=`<div class="cal-dh">${d}</div>`;});
-  for(let i=0;i<startPad;i++)left+=`<div class="cal-d empty"></div>`;
+  ["M","T","W","T","F","S","S"].forEach((d,i)=>{left+=`<div class="cal-dh${i>=5?" wknd":""}">${d}</div>`;});
+  for(let i=0;i<startPad;i++){const isWknd=(i%7)>=5;left+=`<div class="cal-d empty${isWknd?" weekend-col":""}"></div>`;}
   for(let d=1;d<=last.getDate();d++){
     const info=dateMap[d];const dt=new Date(y,m,d);const isTod=isToday(dt);const isSel=selD===d;
+    const dow=(startPad+d-1)%7;const isWknd=dow>=5;
+    const isLowCov=info&&info.work>0&&info.work<S.covMin;
     let cls="cal-d";if(!info)cls+=" empty";else if(info.work>0)cls+=" work";else cls+=" off";
-    if(isTod)cls+=" today";if(isSel)cls+=" sel";
+    if(isWknd&&!isSel)cls+=" weekend-col";if(isTod)cls+=" today";if(isSel)cls+=" sel";
+    if(isLowCov&&!isSel)cls+=" coverage-low";
     let dot="";if(info){if(info.work>0&&info.off>0)dot='<div class="cd-dot dot-mix"></div>';else if(info.work>0)dot='<div class="cd-dot dot-work"></div>';else dot='<div class="cd-dot dot-off"></div>';}
     left+=`<div class="${cls}" onclick="pickDay(${y},${m},${d})"><span class="cd-n">${d}</span>${dot}</div>`;
   }
-  left+=`</div></div>`;
+  left+=`</div>`;
+  left+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between">`;
+  left+=`<span style="font-size:9px;color:var(--tm)">Min coverage</span>`;
+  left+=`<div style="display:flex;align-items:center;gap:4px"><button style="width:18px;height:18px;border:1px solid var(--bdr);border-radius:3px;background:transparent;color:var(--text);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center" onclick="S.covMin=Math.max(1,S.covMin-1);ren()">−</button><span style="font-size:11px;font-weight:600;min-width:14px;text-align:center">${S.covMin}</span><button style="width:18px;height:18px;border:1px solid var(--bdr);border-radius:3px;background:transparent;color:var(--text);cursor:pointer;font-size:10px;display:flex;align-items:center;justify-content:center" onclick="S.covMin++;ren()">+</button></div></div>`;
+  if(lowCovDays>0)left+=`<div style="margin-top:4px;font-size:9px;color:#dc2626;font-weight:500">\u26a0 ${lowCovDays} day${lowCovDays>1?"s":""} below min</div>`;
+  left+=`</div>`;
 
-  // ─── MID: Day Roster ───
+  // MID: Day Roster with click-to-navigate + quick share
   const working=selInfo.entries.filter(e=>!e.isOff).sort((a,b)=>((a.ukS||"99")>(b.ukS||"99")?1:-1));
   const offPpl=selInfo.entries.filter(e=>e.isOff);
-  let mid=`<div class="cal-mid"><div class="roster-date">${selDate.getDate()} ${MO[selDate.getMonth()]} ${selDate.getFullYear()}</div>`;
-  mid+=`<div class="roster-day">${DOW[selDate.getDay()]}${isToday(selDate)?" · <strong style='color:var(--accent)'>Today</strong>":""}</div>`;
-  if(!selInfo.entries.length){mid+=`<p style="color:var(--tm);font-size:12px">No schedule data for this day.</p>`;}
+  let mid=`<div class="cal-mid"><div style="display:flex;align-items:flex-start;justify-content:space-between"><div><div class="roster-date">${selDate.getDate()} ${MO[selDate.getMonth()]} ${selDate.getFullYear()}</div>`;
+  mid+=`<div class="roster-day">${DOW[selDate.getDay()]}${isToday(selDate)?" \xb7 <strong style='color:var(--accent)'>Today</strong>":""}</div></div>`;
+  if(selInfo.entries.length)mid+=`<button class="qs-btn" onclick="shareDay()" title="Copy roster for Teams/WhatsApp">\ud83d\udccb Share</button>`;
+  mid+=`</div>`;
+  if(!selInfo.entries.length){mid+=`<p style="color:var(--tm);font-size:12px;margin-top:10px">No schedule data for this day.</p>`;}
   else{
+    if(working.length>0&&working.length<S.covMin)mid+=`<div style="margin:8px 0;padding:6px 10px;border-radius:6px;background:rgba(220,38,38,.1);color:#dc2626;font-size:11px;font-weight:500">\u26a0 Below minimum coverage (${working.length}/${S.covMin})</div>`;
     if(working.length){
-      mid+=`<div class="roster-section"><h4>🟢 Working (${working.length})</h4><div class="roster-list">`;
+      mid+=`<div class="roster-section"><h4>\ud83d\udfe2 Working (${working.length})</h4><div class="roster-list">`;
       working.forEach(e=>{
         const uk=uD(e);const sa=S.tz?sAD(e):"";
         const hrs=calcHrs(S.tz&&e.saS?e.saS:e.ukS,S.tz&&e.saE?e.saE:e.ukE);
         const tag=e.team!=="Main"?` <span style="font-size:8px;opacity:.4">${X(e.team)}</span>`:"";
-        mid+=`<div class="roster-item"><span class="ri-name">${X(e.name)}${tag}</span><span><span class="ri-shift ${shiftCls(e)}">${S.tz?X(sa):X(uk)}</span><span class="ri-hrs">${hrs.toFixed(1)}h</span></span></div>`;
+        mid+=`<div class="roster-item" onclick="navToPerson('${X(e.name).replace(/'/g,"\\'")}')"><span class="ri-name">${X(e.name)}${tag}</span><span><span class="ri-shift ${shiftCls(e)}">${S.tz?X(sa):X(uk)}</span><span class="ri-hrs">${hrs.toFixed(1)}h</span></span></div>`;
       });
       mid+=`</div></div>`;
     }
@@ -817,28 +843,45 @@ function rCal(el){
   }
   mid+=`</div>`;
 
-  // ─── RIGHT: Day Summary ───
+  // RIGHT: Day Summary with coverage indicator + month stats
   const totalHrs=working.reduce((s,e)=>s+calcHrs(S.tz&&e.saS?e.saS:e.ukS,S.tz&&e.saE?e.saE:e.ukE),0);
   let right=`<div class="cal-right">`;
-  right+=`<div class="day-stat"><div class="ds-n">${working.length}</div><div class="ds-l">Working</div></div>`;
+  const covCls=working.length>=S.covMin?"cov-ok":"cov-low";
+  right+=`<div class="day-stat"><div class="ds-n ${covCls}">${working.length}</div><div class="ds-l">Working</div></div>`;
   right+=`<div class="day-stat"><div class="ds-n">${offPpl.length}</div><div class="ds-l">Off</div></div>`;
   right+=`<div class="day-stat"><div class="ds-n">${Math.round(totalHrs)}</div><div class="ds-l">Total Hours</div></div>`;
   right+=`<div class="day-stat"><div class="ds-n">${working.length?((totalHrs/working.length).toFixed(1)):0}</div><div class="ds-l">Avg Hrs/Person</div></div>`;
-  // Shift breakdown
   if(working.length){
     const shifts={};working.forEach(e=>{const k=S.tz?sAD(e):uD(e);shifts[k]=(shifts[k]||0)+1;});
-    right+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bdr)"><div style="font-size:9px;font-weight:600;color:var(--tm);text-transform:uppercase;margin-bottom:4px">Shift Breakdown</div><div class="shift-breakdown">`;
-    Object.entries(shifts).sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{
-      right+=`<div class="sb-row"><span style="font-family:'JetBrains Mono',monospace">${X(k)}</span><span style="font-weight:600">${v}</span></div>`;
-    });
+    right+=`<div style="margin-top:8px;padding-top:8px;border-top:1px solid var(--bdr)"><div style="font-size:9px;font-weight:600;color:var(--tm);text-transform:uppercase;margin-bottom:4px">Shifts</div><div class="shift-breakdown">`;
+    Object.entries(shifts).sort((a,b)=>b[1]-a[1]).forEach(([k,v])=>{right+=`<div class="sb-row"><span style="font-family:'JetBrains Mono',monospace">${X(k)}</span><span style="font-weight:600">${v}</span></div>`;});
     right+=`</div></div>`;
   }
+  const covDays=Object.values(dateMap);
+  if(covDays.length){
+    const lowDays=covDays.filter(d=>d.work>0&&d.work<S.covMin).length;
+    const avgWorking=Math.round(covDays.reduce((s,d)=>s+d.work,0)/covDays.length*10)/10;
+    right+=`<div class="coverage-bar"><div style="font-size:9px;font-weight:600;color:var(--tm);text-transform:uppercase;margin-bottom:4px">Month</div>`;
+    right+=`<div class="sb-row"><span>Avg/day</span><span style="font-weight:600">${avgWorking}</span></div>`;
+    right+=`<div class="sb-row"><span>Low days</span><span class="${lowDays>0?"cov-low":"cov-ok"}" style="font-weight:600">${lowDays}</span></div>`;
+    right+=`</div>`;
+  }
   right+=`</div>`;
-
   el.innerHTML=`<div class="cal-dash">${left}${mid}${right}</div>`;
 }
 function pickDay(y,m,d){S.calDay=new Date(y,m,d);ren();}
-
+function navToPerson(name){S.emp=name;S.tab="cards";S.allMonths=false;ren();}
+function shareDay(){
+  if(!S.calDay)return;const d=S.calDay;
+  const dayEntries=S.entries.filter(e=>e.date&&e.date.getFullYear()===d.getFullYear()&&e.date.getMonth()===d.getMonth()&&e.date.getDate()===d.getDate());
+  const dayStr=DOW[d.getDay()].substring(0,3)+" "+fD(d);
+  const lines=["\ud83d\udcc5 "+dayStr,""];
+  const working=dayEntries.filter(e=>!e.isOff).sort((a,b)=>((a.ukS||"99")>(b.ukS||"99")?1:-1));
+  const off=dayEntries.filter(e=>e.isOff);
+  if(working.length){lines.push("Working ("+working.length+"):");working.forEach(e=>{const sh=S.tz?sAD(e):uD(e);lines.push("  "+e.name+" \u2014 "+sh);});}
+  if(off.length){lines.push("");lines.push("Off ("+off.length+"):");off.forEach(e=>lines.push("  "+e.name));}
+  navigator.clipboard.writeText(lines.join("\n")).then(()=>{const btn=document.querySelector(".qs-btn");if(btn){btn.textContent="\u2713 Copied!";setTimeout(()=>{btn.textContent="\ud83d\udccb Share";},1500);}});
+}
 /* ═══ TODAY (now redirects to calendar with today selected) ═══ */
 function rToday(el){
   const now=new Date();const curKey=now.getFullYear()+"-"+P(now.getMonth());
@@ -994,9 +1037,14 @@ function rSum(el){
   const all=gD(),em=gE(),nm=Object.keys(em);
   const tHrs=all.reduce((s,e)=>s+(e.isOff?0:calcHrs(S.tz&&e.saS?e.saS:e.ukS,S.tz&&e.saE?e.saE:e.ukE)),0);
   let h=`<div class="sg"><div class="scd"><div class="n">${nm.length}</div><div class="lb">Leaders</div></div><div class="scd"><div class="n">${all.filter(e=>!e.isOff).length}</div><div class="lb">Shifts</div></div><div class="scd"><div class="n">${all.filter(e=>e.isOff).length}</div><div class="lb">Off</div></div><div class="scd"><div class="n">${Math.round(tHrs)}</div><div class="lb">Hours</div></div></div>`;
-  h+=`<div class="ftw"><table class="ft"><thead><tr><th>Leader</th><th>Team</th><th>Work</th><th>Off</th><th>Hours</th><th>Avg</th><th>Issues</th></tr></thead><tbody>`;
+  h+=`<div class="ftw"><table class="ft"><thead><tr><th>Leader</th><th>Team</th><th>Work</th><th>Off</th><th>Hours</th><th>Avg h/d</th><th>Wk Avg</th><th>Issues</th></tr></thead><tbody>`;
   nm.forEach(n=>{const e=em[n];const st=cardStats(e);const anom=findAnomalies(e);
-  h+=`<tr><td>${X(n)}</td><td style="font-size:10px;color:var(--tm)">${X(e[0]?.team||"")}</td><td>${e.filter(x=>!x.isOff).length}</td><td>${e.filter(x=>x.isOff).length}</td><td class="sc">${st.hrs}h</td><td class="sc">${st.avg}h</td><td>${anom.length?`<span class="anom">⚠${anom.length}</span>`:''}</td></tr>`;});
+  // Calculate weekly average hours (total hours / number of weeks spanned)
+  const dates=e.filter(x=>x.date).map(x=>x.date.getTime());
+  const span=dates.length>=2?Math.max(1,Math.round((Math.max(...dates)-Math.min(...dates))/604800000)):1;
+  const wkAvg=Math.round(st.hrs/span*10)/10;
+  const overHrs=wkAvg>S.hrsMax;
+  h+=`<tr><td style="cursor:pointer" onclick="S.emp='${X(n)}';S.tab='cards';ren()">${X(n)}</td><td style="font-size:10px;color:var(--tm)">${X(e[0]?.team||"")}</td><td>${e.filter(x=>!x.isOff).length}</td><td>${e.filter(x=>x.isOff).length}</td><td class="sc">${st.hrs}h</td><td class="sc">${st.avg}h</td><td class="sc${overHrs?" hrs-alert":""}">${wkAvg}h${overHrs?" ⚠":""}</td><td>${anom.length?`<span class="anom">⚠${anom.length}</span>`:""}${overHrs?`<span class="hrs-warn">>${S.hrsMax}h/wk</span>`:""}</td></tr>`;});
   el.innerHTML=h+`</tbody></table></div>`;
 }
 
@@ -1270,7 +1318,7 @@ function setTh(k){S.th=k;const t=TH[k];const r=document.documentElement.style;
   r.setProperty("--card-top",isPrint?"rgba(255,255,255,.8)":"rgba(255,255,255,.06)");
   document.querySelectorAll(".td").forEach(d=>d.classList.remove("ac"));
   document.querySelector(`.td[title="${t.n}"]`)?.classList.add("ac");}
-function reset(){S={wb:null,fn:"",shs:[],sh:"",raw:[],entries:[],team:"all",emp:"all",tz:true,tab:"calendar",th:S.th,month:null,months:[],mIdx:0,shiftFilter:"",calDay:null,rawSheet:"",collapsed:{},hlToday:S.hlToday,srch:"",dayFilter:"",allMonths:false};$("us").style.display="flex";$("mv").classList.add("hid");$("mv").style.display="none";$("ha").style.display="none";$("fl").textContent="Messy rosters → clean schedules";$("fi").value="";$("kbh").style.display="none";}
+function reset(){S={wb:null,fn:"",shs:[],sh:"",raw:[],entries:[],team:"all",emp:"all",tz:true,tab:"calendar",th:S.th,month:null,months:[],mIdx:0,shiftFilter:"",calDay:null,rawSheet:"",collapsed:{},hlToday:S.hlToday,srch:"",dayFilter:"",allMonths:false,covMin:S.covMin,hrsMax:S.hrsMax};$("us").style.display="flex";$("mv").classList.add("hid");$("mv").style.display="none";$("ha").style.display="none";$("fl").textContent="Messy rosters → clean schedules";$("fi").value="";$("kbh").style.display="none";}
 
 /* ═══ KEYBOARD ═══ */
 document.addEventListener("keydown",e=>{
