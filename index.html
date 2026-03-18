@@ -47,6 +47,29 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 /* ── Month Generator ── */
 .gen-controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
 .gen-controls select,.gen-controls input{padding:4px 8px;border:1px solid var(--bdr);border-radius:4px;background:var(--bg);color:var(--text);font-family:inherit;font-size:11px}
+/* ── Planner Month Nav ── */
+.pl-nav{display:flex;align-items:center;gap:10px}
+.pl-nav-btn{background:none;border:1px solid var(--bdr);color:var(--text);width:28px;height:28px;border-radius:6px;cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;transition:all .1s}
+.pl-nav-btn:hover{background:var(--al);border-color:var(--accent);color:var(--accent)}
+.pl-nav-label{font-size:14px;font-weight:600;min-width:140px;text-align:center}
+/* ── Planner Week Block — Bento ── */
+.pw-block{margin-bottom:10px;border:1px solid var(--card-border);border-radius:12px;overflow:hidden;background:var(--card);backdrop-filter:blur(12px);box-shadow:var(--sh)}
+.pw-hd{display:flex;justify-content:space-between;align-items:center;padding:8px 16px;font-size:11px;color:var(--tm);border-bottom:1px solid rgba(255,255,255,.06);background:rgba(255,255,255,.025)}
+.pw-hd .pw-wk{font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:10px;padding:2px 8px;background:var(--al);border-radius:5px}
+.pw-grid{display:grid;grid-template-columns:130px repeat(7,1fr);font-size:11px}
+.pw-grid .pw-dh{font-size:9px;font-weight:600;color:var(--tm);text-transform:uppercase;text-align:center;padding:6px 4px;letter-spacing:.4px;background:rgba(255,255,255,.02)}
+.pw-grid .pw-name{padding:7px 12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px solid rgba(255,255,255,.04);font-size:11px;display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.015)}
+.pw-grid .pw-name .pw-nwk{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent);opacity:.75;flex-shrink:0;background:var(--al);padding:1px 5px;border-radius:4px}
+.pw-grid .pw-cell{text-align:center;padding:7px 3px;font-family:'JetBrains Mono',monospace;font-size:10px;border-top:1px solid rgba(255,255,255,.04);white-space:nowrap;letter-spacing:-.2px}
+.pw-cell.pw-off{color:var(--tm);opacity:.28;font-size:9px}.pw-cell.pw-early{color:var(--early)}.pw-cell.pw-mid{color:var(--mid)}.pw-cell.pw-late{color:var(--late)}.pw-cell.pw-wknd{color:var(--wknd)}
+.pw-cell.pw-out{opacity:.15}
+.pw-grid .pw-cov{font-weight:700;font-size:13px;padding:6px 3px;text-align:center;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02)}
+.pw-cov.pw-cov-ok{color:var(--early)}.pw-cov.pw-cov-low{color:#dc2626}.pw-cov.pw-cov-des{color:var(--wknd)}
+/* Coverage row label */
+.pw-cov-label{font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.4px;padding:6px 12px;border-top:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.02);display:flex;align-items:center}
+/* ── Planner save bar ── */
+.pl-save-bar{display:flex;gap:8px;align-items:center;padding:12px 16px;background:rgba(52,211,153,.04);border:1px solid rgba(52,211,153,.14);border-radius:10px;font-size:11px;margin-top:4px}
+.pl-save-bar .ps-info{color:var(--tm);flex:1}
 /* ── Coverage Intelligence ── */
 .cov-dash{margin-top:12px}
 .cov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(42px,1fr));gap:2px;margin-top:8px}
@@ -68,31 +91,106 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .cov-floor-day .cfd-t{font-family:'JetBrains Mono',monospace;color:var(--accent);font-weight:500}
 .cov-floor-day .cfd-w{font-family:'JetBrains Mono',monospace;font-size:8px;color:var(--tm)}
 .cov-conflict{margin-top:8px;padding:8px 12px;background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.15);border-radius:6px;font-size:10px;color:#dc2626}
-.hd{background:rgba(5,8,16,.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--bdr);color:var(--ht);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:100}
-.hd-b{display:flex;align-items:center;gap:8px}.hd-l{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px}
-.hd h1{font-size:15px;font-weight:600}.hd-s{font-size:10px;opacity:.5}
-.hd-a{display:flex;gap:5px;align-items:center}
+.hd{background:rgba(5,8,16,.92);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-bottom:1px solid var(--bdr);color:var(--ht);padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:100;height:52px;flex-shrink:0}
+.hd-b{display:flex;align-items:center;gap:10px}
+.hd-l{width:30px;height:30px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;box-shadow:0 0 16px rgba(122,180,255,.2)}
+.hd-titles{display:flex;flex-direction:column;gap:1px}
+.hd h1{font-size:9px;font-weight:500;opacity:.35;letter-spacing:.6px;text-transform:uppercase;line-height:1}
+.hd-dept{font-size:15px;font-weight:700;letter-spacing:-.2px;line-height:1.2;color:var(--ht)}
+.hd-s{font-size:9px;opacity:.35;text-transform:uppercase;letter-spacing:.5px}
+.hd-a{display:flex;gap:6px;align-items:center}
 .btn{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border:none;border-radius:6px;font-family:inherit;font-size:11px;font-weight:500;cursor:pointer;transition:all .12s;white-space:nowrap}
 .bp{background:var(--accent);color:#fff}.bp:hover{background:var(--ah)}
 .bi{width:28px;height:28px;padding:0;display:flex;align-items:center;justify-content:center;border-radius:6px;background:rgba(255,255,255,.06);border:none;color:var(--ht);cursor:pointer;font-size:13px}.bi:hover{background:rgba(255,255,255,.12)}
-.uz{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px}
-.dz{width:100%;max-width:480px;border:2px dashed var(--bdr);border-radius:16px;padding:40px 30px;text-align:center;cursor:pointer;transition:all .2s;background:var(--card)}
-.dz:hover,.dz.dov{border-color:var(--accent);background:var(--al);transform:scale(1.01)}
-.dz h2{font-size:18px;font-weight:600;margin:12px 0 6px}.dz p{color:var(--tm);font-size:12px;margin-bottom:14px}
-.fb{display:flex;gap:5px;justify-content:center}.fm{background:var(--al);color:var(--accent);padding:2px 8px;border-radius:12px;font-size:10px;font-weight:500;font-family:'JetBrains Mono',monospace}
-.tb{display:flex;align-items:center;gap:5px;padding:7px 16px;background:var(--card);border-bottom:1px solid var(--bdr);flex-wrap:wrap}
-.tg{display:flex;align-items:center;gap:3px}.tsp{width:1px;height:18px;background:var(--bdr);margin:0 3px}
-.tb label{font-size:10px;color:var(--tm);font-weight:500}
-.tb select,.tb input[type=text]{padding:4px 6px;border:1px solid var(--bdr);border-radius:4px;font-family:inherit;font-size:11px;background:var(--bg);color:var(--text)}
+/* ── Toolbar ── */
+.tb{display:flex;align-items:center;gap:4px;padding:0 16px;background:rgba(5,8,16,.7);border-bottom:1px solid var(--bdr);flex-wrap:wrap;min-height:42px;backdrop-filter:blur(12px)}
+.tg{display:flex;align-items:center;gap:4px}
+.tsp{width:1px;height:16px;background:var(--bdr);margin:0 5px;opacity:.5}
+.tb label{font-size:10px;color:var(--tm);font-weight:500;letter-spacing:.1px}
+.tb select{padding:4px 8px;border:1px solid rgba(255,255,255,.08);border-radius:6px;font-family:inherit;font-size:11px;background:rgba(255,255,255,.05);color:var(--text);cursor:pointer;transition:border-color .1s}
+.tb select:hover,.tb select:focus{border-color:rgba(122,180,255,.3);outline:none}
 .tb input[type=text]{width:80px}
-.mnav{display:flex;align-items:center;gap:2px}
-.mnav button{width:22px;height:22px;border:1px solid var(--bdr);border-radius:4px;background:var(--card);cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;color:var(--text)}.mnav button:hover{background:var(--al)}
-.mnav .mlbl{font-size:11px;font-weight:600;min-width:70px;text-align:center}
-.ib{display:flex;align-items:center;gap:8px;padding:6px 16px;background:var(--al);font-size:11px;border-bottom:1px solid var(--bdr);flex-wrap:wrap}.ib .l{font-weight:600;color:var(--accent)}
-.tabs{display:flex;background:var(--card);border-bottom:1px solid var(--bdr);padding:0 16px;overflow-x:auto}
-.tab{padding:8px 12px;font-size:11px;font-weight:500;color:var(--tm);cursor:pointer;border:none;background:none;font-family:inherit;border-bottom:2px solid transparent;transition:all .1s;white-space:nowrap}
-.tab:hover{color:var(--text)}.tab.a{color:var(--accent);border-bottom-color:var(--accent)}
-.ct{flex:1;overflow-y:auto;padding:16px}.hid{display:none!important}
+/* ── Month nav ── */
+.mnav{display:flex;align-items:center;gap:4px}
+.mnav button{width:26px;height:26px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(255,255,255,.04);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;color:var(--text);transition:all .1s}
+.mnav button:hover{background:var(--al);border-color:var(--accent);color:var(--accent)}
+.mnav .mlbl{font-size:13px;font-weight:700;min-width:90px;text-align:center;letter-spacing:-.2px}
+/* ── Search ── */
+.srch-wrap{position:relative;display:flex;align-items:center}
+.srch-inp{padding:5px 28px 5px 28px;border:1px solid rgba(255,255,255,.08);border-radius:8px;font-family:inherit;font-size:11px;background:rgba(255,255,255,.05);color:var(--text);width:200px;transition:all .15s}
+.srch-inp:focus{width:260px;border-color:rgba(122,180,255,.35);background:rgba(122,180,255,.06);outline:none}
+.srch-ico{position:absolute;left:8px;font-size:11px;opacity:.35;pointer-events:none}
+.srch-clr{position:absolute;right:8px;cursor:pointer;font-size:11px;opacity:.4;line-height:1;transition:opacity .1s}
+.srch-clr:hover{opacity:.9}
+.srch-dd{position:absolute;top:calc(100% + 5px);left:0;width:260px;background:rgba(10,14,26,.97);border:1px solid var(--bdr);border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.5);z-index:300;overflow:hidden;backdrop-filter:blur(20px)}
+.srch-section{padding:4px 0}
+.srch-label{padding:4px 12px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--tm);opacity:.5}
+.srch-item{padding:7px 12px;font-size:12px;cursor:pointer;display:flex;align-items:center;gap:8px;transition:background .1s}
+.srch-item:hover,.srch-item.active{background:var(--al);color:var(--accent)}
+.srch-item .si-tag{font-size:9px;opacity:.45;margin-left:auto;font-family:'JetBrains Mono',monospace}
+/* ── Tabs ── */
+.tabs{display:flex;background:rgba(5,8,16,.6);border-bottom:1px solid var(--bdr);padding:0 16px;overflow-x:auto;backdrop-filter:blur(12px)}
+.tab{padding:10px 14px;font-size:11px;font-weight:500;color:var(--tm);cursor:pointer;border:none;background:none;font-family:inherit;border-bottom:2px solid transparent;transition:all .12s;white-space:nowrap;letter-spacing:.1px}
+.tab:hover{color:var(--text);background:rgba(255,255,255,.03)}
+.tab.a{color:var(--accent);border-bottom-color:var(--accent);background:rgba(122,180,255,.06)}
+/* ── Info bar ── */
+.ib{display:flex;align-items:center;gap:6px;padding:0 18px;background:rgba(255,255,255,.02);font-size:11px;border-bottom:1px solid var(--bdr);height:36px;flex-wrap:wrap;flex-shrink:0}
+.ib .l{font-weight:700;color:var(--accent);font-size:13px}
+.ib .ib-sep{color:var(--bdr);font-size:14px;opacity:.5}
+.ib .ib-stat{color:var(--text);font-weight:500}
+.ib .ib-muted{color:var(--tm);font-size:10px}
+/* ── Continuity bar ── */
+.cont-msg{font-size:10px;color:var(--tm);padding:5px 18px;background:rgba(122,180,255,.03);border-bottom:1px solid rgba(122,180,255,.06);display:flex;align-items:center;gap:5px}
+.cont-msg .cm-icon{opacity:.4;font-size:11px}
+/* ── Content area ── */
+.ct{flex:1;overflow-y:auto;padding:20px}.hid{display:none!important}
+/* ── Table filters – distinct bg ── */
+.tbl-filters{display:flex;gap:6px;align-items:center;flex-wrap:wrap;padding:10px 14px;background:rgba(255,255,255,.025);border-radius:10px 10px 0 0;border:1px solid var(--card-border);border-bottom:1px solid var(--bdr)}
+.tbl-filters label{font-size:9px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+.tbl-filters select{padding:4px 8px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(255,255,255,.04);color:var(--text);font-family:inherit;font-size:10px;cursor:pointer}
+.tbl-filters .tf-count{font-size:10px;color:var(--tm);margin-left:auto;font-family:'JetBrains Mono',monospace}
+.tbl-filters input[type=number]{padding:4px 6px;border:1px solid rgba(255,255,255,.08);border-radius:6px;background:rgba(255,255,255,.04);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:10px;width:52px;-moz-appearance:textfield}
+.tbl-filters input[type=number]::-webkit-outer-spin-button,.tbl-filters input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none}
+/* Wk label in table/cards — badge style */
+.wk-lbl{font-size:9px;color:var(--accent);opacity:.6;font-family:'JetBrains Mono',monospace;font-weight:600}
+/* Card collapse icon */
+.ech .collapse-icon{font-size:12px;opacity:.45;transition:transform .2s;margin-left:6px}
+.ech.collapsed .collapse-icon{transform:rotate(-90deg)}
+.uz{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 20px;min-height:calc(100vh - 48px)}
+.uz-inner{width:100%;max-width:580px;display:flex;flex-direction:column;align-items:center;gap:0}
+/* Drop overlay */
+.uz.dov-active::after{content:"Drop to load";position:fixed;inset:0;background:rgba(122,180,255,.08);border:2px dashed var(--accent);border-radius:0;z-index:200;display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600;color:var(--accent);pointer-events:none}
+/* Wordmark */
+.uz-mark{display:flex;flex-direction:column;align-items:center;margin-bottom:36px}
+.uz-logo{width:44px;height:44px;background:var(--accent);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:14px;box-shadow:0 0 32px rgba(122,180,255,.25)}
+.uz-title{font-size:26px;font-weight:700;letter-spacing:-.5px;line-height:1.1}
+.uz-sub{font-size:12px;color:var(--tm);margin-top:5px;letter-spacing:.2px}
+/* Primary drop tile */
+.uz-drop{width:100%;border:1.5px dashed rgba(255,255,255,.14);border-radius:14px;padding:22px 24px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(255,255,255,.03);position:relative;margin-bottom:10px}
+.uz-drop:hover,.uz-drop.dov{border-color:var(--accent);background:rgba(122,180,255,.06)}
+.uz-drop:hover .ud-arrow{opacity:1;transform:translateY(-2px)}
+.ud-arrow{font-size:20px;opacity:.3;transition:all .2s;display:block;margin-bottom:8px}
+.ud-main{font-size:15px;font-weight:600;margin-bottom:3px}
+.ud-sub{font-size:11px;color:var(--tm);margin-bottom:14px}
+.ud-types{display:flex;gap:6px;justify-content:center}
+.ud-type{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;padding:3px 10px;border-radius:6px;border:1px solid var(--bdr);color:var(--tm);letter-spacing:.3px;transition:all .15s}
+.uz-drop:hover .ud-type{border-color:rgba(122,180,255,.3);color:var(--accent)}
+/* "or" divider */
+.uz-or{display:flex;align-items:center;gap:10px;width:100%;margin:10px 0 8px;color:var(--tm);font-size:10px;letter-spacing:.5px;text-transform:uppercase}
+.uz-or::before,.uz-or::after{content:"";flex:1;height:1px;background:var(--bdr)}
+/* Paste button */
+.uz-paste-btn{display:flex;align-items:center;gap:8px;width:100%;padding:13px 18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:12px;color:var(--text);font-family:inherit;font-size:13px;font-weight:500;cursor:pointer;transition:all .15s;margin-bottom:18px;justify-content:center}
+.uz-paste-btn:hover{background:rgba(122,180,255,.07);border-color:rgba(122,180,255,.25);color:var(--accent)}
+.upb-hint{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--tm);margin-left:auto;opacity:.6}
+/* Privacy/clear row */
+.uz-foot{display:flex;align-items:center;gap:8px;font-size:9px;color:var(--tm)}
+.uz-foot::before{content:"🔒";font-size:10px}
+.uz-foot-sep{width:1px;height:10px;background:var(--bdr)}
+.clr-data-sm{background:none;border:none;color:var(--tm);font-size:9px;font-family:inherit;cursor:pointer;padding:0;transition:color .1s}
+.clr-data-sm:hover{color:#dc2626}
+/* Legacy compat */
+.fb{display:flex;gap:5px;justify-content:center}.fm{background:var(--al);color:var(--accent);padding:2px 8px;border-radius:12px;font-size:10px;font-weight:500;font-family:'JetBrains Mono',monospace}
+/* ── Content area ── */
 
 /* Calendar Dashboard - 3 panel layout */
 .cal-dash{display:grid;grid-template-columns:260px 1fr 200px;gap:14px;min-height:400px}
@@ -215,7 +313,6 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .ec-footer{padding:8px 18px 14px}
 .sc{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500}
 .s-early{color:var(--early)}.s-mid{color:var(--mid)}.s-late{color:var(--late)}.s-wknd{color:var(--wknd)}.s-off{color:var(--tm);font-style:italic}
-.wk-lbl{font-size:9px;color:var(--tm);opacity:.5;font-family:'JetBrains Mono',monospace}
 .anom{display:inline-flex;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:500;background:#fef2f2;color:#dc2626;margin-right:6px;margin-bottom:4px}
 .card-summary{padding:12px 18px 16px;display:flex;flex-direction:column;gap:10px}
 .cs-heatmap{display:flex;gap:2px;flex-wrap:wrap}
@@ -231,6 +328,26 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .ft td{padding:5px 10px;border-bottom:1px solid var(--bdr)}.ft tr:hover td{background:var(--al)}
 .ft td:first-child{position:sticky;left:0;background:var(--card);z-index:1;font-weight:500}
 .ft tr:hover td:first-child{background:var(--al)}
+/* Table filters */
+/* Planner cell popup */
+.pl-cell-popup{position:fixed;z-index:600;background:rgba(15,20,35,.97);border:1px solid rgba(122,180,255,.25);border-radius:10px;padding:10px 12px;box-shadow:0 8px 32px rgba(0,0,0,.6);backdrop-filter:blur(20px);min-width:170px;font-family:inherit}
+.pl-cell-popup .pcp-hd{font-size:10px;font-weight:600;color:var(--tm);margin-bottom:7px;letter-spacing:.2px}
+.pl-cell-popup .pcp-opt{display:block;width:100%;padding:5px 8px;text-align:left;background:none;border:1px solid transparent;border-radius:6px;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:10px;cursor:pointer;transition:all .1s;margin-bottom:2px;white-space:nowrap}
+.pl-cell-popup .pcp-opt:hover{background:var(--al);border-color:var(--accent);color:var(--accent)}
+.pl-cell-popup .pcp-opt.pcp-off{color:var(--tm)}
+.pl-cell-popup .pcp-inp{width:100%;padding:5px 8px;border:1px solid var(--bdr);border-radius:6px;background:rgba(255,255,255,.04);color:var(--text);font-family:'JetBrains Mono',monospace;font-size:10px;margin-top:4px;outline:none}
+.pl-cell-popup .pcp-inp:focus{border-color:var(--accent)}
+.pl-cell-popup .pcp-close{position:absolute;top:8px;right:10px;background:none;border:none;color:var(--tm);cursor:pointer;font-size:12px;padding:0;line-height:1}
+/* Editable planner cells */
+.pw-cell.pw-editable{cursor:pointer;transition:background .1s}
+.pw-cell.pw-editable:hover{background:rgba(122,180,255,.1);outline:1px solid rgba(122,180,255,.3)}
+.pw-cell.pw-override{outline:1px solid rgba(251,191,36,.4)!important;background:rgba(251,191,36,.06)!important}
+/* Remove saved month */
+.rm-month-btn{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border:1px solid rgba(220,38,38,.25);border-radius:5px;background:rgba(220,38,38,.06);color:#dc2626;font-size:9px;font-weight:500;cursor:pointer;transition:all .1s;font-family:inherit}
+.rm-month-btn:hover{background:rgba(220,38,38,.15);border-color:#dc2626}
+/* Coverage toggle in planner */
+.pl-cov-toggle{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:10px;color:var(--tm);user-select:none}
+.pl-cov-toggle:hover{color:var(--text)}
 .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-bottom:16px}
 .scd{background:var(--card);border-radius:var(--r);padding:14px;box-shadow:var(--sh);text-align:center}
 .scd .n{font-size:24px;font-weight:700;color:var(--accent)}.scd .lb{font-size:10px;color:var(--tm);margin-top:2px}
@@ -247,18 +364,8 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .raw-tabs{display:flex;gap:2px;margin-bottom:10px;overflow-x:auto}
 .raw-tab{padding:5px 10px;border-radius:6px 6px 0 0;font-size:10px;font-weight:500;cursor:pointer;background:var(--bg);color:var(--tm);border:1px solid var(--bdr);border-bottom:none}
 .raw-tab.active{background:var(--card);color:var(--accent);font-weight:600}
-.ew{position:relative}.em{position:absolute;top:100%;right:0;margin-top:3px;background:var(--card);border:1px solid var(--bdr);border-radius:7px;box-shadow:var(--sl);padding:3px;min-width:160px;z-index:200}
-.srch-wrap{position:relative;display:flex;align-items:center}
-.srch-inp{padding:4px 26px 4px 22px;border:1px solid var(--bdr);border-radius:4px;font-family:inherit;font-size:11px;background:var(--bg);color:var(--text);width:160px}
-.srch-ico{position:absolute;left:6px;font-size:10px;opacity:.4;pointer-events:none}
-.srch-clr{position:absolute;right:6px;cursor:pointer;font-size:10px;opacity:.4;line-height:1}
-.srch-clr:hover{opacity:.9}
-.srch-dd{position:absolute;top:calc(100% + 3px);left:0;width:220px;background:var(--hbg);border:1px solid var(--bdr);border-radius:8px;box-shadow:var(--sl);z-index:300;overflow:hidden;backdrop-filter:blur(16px)}
-.srch-section{padding:4px 0}
-.srch-label{padding:3px 10px;font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--tm);opacity:.6}
-.srch-item{padding:6px 10px;font-size:11px;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .1s}
-.srch-item:hover,.srch-item.active{background:var(--al);color:var(--accent)}
-.srch-item .si-tag{font-size:9px;opacity:.5;margin-left:auto}
+/* ── Export menu ── */
+.ew{position:relative}.em{position:absolute;top:100%;right:0;margin-top:4px;background:rgba(10,14,26,.97);border:1px solid var(--bdr);border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,.5);padding:4px;min-width:170px;z-index:200;backdrop-filter:blur(20px)}
 .ei{display:flex;align-items:center;gap:5px;padding:6px 8px;border-radius:4px;cursor:pointer;font-size:11px;border:none;background:none;width:100%;font-family:inherit;color:var(--text)}.ei:hover{background:var(--al)}
 .tp{display:flex;gap:3px}.td{width:18px;height:18px;border-radius:50%;border:2px solid transparent;cursor:pointer;transition:all .1s}.td:hover{transform:scale(1.15)}.td.ac{border-color:#fff;box-shadow:0 0 0 2px var(--accent)}
 .kb-hint{position:fixed;bottom:12px;right:12px;background:var(--hbg);color:var(--ht);padding:4px 10px;border-radius:6px;font-size:9px;opacity:.4;pointer-events:none;z-index:50;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
@@ -274,11 +381,8 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .toast.t-warn{background:rgba(245,158,11,.9);border:1px solid rgba(245,158,11,.3)}
 @keyframes toastIn{from{transform:translateX(40px);opacity:0}to{transform:translateX(0);opacity:1}}
 /* Privacy badge */
-.priv-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;background:rgba(34,197,94,.1);color:#34D399;font-size:9px;font-weight:500;margin-top:10px}
-.priv-badge::before{content:"🔒"}
-/* Clear data button */
-.clr-data{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:4px;background:rgba(220,38,38,.1);color:#dc2626;font-size:9px;font-weight:500;border:none;cursor:pointer;font-family:inherit}
-.clr-data:hover{background:rgba(220,38,38,.2)}
+/* priv-badge replaced by uz-foot *//* Clear data button */
+/* clr-data replaced by clr-data-sm */
 /* Mobile hamburger toggle */
 .mob-ham{display:none;width:32px;height:32px;padding:0;align-items:center;justify-content:center;border-radius:6px;background:rgba(255,255,255,.06);border:none;color:var(--ht);cursor:pointer;font-size:16px;flex-shrink:0}
 .mob-ham:hover{background:rgba(255,255,255,.12)}
@@ -424,7 +528,7 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .var-negative{background:rgba(220,38,38,.1)}.var-negative .vc-n{color:#dc2626}
 .var-neutral{background:var(--al)}.var-neutral .vc-n{color:var(--accent)}
 /* Planner */
-.pl-wrap{display:flex;flex-direction:column;gap:16px}
+.pl-wrap{display:flex;flex-direction:column;gap:10px}
 .pl-section{background:var(--card);border:1px solid var(--card-border);border-radius:14px;box-shadow:var(--sh);overflow:hidden;backdrop-filter:blur(12px)}
 .pl-hd{padding:14px 18px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
 .pl-hd h3{font-size:14px;font-weight:700}.pl-hd-sub{font-size:10px;color:var(--tm)}
@@ -549,8 +653,7 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .month-dots .md.partial{background:var(--accent);opacity:.4}
 .month-dots .md.active{outline:1.5px solid var(--accent);outline-offset:1px}
 /* Continuity badge */
-.cont-badge{font-size:9px;color:var(--tm);font-style:italic;padding:0 4px}
-/* Card off-type labels */
+/* ── Parse popup ── */
 .off-label{font-size:9px;font-weight:600;padding:1px 5px;border-radius:3px;letter-spacing:.3px}
 .off-label.ol-leave{background:rgba(122,180,255,.1);color:var(--accent)}
 .off-label.ol-sick{background:rgba(244,114,182,.1);color:#F472B6}
@@ -569,15 +672,11 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 .pp-sheet{font-weight:600;color:var(--accent);min-width:60px}
 .pp-conf{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:600}
 .pp-conf.high{background:rgba(52,211,153,.12);color:var(--early)}.pp-conf.medium{background:rgba(122,180,255,.12);color:var(--accent)}.pp-conf.low{background:rgba(251,191,36,.12);color:#d97706}
-/* Cross-month continuity */
-.cont-msg{font-size:10px;color:var(--tm);padding:4px 16px;background:rgba(122,180,255,.04);border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:6px}
-.cont-msg .cm-icon{opacity:.5}
 /* Week label in calendar */
 .ws-wk{font-size:7px;color:var(--accent);font-weight:600;font-family:'JetBrains Mono',monospace;opacity:.7}
 .cal-wk-badge{position:absolute;bottom:0;right:0;font-size:6px;color:var(--accent);font-weight:700;font-family:'JetBrains Mono',monospace;opacity:.6;line-height:1}
 /* Upload zone features */
-.uz-features{display:flex;flex-direction:column;gap:6px;margin-top:14px;text-align:left;max-width:340px;margin-left:auto;margin-right:auto}
-.uz-feat{display:flex;align-items:flex-start;gap:8px;font-size:11px;color:var(--tm)}.uz-feat .uf-icon{font-size:13px;flex-shrink:0;margin-top:1px}.uz-feat strong{color:var(--text);font-weight:500}
+/* uz-features removed — features surfaced in-app */
 /* Mobile toolbar overlay */
 .mob-overlay{display:none}
 @media(max-width:768px){.tb.tb-open{position:fixed;top:45px;left:0;right:0;bottom:0;z-index:90;background:var(--bg);overflow-y:auto;padding:12px;flex-direction:column;align-items:stretch;gap:8px;backdrop-filter:blur(20px)}.tb.tb-open .tg{width:100%}.tb.tb-open select,.tb.tb-open input[type=text]{width:100%;max-width:none}.mob-overlay{position:fixed;inset:0;z-index:89;background:rgba(0,0,0,.4);backdrop-filter:blur(2px)}}
@@ -616,10 +715,55 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
 <div class="app">
 <div id="mobOv" class="mob-overlay" onclick="S.tbOpen=false;ren()"></div>
 <div id="toasts" class="toast-wrap"></div>
-<div class="hd"><div class="hd-b"><div class="hd-l">📋</div><div><h1>Schedule Cleaner</h1><div class="hd-s" id="fl">Messy rosters → clean schedules</div></div></div><div class="hd-a" id="ha" style="display:none"><button class="mob-ham" id="mobHam" onclick="S.tbOpen=!S.tbOpen;ren()" title="Filters">☰</button><div class="tp" id="tp"></div><button class="bi" onclick="removeDept(S.activeDept)" title="Close department">✕</button><div class="ew"><button class="btn bp" onclick="togExp()">↓ Export</button><div class="em" id="exm" style="display:none"><button class="ei" onclick="expClean()">✨ Clean Reformat</button><button class="ei" onclick="genEmail()">✉ Email Roster</button><button class="ei" onclick="expPNG()">🖼 Save as PNG</button><button class="ei" onclick="window.print();hExp()">🖨 Print / PDF</button></div></div></div></div>
+<div class="hd"><div class="hd-b"><div class="hd-l">📋</div><div class="hd-titles"><h1>Schedule Cleaner</h1><div class="hd-dept" id="fl">Messy rosters → clean schedules</div></div></div><div class="hd-a" id="ha" style="display:none"><button class="mob-ham" id="mobHam" onclick="S.tbOpen=!S.tbOpen;ren()" title="Filters">☰</button><div class="tp" id="tp"></div><button class="bi" onclick="removeDept(S.activeDept)" title="Close department">✕</button><div class="ew"><button class="btn bp" onclick="togExp()">↓ Export</button><div class="em" id="exm" style="display:none"><button class="ei" onclick="expClean()">✨ Clean Reformat</button><button class="ei" onclick="genEmail()">✉ Email Roster</button><button class="ei" onclick="expPNG()">🖼 Save as PNG</button><button class="ei" onclick="window.print();hExp()">🖨 Print / PDF</button></div></div></div></div>
 <div id="deptStrip" class="dept-strip"></div>
 <input type="file" id="fiAdd" accept=".xlsx,.xls,.csv" style="display:none" onchange="hFile(this)">
-<div class="uz" id="us"><div class="dz" id="dz" onclick="document.getElementById('fi').click()"><div style="font-size:40px">📊</div><h2>Drop your schedule file here</h2><p>Retentions rosters, Claims blocks, and similar formats.</p><div class="fb"><span class="fm">.xlsx</span><span class="fm">.xls</span><span class="fm">.csv</span></div><input type="file" id="fi" accept=".xlsx,.xls,.csv" style="display:none" onchange="hFile(this)"><div style="margin-top:16px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="btn" style="background:var(--al);color:var(--accent);font-size:11px" onclick="event.stopPropagation();pasteFromClip()">📋 Paste from Excel</button><button class="btn" style="background:var(--al);color:var(--accent);font-size:11px" onclick="event.stopPropagation();document.getElementById('gsWrap').style.display='flex'">🔗 Google Sheet URL</button></div><div id="gsWrap" style="display:none;margin-top:12px;flex-direction:column;gap:6px;align-items:center" onclick="event.stopPropagation()"><input type="text" id="gsUrl" placeholder="Paste Google Sheets URL..." style="width:100%;max-width:360px;padding:8px 12px;border:1px solid var(--bdr);border-radius:8px;background:var(--bg);color:var(--text);font-family:inherit;font-size:12px"><button class="btn bp" style="font-size:11px" onclick="loadGSheet()">Load Sheet</button><p style="font-size:9px;color:var(--tm);max-width:360px">Sheet must be published: File → Share → Publish to web → CSV</p></div><div class="uz-features"><div class="uz-feat"><span class="uf-icon">🗓</span><span><strong>Auto-detect</strong> — handles merged cells, mixed date formats, weekly blocks, per-person sheets</span></div><div class="uz-feat"><span class="uf-icon">🔄</span><span><strong>Rotation intelligence</strong> — reads week labels and rotation keys, projects schedules forward</span></div><div class="uz-feat"><span class="uf-icon">🕐</span><span><strong>UK→SA timezone</strong> — BST/GMT-aware conversion on every shift</span></div><div class="uz-feat"><span class="uf-icon">📊</span><span><strong>7 views</strong> — calendar, cards, table, analytics, planner, summary, raw data</span></div></div><div class="priv-badge">Your data never leaves this browser — zero uploads, zero tracking</div><button class="clr-data" onclick="event.stopPropagation();clearAllData()" style="margin-top:6px">🗑 Clear stored data</button></div></div>
+<div class="uz" id="us"
+  ondragover="event.preventDefault();document.getElementById('dz').classList.add('dov')"
+  ondragleave="document.getElementById('dz').classList.remove('dov')"
+  ondrop="document.getElementById('dz').classList.remove('dov');event.preventDefault();const f=event.dataTransfer.files[0];if(f)proc(f)">
+
+  <input type="file" id="fi" accept=".xlsx,.xls,.csv" style="display:none" onchange="hFile(this)">
+
+  <div class="uz-inner">
+    <div class="uz-mark">
+      <div class="uz-logo">📋</div>
+      <div class="uz-title">Schedule Cleaner</div>
+      <div class="uz-sub">Messy rosters → structured, analysable data</div>
+    </div>
+
+    <!-- Drop tile -->
+    <div class="uz-drop" id="dz"
+      onclick="document.getElementById('fi').click()"
+      ondragover="event.preventDefault();event.stopPropagation();this.classList.add('dov')"
+      ondragleave="event.stopPropagation();this.classList.remove('dov')"
+      ondrop="this.classList.remove('dov');event.preventDefault();event.stopPropagation();const f=event.dataTransfer.files[0];if(f)proc(f)">
+      <span class="ud-arrow">↓</span>
+      <div class="ud-main">Drop your file here</div>
+      <div class="ud-sub">or click to browse</div>
+      <div class="ud-types">
+        <span class="ud-type">.xlsx</span>
+        <span class="ud-type">.xls</span>
+        <span class="ud-type">.csv</span>
+      </div>
+    </div>
+
+    <div class="uz-or"><span>or</span></div>
+
+    <button class="uz-paste-btn" onclick="pasteFromClip()">
+      <span style="font-size:15px;opacity:.7">⌘</span>
+      Paste from Excel
+      <span class="upb-hint">Ctrl+V</span>
+    </button>
+
+    <!-- Footer -->
+    <div class="uz-foot">
+      Your data never leaves this browser — zero uploads, zero tracking
+      <span class="uz-foot-sep"></span>
+      <button class="clr-data-sm" onclick="clearAllData()">Clear stored data</button>
+    </div>
+  </div>
+</div>
 <div id="mv" class="hid" style="flex:1;display:flex;flex-direction:column"><div class="ib" id="ib"></div><div class="tb" id="toolbar"></div><div class="tabs" id="tbar"></div><div id="contBar"></div><div class="ct" id="ca"></div></div>
 <div class="kb-hint" id="kbh"><span><kbd>←</kbd><kbd>→</kbd> month <kbd>↑</kbd><kbd>↓</kbd> person <kbd>T</kbd> today <kbd>C</kbd> calendar</span><span class="wm-inline">© theGuide.Club · Sel K. Naicker · 2026</span></div>
 <div class="wm-print">© theGuide.Club · Sel K. Naicker · 2026 · All rights reserved</div>
@@ -630,7 +774,9 @@ body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opac
    (preserved from v5 — identical parsing logic)
    ═══════════════════════════════════════════════════════════════ */
 let S={wb:null,fn:"",shs:[],sh:"",raw:[],entries:[],team:"all",emp:"all",tz:true,tab:"calendar",th:"midnight",
-  month:null,months:[],mIdx:0,shiftFilter:"",compare:false,cmp2:"",calDay:null,rawSheet:"",collapsed:{},hlToday:true,srch:"",dayFilter:"",allMonths:false,covMin:3,hrsMax:45,att:{},hc:{},notes:{},noteOpen:false,anDay:null,anMode:"roster",plMonths:2,plRemoved:{},plLeave:[],plOverrides:{},plHires:[],plEdit:null,tbOpen:false,rotationDef:null,rotPanelOpen:false,parseInfo:[],workspace:{},activeDept:null,plBlueprints:{},plPositions:{},plBpOpen:false,plPosOpen:true,plGenMonth:null,plGenYear:null};
+  month:null,months:[],mIdx:0,shiftFilter:"",compare:false,cmp2:"",calDay:null,rawSheet:"",collapsed:{},hlToday:true,srch:"",dayFilter:"",allMonths:false,covMin:3,hrsMax:45,att:{},hc:{},notes:{},noteOpen:false,anDay:null,anMode:"roster",plMonths:2,plRemoved:{},plLeave:[],plOverrides:{},plHires:[],plEdit:null,tbOpen:false,rotationDef:null,rotPanelOpen:false,parseInfo:[],workspace:{},activeDept:null,plBlueprints:{},plPositions:{},plBpOpen:false,plPosOpen:true,plGenMonth:null,plGenYear:null,
+  tblDay:"all",tblWk:"all",tblType:"all",tblLeader:"all",tblHrsMin:"",tblHrsMax:"",
+  plCellEdit:null,plCovOpen:true,savedMonths:{},plCellOverrides:{}};
 
 // Each theme: d=dot color, bg=page bg, c=card bg, ac=accent, al=accent light, ah=accent hover,
 // t=text, tm=muted text, bd=border, hb=header bg, ht=header text,
@@ -842,13 +988,10 @@ function anomBannerHTML(){
 // Two strategies: Overview grid (Retentions-style) and Inline key (Claims-style).
 function scanRotationDef(wb){
   if(!wb||!wb.SheetNames)return null;
-  // Strategy A: Overview grid detection
-  // Look for sheets with a WC date row + person→week mapping + rotation breakdown
+  // Look for Overview grid with person→date→week mapping
+  // Patterns are derived later from parsed entries via derivePatternsFromEntries()
   const ovResult=scanOverviewGrid(wb);
   if(ovResult)return ovResult;
-  // Strategy B: Inline rotation key in block sheets
-  const keyResult=scanInlineKey(wb);
-  if(keyResult)return keyResult;
   return null;
 }
 
@@ -918,157 +1061,16 @@ function scanOverviewGrid(wb){
       }
     }
     if(Object.keys(personMap).length<2||maxWeek<2)continue;
-    // Extract Weekly Rotation Breakdown (lower section of Overview)
-    // Look for rows with "Week 1", "Week 2", etc. below the person grid
-    const patterns={};// weekNum → { 0: shift, 1: shift, ... } (0=Mon, 6=Sun)
-    // Find the breakdown section — look for "Weekly Rotation Breakdown" text or "Week 1" below person rows
-    let breakdownStart=-1;
-    for(let i=wcRow+Object.keys(personMap).length+2;i<data.length;i++){
-      const row=data[i]||[];
-      for(let j=0;j<Math.min(row.length,200);j++){
-        if(String(row[j]||"").toLowerCase().includes("weekly rotation breakdown")){breakdownStart=i;break;}
-        if(String(row[j]||"").trim()==="Week 1"&&breakdownStart<0){breakdownStart=i;break;}
-      }
-      if(breakdownStart>=0)break;
-    }
-    if(breakdownStart>=0){
-      // Find day header row and shift columns
-      // Pattern: "Mon Tue Wed Thu Fri Sat Sun" in a row, then Week label rows alternate with shift rows
-      let dayHdrRow=-1,shiftCols=[];
-      for(let i=breakdownStart;i<Math.min(data.length,breakdownStart+5);i++){
-        const row=data[i]||[];
-        for(let j=0;j<row.length;j++){
-          if(nD(row[j])){
-            const hits=[];
-            for(let k=j;k<Math.min(row.length,j+10);k++){if(nD(row[k]))hits.push(k);}
-            if(hits.length>=5){dayHdrRow=i;shiftCols=hits;break;}
-          }
-        }
-        if(dayHdrRow>=0)break;
-      }
-      if(dayHdrRow>=0&&shiftCols.length>=5){
-        // Scan below for "Week N" labels followed by shift data on the next row
-        for(let i=dayHdrRow+1;i<data.length;i++){
-          const row=data[i]||[];
-          // Check all cols for a "Week N" label
-          let foundWeek=0;
-          for(let j=0;j<Math.min(row.length,200);j++){
-            const wn=getWk(row[j]);
-            if(wn){foundWeek=parseInt(wn);break;}
-          }
-          if(foundWeek>0){
-            // Next row should have shift times in the shiftCols positions
-            const nextRow=data[i+1]||[];
-            const weekPat={};
-            for(let d=0;d<shiftCols.length&&d<7;d++){
-              const cv=String(nextRow[shiftCols[d]]||"").trim();
-              const tm=pTm(cv);
-              if(tm)weekPat[d]=tm.s+"-"+tm.e;
-              else if(isOf(cv)||!cv)weekPat[d]="OFF";
-              else weekPat[d]=cv;
-            }
-            if(Object.keys(weekPat).length>0)patterns[foundWeek]=weekPat;
-          }
-        }
-      }
-    }
-    // Validate patterns — ensure they contain actual time ranges, not garbage
-    // A valid pattern value looks like "08:00-17:10" (contains ":") or "OFF"
-    let validTimeCount=0,totalTimeCount=0;
-    for(const[wn,pat]of Object.entries(patterns)){
-      for(const[d,sig]of Object.entries(pat)){
-        if(sig==="OFF")continue;
-        totalTimeCount++;
-        if(sig.includes(":"))validTimeCount++;
-      }
-    }
-    // If less than half of non-OFF values are valid times, the breakdown is garbage
-    if(totalTimeCount>0&&validTimeCount<totalTimeCount/2){
-      // Keep personMap but discard patterns
-      return{
-        source:"overview",sourceSheet:sn,cycleLen:maxWeek,
-        personMap:personMap,patterns:{},
-        confidence:Object.keys(personMap).length>=3?"high":"medium"
-      };
-    }
+    // Patterns will be derived from parsed entries via derivePatternsFromEntries()
     return{
       source:"overview",sourceSheet:sn,cycleLen:maxWeek,
-      personMap:personMap,patterns:patterns,
+      personMap:personMap,patterns:{},
       confidence:Object.keys(personMap).length>=3?"high":"medium"
     };
   }
   return null;
 }
 
-function scanInlineKey(wb){
-  for(const sn of wb.SheetNames){
-    const ws=wb.Sheets[sn];if(!ws)continue;
-    const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:""});
-    if(!data||data.length<5)continue;
-    // Look for a column range where 3+ consecutive rows have "Week N" labels
-    // In Claims this is col 12 (index 11) with shifts in cols 13-19 (indices 12-18)
-    for(let startCol=8;startCol<Math.min((data[0]||[]).length,30);startCol++){
-      let weekRun=0,firstWkRow=-1,weekNums=[];
-      for(let r=0;r<Math.min(data.length,15);r++){
-        const v=String((data[r]||[])[startCol]||"").trim();
-        const wn=getWk(v);
-        if(wn){
-          if(weekRun===0)firstWkRow=r;
-          weekRun++;weekNums.push(parseInt(wn));
-        } else if(weekRun>0&&weekRun<3){weekRun=0;weekNums=[];firstWkRow=-1;}
-        else if(weekRun>=3)break;
-      }
-      if(weekRun>=3&&firstWkRow>=0){
-        // CRITICAL: Check if week numbers are SEQUENTIAL (1,2,3,4,5).
-        // The rotation key is always Week 1, Week 2, Week 3... in order.
-        // Per-person week labels (e.g. Week 4, Week 5, Week 1, Week 3) are STAGGERED — skip those.
-        const isSequential=weekNums.length>=3&&weekNums[0]===1;
-        let sequential=isSequential;
-        if(isSequential){for(let k=1;k<weekNums.length;k++){if(weekNums[k]!==weekNums[k-1]+1){sequential=false;break;}}}
-        if(!sequential)continue;// Skip staggered per-person labels, keep scanning for the real key
-
-        const maxWeek=Math.max(...weekNums);
-        // Check that there's a day header row above the first week row
-        // Look 1-2 rows above firstWkRow for Mon/Tue/Wed...
-        let dayHdrRow=-1,shiftCols=[];
-        for(let scan=Math.max(0,firstWkRow-3);scan<firstWkRow;scan++){
-          const row=data[scan]||[];
-          const hits=[];
-          for(let j=startCol+1;j<Math.min(row.length,startCol+10);j++){if(nD(row[j]))hits.push(j);}
-          if(hits.length>=5){dayHdrRow=scan;shiftCols=hits;break;}
-        }
-        // Extract patterns
-        const patterns={};
-        for(let r=firstWkRow;r<Math.min(data.length,firstWkRow+maxWeek+2);r++){
-          const wn=getWk(String((data[r]||[])[startCol]||""));
-          if(!wn)continue;
-          const weekNum=parseInt(wn);
-          const weekPat={};
-          if(shiftCols.length>=5){
-            for(let d=0;d<Math.min(shiftCols.length,7);d++){
-              const cv=String((data[r]||[])[shiftCols[d]]||"").trim();
-              const tm=pTm(cv);
-              if(tm)weekPat[d]=tm.s+"-"+tm.e;
-              else if(isOf(cv)||!cv)weekPat[d]="OFF";
-              else weekPat[d]=cv;
-            }
-          }
-          if(Object.keys(weekPat).length>0)patterns[weekNum]=weekPat;
-        }
-        if(Object.keys(patterns).length>=3){
-          return{
-            source:"inlineKey",sourceSheet:sn,cycleLen:maxWeek,
-            personMap:{},patterns:patterns,
-            confidence:"medium"
-          };
-        }
-      }
-    }
-    // Also check for per-person week labels in block data (col after Sunday)
-    // These will be captured by parseBlocks, but we can collect the person→week map here
-  }
-  return null;
-}
 
 // ═══ WEEK LABEL ENRICHMENT ═══
 // After parsing, fill in missing week labels using the rotation definition.
@@ -1219,46 +1221,226 @@ function enrichWeekLabels(entries,rotDef){
   return entries;
 }
 
-// ═══ DERIVE ROTATION PATTERNS FROM PARSED ENTRIES ═══
-// Fallback when the file's rotation breakdown can't be read directly.
-// Groups week-labelled entries by week number, finds the modal shift per dow.
-function derivePatternsFromEntries(entries,rotDef){
-  if(!rotDef)return;
-  // Only run if patterns are empty or invalid
-  const hasPats=rotDef.patterns&&Object.keys(rotDef.patterns).length>=2;
-  const hasValidTimes=hasPats&&Object.values(rotDef.patterns).some(p=>
-    Object.values(p).some(v=>typeof v==="string"&&v.includes(":")));
-  if(hasValidTimes)return;// already have good patterns
-
-  // Collect entries with week labels
-  const byWeek={};// weekNum → { dow → { "shift": count } }
+// ═══ PATTERN-FIRST ROTATION DETECTION ═══
+// Analyses actual shift data to find repeating patterns and assign week numbers.
+// Does NOT rely on "Week N" labels in the file — uses fingerprinting.
+function detectShiftPatterns(entries){
+  if(!entries||entries.length<14)return null;// need at least 2 weeks of data
+  // 1. Build per-person weekly fingerprints
+  const byPerson={};
   entries.forEach(e=>{
-    if(!e.week||!e.date)return;
-    const wNum=parseInt(e.week.replace(/\D/g,""));if(!wNum)return;
-    const dow=(e.date.getDay()+6)%7;// 0=Mon
-    if(!byWeek[wNum])byWeek[wNum]={};
-    if(!byWeek[wNum][dow])byWeek[wNum][dow]={};
-    const sig=e.isOff?"OFF":(e.ukS&&e.ukE?e.ukS+"-"+e.ukE:"OFF");
-    byWeek[wNum][dow][sig]=(byWeek[wNum][dow][sig]||0)+1;
+    if(!e.date||!e.name)return;
+    if(!byPerson[e.name])byPerson[e.name]=[];
+    byPerson[e.name].push(e);
   });
-  if(Object.keys(byWeek).length<2)return;// not enough data
+  const people=Object.keys(byPerson);
+  if(!people.length)return null;
 
-  // Build patterns from modal (most common) shift per dow
+  // Group each person's entries by calendar week (Mon-Sun)
+  const personWeeks={};// name → [{monday, fp:{dow:sig}, entries:[]}]
+  for(const[name,ents]of Object.entries(byPerson)){
+    const weeks={};
+    ents.forEach(e=>{
+      const d=new Date(e.date);const mon=new Date(d);mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+      const wk=mon.toISOString().split("T")[0];
+      if(!weeks[wk])weeks[wk]={monday:mon,fp:{},entries:[]};
+      const dow=(d.getDay()+6)%7;
+      weeks[wk].fp[dow]=e.isOff?"OFF":(e.ukS&&e.ukE?e.ukS+"-"+e.ukE:"OFF");
+      weeks[wk].entries.push(e);
+    });
+    personWeeks[name]=Object.values(weeks).sort((a,b)=>a.monday-b.monday);
+  }
+
+  // 2. Generate comparison keys for fingerprints
+  // Two weeks match if same on/off shape AND start hours within 1h
+  function fpKey(fp){
+    const parts=[];
+    for(let d=0;d<7;d++){
+      const sig=fp[d]||"OFF";
+      if(sig==="OFF")parts.push("O");
+      else{
+        // Use 15-min rounded start time so 08:00/08:30/09:00/09:45 stay distinct
+        // but minor jitter (09:20 vs 09:15) is absorbed
+        const start=(sig.split("-")[0]||sig).trim();
+        const[hStr,mStr]=(start+":00").split(":");
+        const h=parseInt(hStr)||0,m=parseInt(mStr)||0;
+        const mins=h*60+m;
+        const r=Math.round(mins/15)*15;
+        parts.push(Math.floor(r/60)+":"+P(r%60));
+      }// 15min-rounded start
+    }
+    return parts.join("|");
+  }
+
+  // 3. Find unique patterns using the person with the most weeks
+  let bestPerson=null,bestWeekCount=0;
+  for(const[name,weeks]of Object.entries(personWeeks)){
+    // Only count weeks with 5+ days of data
+    const fullWeeks=weeks.filter(w=>Object.keys(w.fp).length>=5);
+    if(fullWeeks.length>bestWeekCount){bestWeekCount=fullWeeks.length;bestPerson=name;}
+  }
+  if(!bestPerson||bestWeekCount<2)return null;
+
+  const refWeeks=personWeeks[bestPerson].filter(w=>Object.keys(w.fp).length>=5);
+  // Cluster by fingerprint key
+  const clusters={};// key → [{weekData, index}]
+  refWeeks.forEach((w,i)=>{
+    const key=fpKey(w.fp);
+    if(!clusters[key])clusters[key]=[];
+    clusters[key].push({fp:w.fp,idx:i,monday:w.monday});
+  });
+
+  const uniqueKeys=Object.keys(clusters);
+  const cycleLen=uniqueKeys.length;
+  if(cycleLen<2||cycleLen>15)return null;// unreasonable
+
+  // 4. Order patterns by calendar sequence (first appearance order)
+  const ordered=uniqueKeys.map(key=>({
+    key,
+    firstIdx:Math.min(...clusters[key].map(c=>c.idx)),
+    members:clusters[key]
+  })).sort((a,b)=>a.firstIdx-b.firstIdx);
+
+  // 5. Verify cycle repeats
+  let cycleConfirmed=false;
+  if(refWeeks.length>=cycleLen*2){
+    // Check if the sequence of keys repeats
+    const keySeq=refWeeks.map(w=>fpKey(w.fp));
+    let matches=0;
+    for(let i=cycleLen;i<keySeq.length;i++){
+      if(keySeq[i]===keySeq[i%cycleLen])matches++;
+    }
+    cycleConfirmed=matches/(keySeq.length-cycleLen)>0.7;
+  }
+
+  // 6. Build canonical patterns (mode shift per dow across all instances of each pattern)
   const patterns={};
-  for(const[wNum,dows]of Object.entries(byWeek)){
+  ordered.forEach((pat,wi)=>{
+    const wNum=wi+1;
+    const dowShifts={};// dow → {shift: count}
+    pat.members.forEach(m=>{
+      for(let d=0;d<7;d++){
+        const sig=m.fp[d]||"OFF";
+        if(!dowShifts[d])dowShifts[d]={};
+        dowShifts[d][sig]=(dowShifts[d][sig]||0)+1;
+      }
+    });
     patterns[wNum]={};
     for(let d=0;d<7;d++){
-      const shifts=dows[d];
-      if(!shifts){patterns[wNum][d]="OFF";continue;}
-      // Find the most common shift
-      const sorted=Object.entries(shifts).sort((a,b)=>b[1]-a[1]);
-      patterns[wNum][d]=sorted[0][0];
+      if(!dowShifts[d]){patterns[wNum][d]="OFF";continue;}
+      const best=Object.entries(dowShifts[d]).sort((a,b)=>b[1]-a[1])[0];
+      patterns[wNum][d]=best[0];
+    }
+  });
+
+  // 7. Determine each person's current position
+  const positions={};
+  for(const[name,weeks]of Object.entries(personWeeks)){
+    if(!weeks.length)continue;
+    const lastWeek=weeks[weeks.length-1];
+    if(Object.keys(lastWeek.fp).length<3)continue;
+    const lastKey=fpKey(lastWeek.fp);
+    const matchIdx=ordered.findIndex(p=>p.key===lastKey);
+    if(matchIdx>=0){
+      positions[name]={currentWeek:matchIdx+1,lastMonday:lastWeek.monday.toISOString().split("T")[0]};
     }
   }
-  rotDef.patterns=patterns;
-  // Also update cycleLen if needed
-  const maxWk=Math.max(...Object.keys(patterns).map(Number));
-  if(maxWk>rotDef.cycleLen)rotDef.cycleLen=maxWk;
+
+  // 8. Collect all unique shift slots found in data
+  const slotSet=new Set();
+  entries.forEach(e=>{if(!e.isOff&&e.ukS&&e.ukE)slotSet.add(e.ukS+"-"+e.ukE);});
+  const shiftSlots=[...slotSet].sort();
+
+  // 9. Cross-validate: do multiple people share the same pattern set?
+  let crossValid=0;
+  for(const[name,weeks]of Object.entries(personWeeks)){
+    if(name===bestPerson)continue;
+    const pKeys=new Set(weeks.filter(w=>Object.keys(w.fp).length>=5).map(w=>fpKey(w.fp)));
+    const overlap=[...pKeys].filter(k=>uniqueKeys.includes(k)).length;
+    if(overlap>=Math.min(cycleLen,pKeys.size)*0.6)crossValid++;
+  }
+
+  const confidence=cycleConfirmed&&crossValid>=Math.floor(people.length/2)?"high":
+    cycleConfirmed||crossValid>=2?"medium":"low";
+  const reason=`${cycleLen} unique patterns from ${bestPerson} (${refWeeks.length} weeks), ${crossValid}/${people.length-1} people cross-validated`;
+
+  return{cycleLen,confidence,reason,patterns,positions,shiftSlots,source:"pattern-detection"};
+}
+
+// Assign week numbers to all entries based on detected patterns
+function assignPatternWeeks(entries,detected){
+  if(!detected||!detected.patterns)return;
+  // Build fingerprint lookup
+  const patKeys={};// fpKey → weekNum
+  function fpKey(fp){
+    const parts=[];
+    for(let d=0;d<7;d++){
+      const sig=fp[d]||"OFF";
+      if(sig==="OFF")parts.push("O");
+      else{
+        const start=(sig.split("-")[0]||sig).trim();
+        const[hStr,mStr]=(start+":00").split(":");
+        const h=parseInt(hStr)||0,m=parseInt(mStr)||0;
+        const mins=h*60+m;
+        const r=Math.round(mins/15)*15;
+        parts.push(Math.floor(r/60)+":"+P(r%60));
+      }
+    }
+    return parts.join("|");
+  }
+  for(const[wNum,pat]of Object.entries(detected.patterns)){
+    patKeys[fpKey(pat)]=parseInt(wNum);
+  }
+  // Group entries by person+calendar week
+  const personWeeks={};
+  entries.forEach(e=>{
+    if(!e.date)return;
+    const d=new Date(e.date);const mon=new Date(d);mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+    const k=e.name+"|"+mon.toISOString().split("T")[0];
+    if(!personWeeks[k])personWeeks[k]={fp:{},entries:[]};
+    const dow=(d.getDay()+6)%7;
+    personWeeks[k].fp[dow]=e.isOff?"OFF":(e.ukS&&e.ukE?e.ukS+"-"+e.ukE:"OFF");
+    personWeeks[k].entries.push(e);
+  });
+  // Match each person-week to a pattern
+  for(const[k,pw]of Object.entries(personWeeks)){
+    if(Object.keys(pw.fp).length<3)continue;
+    const key=fpKey(pw.fp);
+    const wNum=patKeys[key];
+    if(wNum){pw.entries.forEach(e=>e.week="W"+wNum);}
+  }
+  // Sequence fill: if a person has W3 then gap then W5, fill the gap with W4
+  const byPerson={};
+  entries.forEach(e=>{
+    if(!e.date)return;
+    if(!byPerson[e.name])byPerson[e.name]=[];
+    byPerson[e.name].push(e);
+  });
+  for(const[name,ents]of Object.entries(byPerson)){
+    const weekMap={};
+    ents.forEach(e=>{
+      const d=new Date(e.date);const mon=new Date(d);mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
+      const wk=mon.toISOString().split("T")[0];
+      if(!weekMap[wk])weekMap[wk]={entries:[],label:""};
+      weekMap[wk].entries.push(e);
+      if(e.week&&!weekMap[wk].label)weekMap[wk].label=e.week;
+    });
+    const wks=Object.keys(weekMap).sort();
+    // Forward fill
+    for(let i=0;i<wks.length;i++){
+      if(weekMap[wks[i]].label)continue;
+      for(let j=i-1;j>=0;j--){
+        if(weekMap[wks[j]].label){
+          const prev=parseInt(weekMap[wks[j]].label.replace(/\D/g,""));
+          const gap=i-j;
+          const next=((prev-1+gap)%detected.cycleLen)+1;
+          weekMap[wks[i]].label="W"+next;
+          weekMap[wks[i]].entries.forEach(e=>e.week="W"+next);
+          break;
+        }
+      }
+    }
+  }
 }
 
 // ═══ PARSERS (unchanged logic, added week label tracking) ═══
@@ -1644,10 +1826,22 @@ function load(sn){
     S.shs.forEach(shName=>{const ws=S.wb.Sheets[shName];const data=XLSX.utils.sheet_to_json(ws,{header:1,defval:""});if(!S.raw.length)S.raw=data;
     autoParse(data,shName).forEach(e=>{const k=e.name+"|"+(e.date?e.date.getFullYear()+"-"+P(e.date.getMonth())+"-"+P(e.date.getDate()):"");if(!seen[k]){seen[k]=true;S.entries.push(e);}});});
   } else {const ws=S.wb.Sheets[sn];S.raw=XLSX.utils.sheet_to_json(ws,{header:1,defval:""});S.entries=autoParse(S.raw,sn);}
-  // Enrich week labels using rotation definition
+  // Enrich week labels from Overview personMap if available
   S.entries=enrichWeekLabels(S.entries,S.rotationDef);
-  // Derive rotation patterns from entries if the file's breakdown couldn't be read
-  derivePatternsFromEntries(S.entries,S.rotationDef);
+  // Pattern-first rotation detection
+  const detected=detectShiftPatterns(S.entries);
+  if(detected){
+    // Assign app's own week numbers based on detected patterns
+    assignPatternWeeks(S.entries,detected);
+    // Store in rotationDef for downstream use
+    if(!S.rotationDef)S.rotationDef={source:"pattern-detection",sourceSheet:"",cycleLen:detected.cycleLen,personMap:{},patterns:{},confidence:detected.confidence};
+    S.rotationDef.patterns=detected.patterns;
+    S.rotationDef.cycleLen=detected.cycleLen;
+    S.rotationDef.confidence=detected.confidence;
+    S.rotationDef.source="pattern-detection";
+    S.rotationDef._detected=detected;// keep full detection result for blueprint/positions
+    // (Blueprint and positions auto-populated in loadIntoWorkspace after activeDept is set)
+  }
   S.team="all";S.emp="all";S.shiftFilter="";S.calDay=null;S.rawSheet=sn==="__all__"?S.shs[0]:sn;
   const ms=new Set();S.entries.forEach(e=>{if(e.date)ms.add(e.date.getFullYear()+"-"+P(e.date.getMonth()));});
   S.months=[...ms].sort();S.mIdx=0;S.month=S.months[0]||null;
@@ -1664,7 +1858,7 @@ function swSh(sn){S.sh=sn;load(sn);}
 const DEPT_FIELDS=['wb','fn','shs','sh','raw','entries','team','emp','month','months','mIdx',
   'calDay','rawSheet','shiftFilter','srch','srchIdx','dayFilter','allMonths','collapsed','tab',
   'rotationDef','rotPanelOpen','plMonths','plLeave','plOverrides','plHires','plRemoved','plEdit',
-  'anDay','anMode','parseInfo'];
+  'anDay','anMode','parseInfo','_anomDismissed','_generatedMonth'];
 
 function saveDeptSnap(name){
   if(!name)return;
@@ -1737,7 +1931,7 @@ function detectDeptName(filename,sheetNames){
 
 function loadIntoWorkspace(wb,sourceName){
   const rotDef=scanRotationDef(wb);
-  if(rotDef){const src=rotDef.source==="overview"?"Overview sheet":"rotation key";toast(rotDef.cycleLen+"-week rotation detected ("+src+")","ok",3500);}
+  if(rotDef){toast(rotDef.cycleLen+"-week rotation detected (Overview)","ok",3500);}
   const all=wb.SheetNames;
   const ok=all.filter(s=>{const n=s.toLowerCase();return n!=="out time"&&!(n==="overview"&&all.some(x=>x.toLowerCase().includes("horizontal")||x.toLowerCase().includes("vertic")));});
   const shs=ok.length?ok:all;
@@ -1750,14 +1944,28 @@ function loadIntoWorkspace(wb,sourceName){
   S.plLeave=[];S.plOverrides={};S.plHires=[];S.plRemoved={};S.plEdit=null;
   S.parseInfo=[];S._anomDismissed=false;
   load(S.sh);
-  // Auto-populate blueprint from rotation definition if not already saved
-  const deptKey=deptName;
-  if(rotDef&&rotDef.patterns&&Object.keys(rotDef.patterns).length>=2&&!S.plBlueprints[deptKey]){
-    const bp={cycleLen:rotDef.cycleLen,weeks:{}};
-    for(const[wNum,pat]of Object.entries(rotDef.patterns)){bp.weeks[wNum]=pat;}
-    S.plBlueprints[deptKey]=bp;
+  // Pattern detection toast
+  if(S.rotationDef&&S.rotationDef._detected){
+    const det=S.rotationDef._detected;
+    toast(det.cycleLen+"-week rotation detected ("+det.confidence+") — SC uses its own week system to clean your data","ok",5000);
   }
   S.activeDept=deptName;
+  // Auto-populate blueprint + positions NOW that activeDept is the correct key
+  const _dk=deptName;
+  if(S.rotationDef&&S.rotationDef._detected){
+    const det=S.rotationDef._detected;
+    // Always refresh blueprint from detection on fresh load (overwrite only if empty/unconfirmed)
+    if(!S.plBlueprints[_dk]||!S.plBlueprints[_dk].confirmed){
+      S.plBlueprints[_dk]={cycleLen:det.cycleLen,weeks:JSON.parse(JSON.stringify(det.patterns)),confirmed:false};
+    }
+    // Auto-populate positions if not already confirmed
+    if(!S.plPositions[_dk]||!Object.keys(S.plPositions[_dk]).length){
+      S.plPositions[_dk]={};
+      for(const[name,pos]of Object.entries(det.positions)){
+        S.plPositions[_dk][name]={confirmedWeek:pos.currentWeek,anchorMonday:pos.lastMonday};
+      }
+    }
+  }
   saveDeptSnap(deptName);
   showMV();
 }
@@ -1907,7 +2115,7 @@ function ren(){
   // 4.14: Mobile overlay
   const mobOv=$("mobOv");if(mobOv)mobOv.style.display=S.tbOpen?"block":"none";
   // Tabs
-  const TB=[{id:"calendar",l:"📅 Calendar"},{id:"cards",l:"Cards"},{id:"table",l:"Table"},{id:"analytics",l:"📊 Analytics"},{id:"planner",l:"🔮 Planner"},{id:"summary",l:"Summary"},{id:"raw",l:"Raw Data"}];
+  const TB=[{id:"calendar",l:"Calendar"},{id:"cards",l:"Cards"},{id:"table",l:"Table"},{id:"analytics",l:"Analytics"},{id:"planner",l:"Planner"},{id:"summary",l:"Summary"},{id:"raw",l:"Raw Data"}];
   $("tbar").innerHTML=TB.map(t=>`<button class="tab${t.id===S.tab?" a":""}" onclick="S.tab='${t.id}';ren()">${t.l}</button>`).join("");
   // 4.12: Context-aware keyboard hints
   const kbHints={
@@ -1944,7 +2152,7 @@ function ren(){
     const label=lowConf.length?`<span class="ib-anom" style="background:rgba(251,191,36,.12);color:#d97706;cursor:help">⚠ fallback parser</span>`:`<span style="font-size:9px;opacity:.5;cursor:help">⚙ parsed</span>`;
     parseBadge=`<span class="parse-pop">${label}<div class="pp-body">${ppRows}</div></span>`;
   }
-  $("ib").innerHTML=`<span class="l">${ec} leaders</span><span>•</span><span>${wk} shifts</span><span>•</span><span>${of2} off</span><span>•</span><span>${Math.round(tHrs)}h</span>${anomBadge}${rotBadge} ${wkBadge} ${parseBadge}${S.calDay&&S.tab==="calendar"?`<span>•</span><span class="l" style="cursor:pointer" onclick="S.calDay=null;ren()">✕ ${fDF(S.calDay)}</span>`:""}${S.dayFilter?`<span>•</span><span class="l" style="cursor:pointer" onclick="S.dayFilter='';ren()">✕ ${S.dayFilter}s only</span>`:""}${S.tz?'<span style="margin-left:auto;font-size:10px;opacity:.5">🕐 UK→SA</span>':""}`;
+  $("ib").innerHTML=`<span class="l">${ec}</span><span class="ib-muted" style="font-size:10px">leaders</span><span class="ib-sep">·</span><span class="ib-stat">${wk}</span><span class="ib-muted" style="font-size:10px">shifts</span><span class="ib-sep">·</span><span class="ib-stat">${of2}</span><span class="ib-muted" style="font-size:10px">off</span><span class="ib-sep">·</span><span class="ib-stat">${Math.round(tHrs)}h</span>${anomBadge}${rotBadge} ${wkBadge} ${parseBadge}${S.calDay&&S.tab==="calendar"?`<span class="ib-sep">·</span><span class="l" style="cursor:pointer;font-size:11px" onclick="S.calDay=null;ren()">✕ ${fDF(S.calDay)}</span>`:""}${S.dayFilter?`<span class="ib-sep">·</span><span class="l" style="cursor:pointer;font-size:11px" onclick="S.dayFilter='';ren()">✕ ${S.dayFilter}s only</span>`:""}${S.tz?'<span style="margin-left:auto;font-size:9px;color:var(--tm);opacity:.5;font-family:\'JetBrains Mono\',monospace">UK→SA</span>':""}`;
   const a=$("ca");
   if(!S.entries.length){a.innerHTML='<div class="es-empty"><h3>No data</h3><p>Try a different sheet.</p></div>';if($("contBar"))$("contBar").innerHTML="";return;}
   // 4.6: Cross-month continuity
@@ -2339,7 +2547,7 @@ function rToday(el){
 /* ═══ CARDS ═══ */
 function rCards(el){
   if(S.allMonths){rCardsAllMonths(el);return;}
-  const em=gE();let h=anomBannerHTML()+rotPanelHTML()+'<div class="cg">';
+  const em=gE();let h=anomBannerHTML()+'<div class="cg">';
   for(const[n,ent]of Object.entries(em)){
     h+=renderCard(n,ent,monthLabel());
   }
@@ -2479,7 +2687,49 @@ document.addEventListener("mousedown",e=>{
 
 /* ═══ TABLE ═══ */
 function rTbl(el){
-  const all=gD();let h=anomBannerHTML()+rotPanelHTML()+`<div class="ftw"><table class="ft"><thead><tr><th>Leader</th><th>Date</th><th>Day</th><th>UK Time</th>${S.tz?'<th>SA Time</th>':''}<th>Hrs</th><th>Wk</th></tr></thead><tbody>`;
+  let all=gD();
+  // Collect unique values for filters
+  const leaders=[...new Set(all.map(e=>e.name).filter(Boolean))].sort();
+  const days=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+  const weeks=[...new Set(all.map(e=>e.week).filter(Boolean))].sort();
+  // Apply filters
+  if(S.tblLeader!=="all")all=all.filter(e=>e.name===S.tblLeader);
+  if(S.tblDay!=="all")all=all.filter(e=>e.day&&e.day.substring(0,3)===S.tblDay);
+  if(S.tblWk!=="all")all=all.filter(e=>e.week===S.tblWk);
+  if(S.tblType==="work")all=all.filter(e=>!e.isOff);
+  if(S.tblType==="off")all=all.filter(e=>e.isOff);
+  if(S.tblHrsMin!=="")all=all.filter(e=>{if(e.isOff)return false;const h=calcHrs(S.tz&&e.saS?e.saS:e.ukS,S.tz&&e.saE?e.saE:e.ukE);return h>=parseFloat(S.tblHrsMin);});
+  if(S.tblHrsMax!=="")all=all.filter(e=>{if(e.isOff)return+S.tblHrsMax===0;const h=calcHrs(S.tz&&e.saS?e.saS:e.ukS,S.tz&&e.saE?e.saE:e.ukE);return h<=parseFloat(S.tblHrsMax);});
+
+  const hasFilter=S.tblLeader!=="all"||S.tblDay!=="all"||S.tblWk!=="all"||S.tblType!=="all"||S.tblHrsMin!==""||S.tblHrsMax!=="";
+
+  let h=anomBannerHTML();
+  h+=`<div class="tbl-filters">`;
+  // Leader
+  h+=`<label>Leader</label><select onchange="S.tblLeader=this.value;ren()"><option value="all">All</option>`;
+  leaders.forEach(n=>{h+=`<option value="${XJ(n)}"${S.tblLeader===n?" selected":""}>${X(n)}</option>`;});
+  h+=`</select>`;
+  // Day
+  h+=`<label>Day</label><select onchange="S.tblDay=this.value;ren()"><option value="all">All</option>`;
+  days.forEach(d=>{h+=`<option value="${d}"${S.tblDay===d?" selected":""}>${d}</option>`;});
+  h+=`</select>`;
+  // Week
+  h+=`<label>Wk</label><select onchange="S.tblWk=this.value;ren()"><option value="all">All</option>`;
+  weeks.forEach(w=>{h+=`<option value="${w}"${S.tblWk===w?" selected":""}>${w}</option>`;});
+  h+=`</select>`;
+  // Type
+  h+=`<label>Type</label><select onchange="S.tblType=this.value;ren()"><option value="all"${S.tblType==="all"?" selected":""}>All</option><option value="work"${S.tblType==="work"?" selected":""}>Working</option><option value="off"${S.tblType==="off"?" selected":""}>Off</option></select>`;
+  // Hrs range
+  h+=`<label>Hrs</label>`;
+  h+=`<input type="number" min="0" max="24" step="0.5" placeholder="min" value="${S.tblHrsMin}" onchange="S.tblHrsMin=this.value;ren()" style="width:44px">`;
+  h+=`<span style="font-size:9px;color:var(--tm)">–</span>`;
+  h+=`<input type="number" min="0" max="24" step="0.5" placeholder="max" value="${S.tblHrsMax}" onchange="S.tblHrsMax=this.value;ren()" style="width:44px">`;
+  if(hasFilter){
+    h+=`<button class="pl-btn" onclick="S.tblLeader='all';S.tblDay='all';S.tblWk='all';S.tblType='all';S.tblHrsMin='';S.tblHrsMax='';ren()" style="font-size:9px">✕ Clear</button>`;
+  }
+  h+=`<span class="tf-count">${all.length} row${all.length!==1?"s":""}</span>`;
+  h+=`</div>`;
+  h+=`<div class="ftw" style="border-radius:0 0 10px 10px"><table class="ft"><thead><tr><th>Leader</th><th>Date</th><th>Day</th><th>UK Time</th>${S.tz?'<th>SA Time</th>':''}<th>Hrs</th><th>Wk</th></tr></thead><tbody>`;
   all.forEach(e=>{const hrs=e.isOff?"":(calcHrs(S.tz&&e.saS?e.saS:e.ukS,S.tz&&e.saE?e.saE:e.ukE)).toFixed(1);h+=`<tr class="${rCls(e)}"><td>${X(e.name)}</td><td>${e.date?fDF(e.date):"—"}</td><td>${e.day?e.day.substring(0,3):"—"}</td><td class="${shiftCls(e)}">${e.isOff?offLabel(e):X(uD(e))}</td>${S.tz?`<td class="${shiftCls(e)}">${e.isOff?offLabel(e):X(sAD(e))}</td>`:''}<td class="sc" style="opacity:.5">${hrs}</td><td class="wk-lbl">${e.week||""}</td></tr>`;});
   el.innerHTML=h+`</tbody></table></div>`;
 }
@@ -2940,12 +3190,12 @@ function rotPanelHTML(){
   const hasValidTimes=patKeys.some(k=>Object.values(rd.patterns[k]).some(v=>typeof v==="string"&&v.includes(":")));
   const DSHORT=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
   const open=S.rotPanelOpen;
-  const srcLabel=rd.source==="overview"?"from Overview sheet":"from rotation key";
-  const confLabel=rd.confidence==="high"?"✓ confirmed":rd.confidence==="medium"?"~ matched":"? inferred";
+  const srcLabel=rd.source==="pattern-detection"?"pattern-detected":rd.source.includes("overview")?"from Overview + patterns":"from schedule data";
+  const confLabel=rd.confidence==="high"?"✓ high confidence":rd.confidence==="medium"?"~ medium":"? low";
 
   let h=`<div class="rot-panel">`;
   h+=`<div class="rot-panel-hd" onclick="S.rotPanelOpen=!S.rotPanelOpen;ren()">`;
-  h+=`<h4>🔄 Rotation Key <span class="rp-badge">${rd.cycleLen}-week cycle</span> <span class="rp-src">${srcLabel}</span></h4>`;
+  h+=`<h4>🔄 Detected Patterns <span class="rp-badge">${rd.cycleLen}-week cycle</span> <span class="rp-src">${srcLabel} · ${confLabel}</span></h4>`;
   h+=`<span class="rp-arrow${open?" open":""}">▼</span>`;
   h+=`</div>`;
   h+=`<div class="rot-panel-body${open?" open":""}">`;
@@ -3020,11 +3270,12 @@ function rotPanelHTML(){
 // ═══ BLUEPRINT + POSITION + MONTH GENERATOR ═══
 function saveBpCell(weekNum,dow,val){
   const dk=S.activeDept||"default";
-  if(!S.plBlueprints[dk])S.plBlueprints[dk]={cycleLen:S.rotationDef?S.rotationDef.cycleLen:5,weeks:{}};
+  if(!S.plBlueprints[dk])S.plBlueprints[dk]={cycleLen:S.rotationDef?S.rotationDef.cycleLen:5,weeks:{},confirmed:false};
   if(!S.plBlueprints[dk].weeks[weekNum])S.plBlueprints[dk].weeks[weekNum]={};
-  const v=(val||"").trim().toUpperCase();
-  if(!v||v==="OFF"||v==="O")S.plBlueprints[dk].weeks[weekNum][dow]="OFF";
-  else{const tm=pTm(v);S.plBlueprints[dk].weeks[weekNum][dow]=tm?tm.s+"-"+tm.e:v;}
+  const v=(val||"").trim();
+  if(!v||v.toUpperCase()==="OFF"||v==="O")S.plBlueprints[dk].weeks[weekNum][dow]="OFF";
+  else S.plBlueprints[dk].weeks[weekNum][dow]=v;
+  S.plBlueprints[dk].confirmed=false;// editing unconfirms
   ren();
 }
 function confirmPosition(name,weekNum){
@@ -3299,380 +3550,364 @@ function checkLeaveConflict(name,fromDate,toDate){
 
 function rPlanner(el){
   if(!S.entries.length){el.innerHTML='<div class="es-empty"><h3>Load a schedule first</h3></div>';return;}
-  const rotations=detectRotations();
-  const names=Object.keys(rotations).sort();
-  const proj=projectSchedule(rotations,S.plMonths);
-  const allNames=[...new Set([...names,...S.plHires.map(h=>h.name)])].sort();
-  const activeNames=allNames.filter(n=>!S.plRemoved[n]);
   const DSHORT=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-  const slotStart=6,slotEnd=22,slotStep=0.5;
-  const slots=[];for(let t=slotStart;t<slotEnd;t+=slotStep)slots.push(t);
-  const slotLabel=t=>{const h=Math.floor(t);const m=t%1===0.5?"30":"00";return P(h)+":"+m;};
-
-  let h=rotPanelHTML()+'<div class="pl-wrap">';
-
-  // ─── CONTROLS ───
-  // Compute confidence summary
-  const confCounts={confirmed:0,labelled:0,matched:0,inferred:0};
-  for(const rot of Object.values(rotations)){confCounts[rot.confidence||"inferred"]++;}
-  const confSummary=confCounts.confirmed?`${confCounts.confirmed} confirmed`:confCounts.labelled?`${confCounts.labelled} labelled`:confCounts.matched?`${confCounts.matched} matched`:`${confCounts.inferred} inferred`;
-  const anyDef=S.rotationDef&&S.rotationDef.cycleLen;
-  const cycleTxt=anyDef?`${S.rotationDef.cycleLen}-week cycle · `:"";
-
-  h+=`<div class="pl-section"><div class="pl-hd"><div><h3>Schedule Planner</h3><div class="pl-hd-sub">${cycleTxt}${names.length} people · ${S.plMonths} month${S.plMonths>1?"s":""} projected · ${confSummary}</div></div>`;
-  h+=`<div class="pl-controls"><label>Project:</label><select onchange="S.plMonths=+this.value;ren()">`;
-  [1,2,3,4,6].forEach(m=>{h+=`<option value="${m}"${m===S.plMonths?" selected":""}>${m}mo</option>`;});
-  h+=`</select>`;
-  h+=`<button class="pl-btn" onclick="S.plRemoved={};S.plLeave=[];S.plOverrides={};S.plHires=[];ren()">Reset all</button>`;
-  h+=`<button class="pl-btn" onclick="exportProjection()">↓ Export</button>`;
-  h+=`</div></div></div>`;
-
-  // ─── BLUEPRINT EDITOR (Phase 1) ───
   const dk=S.activeDept||"default";
   const bp=S.plBlueprints[dk];
-  const bpCycleLen=bp?bp.cycleLen:(S.rotationDef?S.rotationDef.cycleLen:5);
-  const hasBp=bp&&bp.weeks&&Object.keys(bp.weeks).length>0;
-  const bpOpen=S.plBpOpen||!hasBp;// auto-open if no blueprint exists
-
-  h+=`<div class="pl-section"><div class="pl-hd" style="cursor:pointer" onclick="S.plBpOpen=!S.plBpOpen;ren()">`;
-  h+=`<div><h3>Rotation Blueprint ${hasBp?`<span style="font-size:9px;color:var(--early);font-weight:400">✓ ${bpCycleLen}-week</span>`:`<span style="font-size:9px;color:var(--wknd);font-weight:400">⚠ not set</span>`}</h3>`;
-  h+=`<div class="pl-hd-sub">${hasBp?"Edit shift times per rotation week — all people share this pattern":"Define the rotation pattern for this department"}</div></div>`;
-  h+=`<span style="font-size:10px;color:var(--tm)">${bpOpen?"▼":"▶"}</span></div>`;
-
-  if(bpOpen){
-    h+=`<div class="bp-editor">`;
-    h+=`<div class="bp-actions"><label style="font-size:10px;color:var(--tm)">Cycle length:</label>`;
-    h+=`<select onchange="const dk=S.activeDept||'default';if(!S.plBlueprints[dk])S.plBlueprints[dk]={cycleLen:5,weeks:{}};S.plBlueprints[dk].cycleLen=+this.value;ren()" style="padding:3px 6px;border:1px solid var(--bdr);border-radius:4px;background:var(--bg);color:var(--text);font-size:11px">`;
-    [3,4,5,6,7,8,9,10,12].forEach(n=>{h+=`<option value="${n}"${n===bpCycleLen?" selected":""}>${n} weeks</option>`;});
-    h+=`</select>`;
-    if(S.rotationDef&&S.rotationDef.patterns&&Object.keys(S.rotationDef.patterns).length>=2){
-      h+=`<button class="pl-btn" onclick="const dk=S.activeDept||'default';const rd=S.rotationDef;S.plBlueprints[dk]={cycleLen:rd.cycleLen,weeks:{}};for(const[w,p]of Object.entries(rd.patterns))S.plBlueprints[dk].weeks[w]=p;toast('Blueprint restored from file','ok');ren()">↻ Restore from file</button>`;
-    }
-    h+=`</div>`;
-    h+=`<div class="bp-grid" style="grid-template-columns:auto repeat(7,1fr)">`;
-    h+=`<div class="bp-hd"></div>`;
-    DSHORT.forEach(d=>h+=`<div class="bp-hd">${d}</div>`);
-    for(let w=1;w<=bpCycleLen;w++){
-      const wpat=(bp&&bp.weeks&&bp.weeks[w])||{};
-      h+=`<div class="bp-wk">W${w}</div>`;
-      for(let d=0;d<7;d++){
-        const val=wpat[d]||"OFF";
-        const isOff=val==="OFF"||!val;
-        h+=`<input class="${isOff?"bp-off":""}" value="${val}" onchange="saveBpCell(${w},${d},this.value)" title="W${w} ${DSHORT[d]}">`;
-      }
-    }
-    h+=`</div></div>`;
-  }
-  h+=`</div>`;
-
-  // ─── POSITION CONFIRMATION (Phase 2) ───
   const positions=S.plPositions[dk]||{};
-  const posOpen=S.plPosOpen;
-
-  h+=`<div class="pl-section"><div class="pl-hd" style="cursor:pointer" onclick="S.plPosOpen=!S.plPosOpen;ren()">`;
-  h+=`<div><h3>Current Positions</h3><div class="pl-hd-sub">Confirm or correct each person's rotation week</div></div>`;
-  h+=`<span style="font-size:10px;color:var(--tm)">${posOpen?"▼":"▶"}</span></div>`;
-
-  if(posOpen){
-    // Find anchor Monday
-    let globalLastMon=null;
-    S.entries.filter(e=>e.date).forEach(e=>{
-      const d=new Date(e.date);const mon=new Date(d);mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
-      if(!globalLastMon||mon>globalLastMon)globalLastMon=mon;
-    });
-    const anchorLabel=globalLastMon?`Anchor: week of ${fDF(globalLastMon)}`:"No data loaded";
-
-    h+=`<table class="pos-table"><thead><tr><th>Person</th><th>Auto-detected</th><th>Confirmed</th><th>Status</th></tr></thead><tbody>`;
-    for(const name of names){
-      const rot=rotations[name];
-      const autoWeek=rot?(rot.currentPos+1):null;
-      const saved=positions[name];
-      const confirmedWeek=saved?saved.confirmedWeek:autoWeek;
-      const match=autoWeek&&confirmedWeek&&autoWeek===confirmedWeek;
-      h+=`<tr><td style="font-weight:500">${X(name)}</td>`;
-      h+=`<td style="font-family:'JetBrains Mono',monospace">${autoWeek?"W"+autoWeek:"—"}</td>`;
-      h+=`<td><select onchange="confirmPosition('${XJ(name)}',+this.value)" style="font-family:'JetBrains Mono',monospace">`;
-      for(let w=1;w<=bpCycleLen;w++){h+=`<option value="${w}"${w===confirmedWeek?" selected":""}>W${w}</option>`;}
-      h+=`</select></td>`;
-      h+=`<td>${saved?`<span class="${match?"pos-match":"pos-diff"}">${match?"✓ confirmed":"⚡ overridden"}</span>`:`<span style="font-size:9px;color:var(--tm)">auto</span>`}</td>`;
-      h+=`</tr>`;
-    }
-    h+=`</tbody></table>`;
-    h+=`<div class="pos-anchor">${anchorLabel}</div>`;
-    h+=`<div class="bp-actions" style="margin-top:6px">`;
-    h+=`<button class="pl-btn" onclick="const dk=S.activeDept||'default';S.plPositions[dk]={};const rots=detectRotations();for(const[n,r]of Object.entries(rots)){confirmPosition(n,r.currentPos+1);}toast('All positions auto-confirmed','ok')">✓ Auto-confirm all</button>`;
-    h+=`<button class="pl-btn" onclick="const dk=S.activeDept||'default';S.plPositions[dk]={};ren()">↻ Reset all</button>`;
-    h+=`</div>`;
-  }
-  h+=`</div>`;
-
-  // ─── FORWARD MONTH GENERATOR (Phase 3) ───
-  const now=new Date();
+  const det=S.rotationDef?S.rotationDef._detected:null;
+  const bpCycleLen=bp?bp.cycleLen:(det?det.cycleLen:5);
+  const hasBp=bp&&bp.weeks&&Object.keys(bp.weeks).length>0;
+  const isConfirmed=bp&&bp.confirmed;
+  const hasPositions=Object.keys(positions).length>0;
+  const names=[...new Set(S.entries.map(e=>e.name))].sort();
+  const now=new Date();const todayStr=now.toISOString().split("T")[0];
   if(!S.plGenYear)S.plGenYear=now.getFullYear();
-  if(S.plGenMonth===null)S.plGenMonth=now.getMonth()+1>11?0:now.getMonth()+1;
+  if(S.plGenMonth===null||S.plGenMonth===undefined)S.plGenMonth=now.getMonth();
 
-  h+=`<div class="pl-section"><div class="pl-hd"><div><h3>Generate Month</h3><div class="pl-hd-sub">Create a full schedule from blueprint + positions</div></div></div>`;
-  h+=`<div class="gen-controls">`;
-  h+=`<select onchange="S.plGenMonth=+this.value;ren()">`;
-  MOFULL.forEach((m,i)=>{h+=`<option value="${i}"${i===S.plGenMonth?" selected":""}>${m}</option>`;});
-  h+=`</select>`;
-  h+=`<select onchange="S.plGenYear=+this.value;ren()">`;
-  [2025,2026,2027,2028].forEach(y=>{h+=`<option value="${y}"${y===S.plGenYear?" selected":""}>${y}</option>`;});
-  h+=`</select>`;
-  const canGen=hasBp&&Object.keys(positions).length>0;
-  h+=`<button class="btn bp" onclick="runGenerate()" ${canGen?"":"disabled style=\"opacity:.4\""}>${canGen?"Generate "+MOFULL[S.plGenMonth]:"Set blueprint + positions first"}</button>`;
-  if(S._generatedMonth&&S._generatedMonth.length){
-    const gm=S._generatedMonth;
-    const gNames=[...new Set(gm.map(e=>e.name))].length;
-    const gWork=gm.filter(e=>!e.isOff).length;
-    h+=`<span style="font-size:10px;color:var(--early)">✓ ${gm.length} entries (${gNames} people, ${gWork} shifts)</span>`;
-    h+=`<button class="pl-btn" onclick="exportPlannedMonth()">↓ Export as Excel</button>`;
-  }
+  // Build shift slot options
+  const slotSet=new Set();
+  if(det&&det.shiftSlots)det.shiftSlots.forEach(s=>slotSet.add(s));
+  if(bp&&bp.weeks)Object.values(bp.weeks).forEach(w=>Object.values(w).forEach(v=>{if(v&&v!=="OFF")slotSet.add(v);}));
+  S.entries.forEach(e=>{if(!e.isOff&&e.ukS&&e.ukE)slotSet.add(e.ukS+"-"+e.ukE);});
+  const slots=[...slotSet].sort();
+
+  // Auto-generate
+  let genData=null;
+  if(isConfirmed&&hasPositions){genData=generateMonth(dk,S.plGenYear,S.plGenMonth);}
+
+  let h='<div class="pl-wrap">';
+
+  // ═══ TOP: Title + month nav + actions (single row) ═══
+  h+=`<div class="pl-section" style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;padding:8px 14px">`;
+  h+=`<div style="display:flex;align-items:center;gap:10px">`;
+  h+=`<h3 style="margin:0;font-size:14px">Planner</h3>`;
+  h+=`<span class="pl-hd-sub">${bpCycleLen}w · ${names.length} ppl</span>`;
   h+=`</div>`;
+  h+=`<div style="display:flex;align-items:center;gap:6px">`;
+  h+=`<div class="pl-nav"><button class="pl-nav-btn" onclick="S.plGenMonth--;if(S.plGenMonth<0){S.plGenMonth=11;S.plGenYear--;}S._generatedMonth=null;ren()">◀</button>`;
+  h+=`<span class="pl-nav-label">${MOFULL[S.plGenMonth]} ${S.plGenYear}</span>`;
+  h+=`<button class="pl-nav-btn" onclick="S.plGenMonth++;if(S.plGenMonth>11){S.plGenMonth=0;S.plGenYear++;}S._generatedMonth=null;ren()">▶</button></div>`;
+  if(genData){
+    h+=`<button class="pl-btn" onclick="S._generatedMonth=generateMonth('${XJ(dk)}',S.plGenYear,S.plGenMonth);exportPlannedMonth()">↓ Export</button>`;
+    h+=`<button class="btn bp" style="font-size:10px;padding:4px 10px" onclick="savePlannedToSchedule()">💾 Save to Schedule</button>`;
+  }
+  h+=`</div></div>`;
 
-  // ─── COVERAGE INTELLIGENCE (Phase 4) ───
-  if(S._generatedMonth&&S._generatedMonth.length){
-    const cov=analyzeCoverage(S._generatedMonth);
+  // ═══ BENTO CONFIG: Blueprint + Positions side by side ═══
+  h+=`<div style="display:grid;grid-template-columns:1fr 180px;gap:8px">`;
+
+  // ── Blueprint (left) ──
+  h+=`<div class="pl-section" style="padding:14px 16px">`;
+  h+=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">`;
+  h+=`<div style="display:flex;align-items:center;gap:8px">`;
+  h+=`<span style="font-size:13px;font-weight:700">Blueprint</span>`;
+  h+=`<span style="font-size:9px;padding:3px 8px;border-radius:6px;background:${isConfirmed?"rgba(52,211,153,.12)":"rgba(251,191,36,.1)"};color:${isConfirmed?"var(--early)":"var(--wknd)"};font-weight:600">${isConfirmed?"✓ confirmed":"⚠ review"} · ${bpCycleLen}w</span>`;
+  h+=`</div>`;
+  h+=`<div style="display:flex;gap:5px;align-items:center">`;
+  h+=`<select onchange="const dk=S.activeDept||'default';if(!S.plBlueprints[dk])S.plBlueprints[dk]={cycleLen:5,weeks:{},confirmed:false};S.plBlueprints[dk].cycleLen=+this.value;S.plBlueprints[dk].confirmed=false;ren()" style="padding:3px 7px;border:1px solid var(--bdr);border-radius:5px;background:var(--bg);color:var(--text);font-size:10px">`;
+  [3,4,5,6,7,8,9,10,12].forEach(n=>{h+=`<option value="${n}"${n===bpCycleLen?" selected":""}>${n}w</option>`;});
+  h+=`</select>`;
+  if(det){h+=`<button class="pl-btn" style="font-size:10px;padding:3px 8px" onclick="const dk=S.activeDept||'default';const d=S.rotationDef._detected;S.plBlueprints[dk]={cycleLen:d.cycleLen,weeks:JSON.parse(JSON.stringify(d.patterns)),confirmed:false};toast('Re-detected','ok');ren()">↻ Re-detect</button>`;}
+  if(!isConfirmed){h+=`<button class="btn bp" style="font-size:10px;padding:4px 12px" onclick="const dk=S.activeDept||'default';if(S.plBlueprints[dk])S.plBlueprints[dk].confirmed=true;toast('Blueprint confirmed ✓','ok');ren()">✓ Confirm</button>`;}
+  else{h+=`<button class="pl-btn" style="font-size:10px;padding:3px 8px" onclick="const dk=S.activeDept||'default';if(S.plBlueprints[dk])S.plBlueprints[dk].confirmed=false;ren()">Edit</button>`;}
+  h+=`</div></div>`;
+  // Blueprint grid — full day names, readable size
+  h+=`<div class="bp-grid" style="grid-template-columns:34px repeat(7,1fr);gap:2px">`;
+  h+=`<div class="bp-hd"></div>`;
+  DSHORT.forEach(d=>h+=`<div class="bp-hd" style="font-size:9px;padding:4px 3px">${d}</div>`);
+  for(let w=1;w<=bpCycleLen;w++){
+    const wpat=(bp&&bp.weeks&&bp.weeks[w])||{};
+    h+=`<div class="bp-wk" style="font-size:10px;padding:5px 4px;display:flex;align-items:center">W${w}</div>`;
+    for(let d=0;d<7;d++){
+      const val=wpat[d]||"OFF";
+      const isOff=val==="OFF";
+      h+=`<select onchange="saveBpCell(${w},${d},this.value)" style="width:100%;padding:4px 2px;border:1px solid ${isOff?"rgba(255,255,255,.06)":"rgba(122,180,255,.15)"};border-radius:4px;background:${isOff?"transparent":"rgba(122,180,255,.04)"};color:${isOff?"var(--tm)":"var(--text)"};font-family:'JetBrains Mono',monospace;font-size:9px;text-align:center;opacity:${isOff?".4":"1"}" title="W${w} ${DSHORT[d]}">`;
+      h+=`<option value="OFF"${isOff?" selected":""}>OFF</option>`;
+      slots.forEach(s=>{h+=`<option value="${s}"${s===val?" selected":""}>${s}</option>`;});
+      if(!isOff&&!slots.includes(val))h+=`<option value="${val}" selected>${val}</option>`;
+      h+=`</select>`;
+    }
+  }
+  h+=`</div></div>`;
+
+  // ── Positions (right) ──
+  h+=`<div class="pl-section" style="padding:14px 14px">`;
+  h+=`<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">`;
+  h+=`<span style="font-size:13px;font-weight:700">Positions</span>`;
+  h+=`<button class="pl-btn" style="font-size:9px;padding:3px 7px" onclick="const dk=S.activeDept||'default';const det=S.rotationDef&&S.rotationDef._detected;if(det){S.plPositions[dk]={};for(const[n,p]of Object.entries(det.positions))S.plPositions[dk][n]={confirmedWeek:p.currentWeek,anchorMonday:p.lastMonday};toast('Auto-set','ok');ren();}">↻ Auto</button>`;
+  h+=`</div>`;
+  h+=`<div style="display:flex;flex-direction:column;gap:6px">`;
+  names.forEach(name=>{
+    const pos=positions[name];
+    const wk=pos?pos.confirmedWeek:null;
+    h+=`<div style="display:flex;align-items:center;justify-content:space-between;gap:6px">`;
+    h+=`<span style="font-size:11px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">${X(name.split(" ")[0])}</span>`;
+    h+=`<select onchange="confirmPosition('${XJ(name)}',+this.value)" style="padding:2px 4px;border:1px solid var(--bdr);border-radius:5px;background:var(--bg);color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;min-width:44px">`;
+    for(let w=1;w<=bpCycleLen;w++){h+=`<option value="${w}"${w===wk?" selected":""}>W${w}</option>`;}
+    h+=`</select></div>`;
+  });
+  h+=`</div></div>`;
+
+  h+=`</div>`; // close bento grid
+
+  // ═══ WEEK BLOCKS ═══
+  if(!isConfirmed||!hasPositions){
+    h+=`<div class="pl-section" style="text-align:center;padding:20px;color:var(--tm);font-size:11px">Confirm blueprint and set positions to generate.</div>`;
+  } else if(genData&&genData.length){
+    const targetMonth=S.plGenMonth;const targetYear=S.plGenYear;
+    const firstOfMonth=new Date(targetYear,targetMonth,1);
+    const lastOfMonth=new Date(targetYear,targetMonth+1,0);
+    const firstMon=new Date(firstOfMonth);firstMon.setDate(firstMon.getDate()-((firstMon.getDay()+6)%7));
+
+    const lookup={};
+    genData.forEach(e=>{const k=e.name+"|"+e.date.toISOString().split("T")[0];lookup[k]=e;});
+    const genNames=[...new Set(genData.map(e=>e.name))].sort();
+
+    // Apply any cell overrides to lookup
+    const overrideKey=`${dk}|${targetYear}|${targetMonth}`;
+    const overrides=S.plCellOverrides[overrideKey]||{};
+    Object.entries(overrides).forEach(([k,v])=>{if(lookup[k]){if(v==="OFF"){lookup[k]={...lookup[k],isOff:true,ukS:null,ukE:null,shift:"OFF"};}else{const parts=v.split("-");lookup[k]={...lookup[k],isOff:false,ukS:parts[0],ukE:parts[1],shift:v};}}});
+
+    let monday=new Date(firstMon);
+    while(monday<=lastOfMonth){
+      const weekDays=[];
+      for(let d=0;d<7;d++){const day=new Date(monday);day.setDate(day.getDate()+d);weekDays.push(day);}
+      const sunday=weekDays[6];
+      if(sunday<firstOfMonth){monday.setDate(monday.getDate()+7);continue;}
+
+      // Per-person rotation weeks for this block
+      const personWeekMap={};
+      genNames.forEach(name=>{
+        const k=name+"|"+monday.toISOString().split("T")[0];
+        const e=lookup[k];
+        if(e&&e.week)personWeekMap[name]=e.week;
+        else{for(let d=0;d<7;d++){const k2=name+"|"+weekDays[d].toISOString().split("T")[0];const e2=lookup[k2];if(e2&&e2.week){personWeekMap[name]=e2.week;break;}}}
+      });
+
+      // Coverage per day
+      const dayCov=weekDays.map(day=>{
+        const dk2=day.toISOString().split("T")[0];
+        let w=0;genNames.forEach(n=>{const e=lookup[n+"|"+dk2];if(e&&!e.isOff)w++;});return w;
+      });
+
+      const monStr=monday.toISOString().split("T")[0];
+      h+=`<div class="pw-block">`;
+      h+=`<div class="pw-hd"><span>${fD(monday)} – ${fD(sunday)}</span></div>`;
+      h+=`<div class="pw-grid" style="grid-template-columns:130px repeat(7,1fr)">`;
+      h+=`<div class="pw-dh"></div>`;
+      weekDays.forEach((day,di)=>{
+        const inMonth=day.getMonth()===targetMonth;
+        const isToday=day.toISOString().split("T")[0]===todayStr;
+        h+=`<div class="pw-dh" style="${inMonth?"":"opacity:.25"}${isToday?";color:var(--accent);font-weight:700":""}">${DSHORT[di]} ${day.getDate()}</div>`;
+      });
+      // Coverage row
+      h+=`<div class="pw-cov-label">Coverage</div>`;
+      weekDays.forEach((day,di)=>{
+        const inMonth=day.getMonth()===targetMonth;
+        const c=dayCov[di];const low=c>0&&c<S.covMin;
+        h+=`<div class="pw-cov${low?" pw-cov-low":" pw-cov-ok"}${inMonth?"":" pw-out"}">${inMonth?c:""}</div>`;
+      });
+      // Person rows — editable cells
+      genNames.forEach(name=>{
+        const pwk=personWeekMap[name]||"";
+        h+=`<div class="pw-name"><span style="flex:1;overflow:hidden;text-overflow:ellipsis">${X(name)}</span>${pwk?`<span class="pw-nwk">${pwk}</span>`:""}</div>`;
+        weekDays.forEach((day,di)=>{
+          const inMonth=day.getMonth()===targetMonth;
+          const dateStr=day.toISOString().split("T")[0];
+          const cellKey=name+"|"+dateStr;
+          const e=lookup[cellKey];
+          const hasOverride=overrides[cellKey]!==undefined;
+          let cls="pw-cell";let txt="";
+          if(!inMonth){cls+=" pw-out";txt="";}
+          else if(!e||e.isOff){cls+=" pw-off";txt="OFF";}
+          else{
+            const startH=parseInt((e.ukS||"").split(":")[0]);
+            if(di>=5)cls+=" pw-wknd";
+            else if(startH<9)cls+=" pw-early";
+            else if(startH>=10)cls+=" pw-late";
+            else cls+=" pw-mid";
+            txt=e.ukS&&e.ukE?(e.ukS.substring(0,5)+"–"+e.ukE.substring(0,5)):e.shift||"";
+          }
+          if(inMonth){
+            cls+=" pw-editable";
+            if(hasOverride)cls+=" pw-override";
+            h+=`<div class="${cls}" onclick="openCellEdit(event,'${XJ(name)}','${dateStr}','${XJ(overrideKey)}')" title="Click to edit">${txt}</div>`;
+          } else {
+            h+=`<div class="${cls}">${txt}</div>`;
+          }
+        });
+      });
+      h+=`</div></div>`;
+      monday.setDate(monday.getDate()+7);
+    }
+
+    // ═══ COVERAGE DASHBOARD (collapsible) ═══
+    const cov=analyzeCoverage(genData);
     if(cov){
-      h+=`<div class="cov-dash">`;
-      // Summary KPIs
-      h+=`<div class="cov-summary">`;
-      h+=`<div class="cov-stat"><div class="cs-n" style="color:var(--accent)">${cov.avgWorking}</div><div class="cs-l">Avg Working/Day</div></div>`;
-      h+=`<div class="cov-stat"><div class="cs-n" style="color:${cov.gapDays?"#dc2626":"var(--early)"}">${cov.gapDays}</div><div class="cs-l">Unexpected Gaps</div></div>`;
-      h+=`<div class="cov-stat"><div class="cs-n" style="color:var(--wknd)">${cov.designedLow}</div><div class="cs-l">Designed Low</div></div>`;
-      h+=`<div class="cov-stat"><div class="cs-n" style="color:${cov.missingTypeDays?"var(--late)":"var(--early)"}">${cov.missingTypeDays}</div><div class="cs-l">Missing Shift Types</div></div>`;
-      h+=`<div class="cov-stat"><div class="cs-n" style="color:var(--mid)">${cov.avgFloorSpan}h</div><div class="cs-l">Avg Floor Span</div></div>`;
+      const covOpen=S.plCovOpen!==false;
+      h+=`<div class="pl-section" style="padding:10px 14px">`;
+      h+=`<div class="pl-cov-toggle" onclick="S.plCovOpen=!S.plCovOpen;ren()" style="margin-bottom:${covOpen?"6":"0"}px">`;
+      h+=`<span style="font-size:11px;font-weight:700">Coverage</span>`;
+      h+=`<span style="font-size:8px;padding:2px 6px;border-radius:5px;background:var(--al);color:var(--accent)">${cov.avgWorking} avg · ${cov.gapDays} gaps</span>`;
+      h+=`<span style="margin-left:auto;font-size:9px;color:var(--tm)">${covOpen?"▼":"▶"}</span>`;
       h+=`</div>`;
-
-      // Daily coverage grid
-      h+=`<div style="margin-top:10px;font-size:10px;font-weight:600;color:var(--tm)">Daily Coverage</div>`;
-      h+=`<div class="cov-grid">`;
-      cov.days.forEach(d=>{
-        const dow=(d.date.getDay()+6)%7;
-        let cls="cov-day";
-        if(d.working===0)cls+=" cov-off";
-        else if(d.isGap&&!d.isDesignedLow)cls+=" cov-low";
-        else if(d.isDesignedLow)cls+=" cov-designed";
-        else cls+=" cov-ok";
-        if(dow===5)cls+=" wknd-col";
-        const typesDots=[];
-        if(d.early>0)typesDots.push(`<span class="cd-dot" style="background:var(--early)"></span>`);
-        if(d.mid>0)typesDots.push(`<span class="cd-dot" style="background:var(--mid)"></span>`);
-        if(d.late>0)typesDots.push(`<span class="cd-dot" style="background:var(--late)"></span>`);
-        if(d.wknd>0)typesDots.push(`<span class="cd-dot" style="background:var(--wknd)"></span>`);
-        const tip=`${fD(d.date)} ${d.dowName}: ${d.working} working, ${d.off} off${d.floorOpen?" · Floor "+d.floorOpen+"–"+d.floorClose:""}${d.missingTypes.length?" · Missing: "+d.missingTypes.join(", "):""}${d.isDesignedLow?" · (designed low)":""}`;
-        h+=`<div class="${cls}" title="${X(tip)}">`;
-        h+=`<div class="cd-date">${d.date.getDate()} ${d.dowName.charAt(0)}</div>`;
-        h+=`<div class="cd-count">${d.working}</div>`;
-        if(typesDots.length)h+=`<div class="cd-types">${typesDots.join("")}</div>`;
-        h+=`</div>`;
-      });
-      h+=`</div>`;
-
-      // Floor window strip
-      const workDays=cov.days.filter(d=>d.floorOpen);
-      if(workDays.length){
-        h+=`<div style="margin-top:10px;font-size:10px;font-weight:600;color:var(--tm)">Floor Window</div>`;
-        h+=`<div class="cov-floor">`;
-        workDays.forEach(d=>{
-          h+=`<div class="cov-floor-day"><div class="cfd-d">${d.date.getDate()} ${d.dowName.substring(0,2)}</div>`;
-          h+=`<div class="cfd-t">${d.floorOpen}–${d.floorClose}</div>`;
-          h+=`<div class="cfd-w">${d.floorSpan.toFixed(1)}h</div></div>`;
+      if(covOpen){
+        h+=`<div class="cov-grid" style="margin-top:4px">`;
+        cov.days.forEach(d=>{
+          const dow=(d.date.getDay()+6)%7;
+          let cls="cov-day";
+          if(d.working===0)cls+=" cov-off";
+          else if(d.isGap&&!d.isDesignedLow)cls+=" cov-low";
+          else if(d.isDesignedLow)cls+=" cov-designed";
+          else cls+=" cov-ok";
+          if(dow===5)cls+=" wknd-col";
+          h+=`<div class="${cls}" title="${fD(d.date)} ${d.dowName}: ${d.working} working"><div class="cd-date">${d.date.getDate()}</div><div class="cd-count">${d.working}</div></div>`;
         });
         h+=`</div>`;
       }
-
-      // Flag missing shift types
-      const missingDays=cov.days.filter(d=>d.missingTypes.length>0);
-      if(missingDays.length){
-        h+=`<div style="margin-top:10px;font-size:10px;font-weight:600;color:var(--late)">⚠ Shift Type Gaps</div>`;
-        h+=`<div style="font-size:10px;color:var(--tm);margin-top:4px">`;
-        missingDays.slice(0,10).forEach(d=>{
-          h+=`<div style="padding:2px 0">${fD(d.date)} ${d.dowName}: missing <strong style="color:var(--late)">${d.missingTypes.join(", ")}</strong> (${d.working} people rostered)</div>`;
-        });
-        if(missingDays.length>10)h+=`<div style="opacity:.5">+${missingDays.length-10} more days</div>`;
-        h+=`</div>`;
-      }
       h+=`</div>`;
     }
-  }
-  h+=`</div>`;
 
-  // ─── ROTATION MAP ───
-  h+=`<div class="pl-section"><div class="pl-hd"><div><h3>Rotation Patterns</h3><div class="pl-hd-sub">Click name to toggle removal</div></div></div>`;
-  h+=`<div class="conf-legend"><span style="font-size:9px;color:var(--tm)">Confidence:</span>`;
-  h+=`<span class="cl-item"><span class="cl-dot" style="background:var(--early)"></span> confirmed — week labels + rotation def</span>`;
-  h+=`<span class="cl-item"><span class="cl-dot" style="background:var(--accent)"></span> labelled — explicit week labels in data</span>`;
-  h+=`<span class="cl-item"><span class="cl-dot" style="background:var(--mid)"></span> matched — fingerprint matched to rotation key</span>`;
-  h+=`<span class="cl-item"><span class="cl-dot" style="background:var(--wknd)"></span> inferred — pattern similarity only</span>`;
-  h+=`</div>`;
-  h+=`<div class="rot-grid">`;
-  for(const name of names){
-    const rot=rotations[name];const isRemoved=S.plRemoved[name];
-    const nextWeek=(rot.currentPos+1)%rot.cycleLen+1; // 1-indexed next rotation week
-    h+=`<div class="rot-card" style="${isRemoved?"opacity:.3":""}">`;
-    h+=`<h4 style="cursor:pointer;${isRemoved?"text-decoration:line-through":""}" onclick="S.plRemoved['${XJ(name)}']=!S.plRemoved['${XJ(name)}'];ren()">${X(name)} <span style="font-size:9px;color:var(--tm);font-weight:400">${rot.cycleLen}-wk · <span style="color:${rot.confidence==="confirmed"?"var(--early)":rot.confidence==="labelled"?"var(--accent)":"var(--wknd)"};">${rot.confidence}</span></span></h4>`;
-    h+=`<div style="font-size:9px;color:var(--tm);margin-bottom:5px">Currently on <strong style="color:var(--accent)">Week ${rot.currentPos+1}</strong> · next: <strong style="color:var(--text)">Week ${nextWeek}</strong></div>`;
-    // Patterns are now ordered W1..WN — display in rotation order
-    for(let c=0;c<rot.patterns.length;c++){
-      const pat=rot.patterns[c]?.pattern;if(!pat)continue;
-      const isCur=c===rot.currentPos;
-      const isNext=c===(rot.currentPos+1)%rot.cycleLen;
-      h+=`<div class="rot-week">`;
-      h+=`<span class="rw-label" style="${isCur?"color:var(--accent);font-weight:700":isNext?"color:var(--text);font-weight:600":""}">W${c+1}${isCur?" ◀":""}</span>`;
-      pat.forEach((d,di)=>{
-        let cls="rot-day ";
-        if(d.isOff)cls+="ro";
-        else if(di>=5)cls+="rw-wk";
-        else{const hr=d.ukS?parseInt(d.ukS):10;cls+=hr<9?"rw-e":hr>=10?"rw-l":"rw";}
-        h+=`<div class="${cls}" title="${DSHORT[di]}: ${d.shift}">${d.isOff?"·":d.ukS?d.ukS.substring(0,2):"W"}</div>`;
-      });
-      h+=`</div>`;
+    // ═══ SAVE / REMOVE BAR ═══
+    h+=`<div class="pl-save-bar">`;
+    h+=`<span class="ps-info">💾 Save to merge this projection into Calendar, Cards, Table & Analytics</span>`;
+    h+=`<div style="display:flex;gap:6px;align-items:center">`;
+    const savedKey=`${targetYear}-${targetMonth}`;
+    if(S.savedMonths&&S.savedMonths[dk]&&S.savedMonths[dk][savedKey]){
+      h+=`<button class="rm-month-btn" onclick="removeSavedMonth('${XJ(dk)}','${savedKey}')">✕ Remove ${MOFULL[targetMonth]}</button>`;
     }
-    h+=`</div>`;
-  }
-  // Show new hires in rotation grid
-  S.plHires.forEach(hire=>{
-    h+=`<div class="rot-card" style="border-color:var(--early)"><h4>${X(hire.name)} <span class="hire-badge">NEW</span></h4><div style="font-size:10px;color:var(--tm)">Copies ${X(hire.copyFrom)} from W${hire.cycleWeek+1} · starts ${hire.startDate}</div></div>`;
-  });
-  h+=`</div>`;
-
-  // ─── LEAVE FORM ───
-  h+=`<div class="pl-form"><label>Add leave:</label><select id="plLvName">${names.map(n=>`<option value="${XJ(n)}">${X(n)}</option>`).join("")}</select>`;
-  h+=`<input type="date" id="plLvFrom"><span style="font-size:10px;color:var(--tm)">to</span><input type="date" id="plLvTo">`;
-  h+=`<button class="pl-btn" onclick="addLeave()">+ Add</button></div>`;
-
-  // ─── NEW HIRE FORM ───
-  h+=`<div class="pl-form"><label>New hire:</label><input type="text" id="plHrName" placeholder="Name" style="width:120px">`;
-  h+=`<input type="date" id="plHrStart"><label>copies</label><select id="plHrCopy">${names.map(n=>`<option value="${XJ(n)}">${X(n)}</option>`).join("")}</select>`;
-  h+=`<label>from wk</label><select id="plHrWeek">${Array.from({length:9},(_,i)=>`<option value="${i}">W${i+1}</option>`).join("")}</select>`;
-  h+=`<button class="pl-btn" onclick="addHire()">+ Add</button></div>`;
-  h+=`</div>`;
-
-  // ─── ACTIVE LEAVES + HIRES LIST ───
-  if(S.plLeave.length||S.plHires.length||Object.keys(S.plRemoved).filter(k=>S.plRemoved[k]).length){
-    h+=`<div class="pl-section"><div class="pl-hd"><h3>Active Scenarios</h3></div><div class="wif-panel">`;
-    Object.keys(S.plRemoved).filter(k=>S.plRemoved[k]).forEach(name=>{
-      h+=`<div class="wif-row"><span style="color:#dc2626">\u2717</span><strong>${X(name)}</strong><span style="color:var(--tm)">removed</span><button class="pl-btn" style="margin-left:auto;font-size:9px" onclick="delete S.plRemoved['${XJ(name)}'];ren()">Restore</button></div>`;
-    });
-    S.plLeave.forEach((lv,i)=>{
-      h+=`<div class="leave-row"><span>\ud83c\udfd6</span><strong>${X(lv.name)}</strong><span class="lr-dates">${lv.from} \u2192 ${lv.to}</span><button class="pl-btn danger" style="margin-left:auto;font-size:9px" onclick="rmLeave(${i})">Remove</button></div>`;
-    });
-    S.plHires.forEach((hire,i)=>{
-      h+=`<div class="wif-row" style="background:rgba(34,197,94,.06)"><span>\u2795</span><strong>${X(hire.name)}</strong><span style="color:var(--tm)">new hire from ${hire.startDate}</span><button class="pl-btn danger" style="margin-left:auto;font-size:9px" onclick="rmHire(${i})">Remove</button></div>`;
-    });
+    h+=`<button class="btn bp" style="font-size:10px;padding:4px 12px" onclick="savePlannedToSchedule()">Save ${MOFULL[S.plGenMonth]} to Schedule</button>`;
     h+=`</div></div>`;
+
+  } else if(isConfirmed&&hasPositions){
+    h+=`<div class="pl-section" style="text-align:center;padding:20px;color:var(--tm);font-size:11px">No schedule generated — check blueprint has shift times and positions are set.</div>`;
   }
-
-  // ─── IMPACT SUMMARY ───
-  const allDays=[];let dd=new Date(proj.startMon);while(dd<proj.endDate){allDays.push(new Date(dd));dd.setDate(dd.getDate()+1);}
-  const dayCov=allDays.map(date=>{
-    let working=0,who=[];
-    for(const name of activeNames){
-      const pe=proj.projected[name];if(!pe)continue;
-      const match=pe.find(p=>p.date.getFullYear()===date.getFullYear()&&p.date.getMonth()===date.getMonth()&&p.date.getDate()===date.getDate());
-      if(match&&!match.isOff){working++;who.push(name);}
-    }
-    return{date,working,who};
-  });
-  const gaps=dayCov.filter(d=>d.working>0&&d.working<S.covMin);
-  const avgCov=dayCov.length?Math.round(dayCov.reduce((s,d)=>s+d.working,0)/dayCov.length*10)/10:0;
-
-  h+=`<div class="pl-section"><div class="pl-hd"><div><h3>Coverage Projection</h3><div class="pl-hd-sub">${fDF(proj.startMon)} \u2192 ${fDF(new Date(proj.endDate.getTime()-864e5))}</div></div></div>`;
-  h+=`<div class="wif-impact"><div class="var-card var-neutral"><div class="vc-n">${avgCov}</div><div class="vc-l">Avg/Day</div></div>`;
-  h+=`<div class="var-card ${gaps.length?"var-negative":"var-positive"}"><div class="vc-n">${gaps.length}</div><div class="vc-l">Gap Days (<${S.covMin})</div></div>`;
-  h+=`<div class="var-card var-neutral"><div class="vc-n">${activeNames.length}</div><div class="vc-l">Active People</div></div>`;
-  h+=`<div class="var-card var-neutral"><div class="vc-n">${Object.keys(S.plOverrides).length}</div><div class="vc-l">Overrides</div></div></div>`;
-
-  // ─── PROJECTION GRID (editable cells) ───
-  h+=`<div class="proj-grid-wrap"><div class="proj-grid" style="grid-template-columns:140px repeat(${allDays.length},minmax(28px,1fr))">`;
-  h+=`<div class="hm-corner">Person</div>`;
-  allDays.forEach(date=>{
-    const dow=date.getDay();const isWknd=dow===0||dow===6;const isMon=dow===1;
-    h+=`<div class="proj-col-hd${isWknd?" wknd":""}" style="${isMon?"border-left:1px solid var(--bdr)":""}">${date.getDate()}<br>${DSHORT[(date.getDay()+6)%7].charAt(0)}</div>`;
-  });
-  // Coverage row
-  h+=`<div class="proj-row-hd" style="font-weight:700;font-size:10px">Coverage</div>`;
-  dayCov.forEach(dc=>{const low=dc.working>0&&dc.working<S.covMin;h+=`<div class="proj-cell${low?" pc-gap":" pc-w"}" style="font-size:9px;font-weight:700">${dc.working}</div>`;});
-  // Person rows
-  for(const name of activeNames){
-    const pe=proj.projected[name]||[];
-    const isHire=S.plHires.some(h2=>h2.name===name);
-    h+=`<div class="proj-row-hd${S.plRemoved[name]?" removed":""}" onclick="S.plRemoved['${XJ(name)}']=true;ren()" title="Click to remove">${X(name)}${isHire?'<span class="hire-badge">NEW</span>':""}</div>`;
-    allDays.forEach(date=>{
-      const dk=plDateKey(date);
-      const match=pe.find(p=>p.date.getFullYear()===date.getFullYear()&&p.date.getMonth()===date.getMonth()&&p.date.getDate()===date.getDate());
-      const ovKey=dk+"|"+name;
-      const hasOv=S.plOverrides[ovKey];
-      const isLeave=match?.isLeave;
-      const isMonday=date.getDay()===1; // Show rotation week label on Mondays
-      let cls="proj-cell editable";let content="";
-      if(match&&!match.isOff){
-        cls+=" pc-w";
-        // Monday: show rotation week label; other days: show shift start hour
-        content=isMonday&&match.rotWeek?`W${match.rotWeek}`:(match.ukS?match.ukS.substring(0,2):"");
-      } else if(isLeave){cls+=" pc-gap";content="L";}
-      else{cls+=" pc-o";content="·";}
-      if(hasOv)cls+=" overridden";
-      const rotLabel=match?.rotWeek?` · Week ${match.rotWeek}`:"";
-      h+=`<div class="${cls}" onclick="openCellEdit('${dk}','${XJ(name)}','${match?XJ(match.shift):"OFF"}',${match?match.isOff:true})" title="${fD(date)}: ${match?match.shift:"OFF"}${rotLabel}${hasOv?" (edited)":""}${isLeave?" (leave)":""}">${content}</div>`;
-    });
-  }
-  h+=`</div></div>`;
-  // Month labels
-  h+=`<div style="padding:4px 18px;font-size:9px;color:var(--tm);display:flex;gap:16px">`;
-  let curM=-1;allDays.forEach(date=>{if(date.getMonth()!==curM){curM=date.getMonth();h+=`<span>${MOFULL[curM]} ${date.getFullYear()}</span>`;}});
-  h+=`</div></div>`;
-
-  // ─── COVERAGE HEATMAP (time-of-day × date for projected data) ───
-  h+=`<div class="pl-section"><div class="pl-hd"><div><h3>Projected Coverage Heatmap</h3><div class="pl-hd-sub">Headcount per 30-min slot · ${S.tz?"SA":"UK"} time</div></div></div>`;
-  // Build grid
-  const hmGrid=slots.map(()=>Array.from({length:allDays.length},()=>({count:0,names:[]})));
-  for(const name of activeNames){
-    const pe=proj.projected[name]||[];
-    pe.forEach(p=>{
-      if(p.isOff||!p.ukS||!p.ukE)return;
-      const dayIdx=allDays.findIndex(d=>d.getFullYear()===p.date.getFullYear()&&d.getMonth()===p.date.getMonth()&&d.getDate()===p.date.getDate());
-      if(dayIdx<0)return;
-      const st=S.tz?u2s(p.ukS,p.date):p.ukS,en=S.tz?u2s(p.ukE,p.date):p.ukE;
-      if(!st||!en)return;
-      const[sh,sm]=st.split(":").map(Number),[eh,em2]=en.split(":").map(Number);
-      const startH=sh+sm/60,endH=eh+em2/60;
-      slots.forEach((t,si)=>{if(startH<t+slotStep&&endH>t){hmGrid[si][dayIdx].count++;if(!hmGrid[si][dayIdx].names.includes(name))hmGrid[si][dayIdx].names.push(name);}});
-    });
-  }
-  // Render (compact — only show every other slot label)
-  h+=`<div class="hm-grid-wrap"><div class="hm-grid" style="grid-template-columns:50px repeat(${allDays.length},minmax(22px,1fr))">`;
-  h+=`<div class="hm-corner"></div>`;
-  allDays.forEach(date=>{const dow=date.getDay();h+=`<div class="proj-col-hd${dow===0||dow===6?" wknd":""}" style="font-size:7px">${date.getDate()}</div>`;});
-  slots.forEach((t,si)=>{
-    if(si%2!==0)return; // Show every hour
-    h+=`<div class="hm-row-hd" style="font-size:8px;padding:2px 4px">${slotLabel(t)}</div>`;
-    for(let di=0;di<allDays.length;di++){
-      // Merge two half-hour slots
-      const c1=hmGrid[si][di],c2=si+1<slots.length?hmGrid[si+1][di]:{count:0};
-      const avg=Math.round((c1.count+c2.count)/2);
-      const lvl=avg===0?0:avg>=6?6:avg;
-      h+=`<div class="hm-cell hm-${lvl}" style="min-height:14px;min-width:22px;font-size:7px">${avg||""}</div>`;
-    }
-  });
-  h+=`</div></div></div>`;
 
   h+=`</div>`;
-
-  // ─── CELL EDIT MODAL ───
-  if(S.plEdit){
-    h+=`<div class="cell-edit-overlay" onclick="cancelCellEdit()"></div>`;
-    h+=`<div class="cell-edit"><h4>Edit: ${X(S.plEdit.name)}</h4><div style="font-size:11px;color:var(--tm);margin-bottom:10px">${S.plEdit.dateStr}</div>`;
-    h+=`<div class="ce-row"><label>Shift:</label><input type="text" id="ceShift" value="${S.plEdit.isOff?"":S.plEdit.shift}" placeholder="09:00-17:00"></div>`;
-    h+=`<div class="ce-row"><label>OFF:</label><input type="checkbox" id="ceOff"${S.plEdit.isOff?" checked":""}></div>`;
-    h+=`<div class="ce-actions"><button class="pl-btn active" onclick="saveCellEdit()">Save</button><button class="pl-btn" onclick="cancelCellEdit()">Cancel</button>`;
-    const ovKey=S.plEdit.dateStr+"|"+S.plEdit.name;
-    if(S.plOverrides[ovKey])h+=`<button class="pl-btn danger" onclick="clearOverride('${XJ(ovKey)}');cancelCellEdit()">Clear override</button>`;
-    h+=`</div></div>`;
-  }
-
   el.innerHTML=h;
+}
+
+// Save generated month into main S.entries so it appears in Calendar/Cards/Table/Analytics
+function savePlannedToSchedule(){
+  const dk=S.activeDept||"default";
+  const genData=generateMonth(dk,S.plGenYear,S.plGenMonth);
+  if(!genData||!genData.length){toast("Nothing to save","warn");return;}
+  const targetMonth=S.plGenMonth;const targetYear=S.plGenYear;
+  // Apply any cell overrides before saving
+  const overrideKey=`${dk}|${targetYear}|${targetMonth}`;
+  const overrides=S.plCellOverrides[overrideKey]||{};
+  // Remove existing entries for this month/year (from same names)
+  const genNames=new Set(genData.map(e=>e.name));
+  S.entries=S.entries.filter(e=>{
+    if(!e.date)return true;
+    if(!genNames.has(e.name))return true;
+    if(e.date.getMonth()===targetMonth&&e.date.getFullYear()===targetYear)return false;
+    return true;
+  });
+  // Add generated entries with overrides applied
+  genData.forEach(e=>{
+    const k=e.name+"|"+e.date.toISOString().split("T")[0];
+    const ov=overrides[k];
+    let ukS=e.ukS,ukE=e.ukE,isOff=e.isOff;
+    if(ov==="OFF"){isOff=true;ukS=null;ukE=null;}
+    else if(ov){const parts=ov.split("-");ukS=parts[0];ukE=parts[1];isOff=false;}
+    S.entries.push({name:e.name,team:e.team||S.activeDept||"Main",date:new Date(e.date),day:e.day,
+      raw:isOff?"OFF":(ukS&&ukE?ukS+"-"+ukE:e.shift),ukS,ukE,isOff,offL:isOff?"OFF":"",week:e.week||"",
+      saS:ukS?u2s(ukS,e.date):null,saE:ukE?u2s(ukE,e.date):null});
+  });
+  // Rebuild months list
+  const monthSet=new Set();
+  S.entries.forEach(e=>{if(e.date)monthSet.add(e.date.getFullYear()+"-"+e.date.getMonth());});
+  S.months=[...monthSet].sort();
+  // Track saved month so Remove button appears
+  if(!S.savedMonths)S.savedMonths={};
+  if(!S.savedMonths[dk])S.savedMonths[dk]={};
+  S.savedMonths[dk][`${targetYear}-${targetMonth}`]=true;
+  // Navigate to the saved month
+  const mKey=targetYear+"-"+targetMonth;
+  const mIdx=S.months.indexOf(mKey);
+  if(mIdx>=0){S.mIdx=mIdx;S.month=mKey;}
+  toast(genData.length+" entries saved to "+MOFULL[targetMonth]+" "+targetYear+" — switch tabs to explore","ok");
+  ren();
+}
+
+// Remove a saved month from S.entries
+function removeSavedMonth(dk,savedKey){
+  const[yearStr,monthStr]=savedKey.split("-");
+  const targetYear=parseInt(yearStr);const targetMonth=parseInt(monthStr);
+  const bp=S.plBlueprints[dk];
+  const positions=S.plPositions[dk];
+  if(!bp||!positions)return;
+  const genData=generateMonth(dk,targetYear,targetMonth);
+  if(!genData)return;
+  const genNames=new Set(genData.map(e=>e.name));
+  S.entries=S.entries.filter(e=>{
+    if(!e.date)return true;
+    if(!genNames.has(e.name))return true;
+    if(e.date.getMonth()===targetMonth&&e.date.getFullYear()===targetYear)return false;
+    return true;
+  });
+  // Rebuild months
+  const monthSet=new Set();
+  S.entries.forEach(e=>{if(e.date)monthSet.add(e.date.getFullYear()+"-"+e.date.getMonth());});
+  S.months=[...monthSet].sort();
+  if(S.savedMonths&&S.savedMonths[dk])delete S.savedMonths[dk][savedKey];
+  toast(MOFULL[targetMonth]+" "+targetYear+" removed from schedule","ok");
+  ren();
+}
+
+// Open cell edit popup on a planner week-block cell
+function openCellEdit(evt,name,dateStr,overrideKey){
+  evt.stopPropagation();
+  // Close any existing popup
+  const old=document.getElementById("plCellPopup");if(old)old.remove();
+  // Get available slots
+  const dk=S.activeDept||"default";
+  const slotSet=new Set();
+  const det=S.rotationDef?S.rotationDef._detected:null;
+  if(det&&det.shiftSlots)det.shiftSlots.forEach(s=>slotSet.add(s));
+  const bp=S.plBlueprints[dk];
+  if(bp&&bp.weeks)Object.values(bp.weeks).forEach(w=>Object.values(w).forEach(v=>{if(v&&v!=="OFF")slotSet.add(v);}));
+  S.entries.forEach(e=>{if(!e.isOff&&e.ukS&&e.ukE)slotSet.add(e.ukS+"-"+e.ukE);});
+  const slots=[...slotSet].sort();
+
+  const pop=document.createElement("div");
+  pop.id="plCellPopup";pop.className="pl-cell-popup";
+  pop.style.cssText+=";position:fixed;z-index:600";
+  const d=new Date(dateStr);
+  const dayName=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"][d.getDay()];
+  pop.innerHTML=`
+    <button class="pcp-close" onclick="document.getElementById('plCellPopup').remove()">✕</button>
+    <div class="pcp-hd">${X(name.split(" ")[0])} · ${dayName} ${d.getDate()}</div>
+    <button class="pcp-opt pcp-off" onclick="applyCellEdit('${XJ(name)}','${dateStr}','${XJ(overrideKey)}','OFF')">OFF</button>
+    ${slots.map(s=>`<button class="pcp-opt" onclick="applyCellEdit('${XJ(name)}','${dateStr}','${XJ(overrideKey)}','${s}')">${s}</button>`).join("")}
+    <div style="border-top:1px solid var(--bdr);margin:6px 0 4px"></div>
+    <div style="font-size:9px;color:var(--tm);margin-bottom:3px">Custom</div>
+    <input class="pcp-inp" type="text" placeholder="08:00-16:00" onkeydown="if(event.key==='Enter'&&this.value.trim())applyCellEdit('${XJ(name)}','${dateStr}','${XJ(overrideKey)}',this.value.trim())">
+  `;
+  document.body.appendChild(pop);
+
+  // Position near click
+  const x=Math.min(evt.clientX,window.innerWidth-200);
+  const y=Math.min(evt.clientY+8,window.innerHeight-300);
+  pop.style.left=x+"px";pop.style.top=y+"px";
+
+  // Close on outside click
+  setTimeout(()=>{
+    document.addEventListener("mousedown",function close(e){
+      if(!pop.contains(e.target)){pop.remove();document.removeEventListener("mousedown",close);}
+    });
+  },50);
+}
+
+function applyCellEdit(name,dateStr,overrideKey,val){
+  if(!S.plCellOverrides)S.plCellOverrides={};
+  if(!S.plCellOverrides[overrideKey])S.plCellOverrides[overrideKey]={};
+  // If value matches blueprint (no override needed), remove it
+  if(val&&val!=="OFF"&&!val.includes("-"))return; // invalid
+  S.plCellOverrides[overrideKey][name+"|"+dateStr]=val;
+  const old=document.getElementById("plCellPopup");if(old)old.remove();
+  ren();
 }
 
 function exportProjection(){
@@ -3706,7 +3941,7 @@ function rSum(el){
   const offTots={LEAVE:0,SICK:0,PH:0,TRAINING:0};
   all.filter(e=>e.isOff).forEach(e=>{const cat=(e.offL||"OFF").toUpperCase();if(offTots[cat]!==undefined)offTots[cat]++;});
   const hasOffTypes=Object.values(offTots).some(v=>v>0);
-  let h=anomBannerHTML()+rotPanelHTML()+`<div class="sg"><div class="scd"><div class="n">${nm.length}</div><div class="lb">Leaders</div></div><div class="scd"><div class="n">${all.filter(e=>!e.isOff).length}</div><div class="lb">Shifts</div></div><div class="scd"><div class="n">${all.filter(e=>e.isOff).length}</div><div class="lb">Off</div></div><div class="scd"><div class="n">${Math.round(tHrs)}</div><div class="lb">Hours</div></div>${hasOffTypes?`<div class="scd"><div class="n" style="color:var(--accent)">${offTots.LEAVE}</div><div class="lb">Leave</div></div><div class="scd"><div class="n" style="color:#F472B6">${offTots.SICK}</div><div class="lb">Sick</div></div><div class="scd"><div class="n" style="color:var(--wknd)">${offTots.PH}</div><div class="lb">PH</div></div>`:""}</div>`;
+  let h=anomBannerHTML()+`<div class="sg"><div class="scd"><div class="n">${nm.length}</div><div class="lb">Leaders</div></div><div class="scd"><div class="n">${all.filter(e=>!e.isOff).length}</div><div class="lb">Shifts</div></div><div class="scd"><div class="n">${all.filter(e=>e.isOff).length}</div><div class="lb">Off</div></div><div class="scd"><div class="n">${Math.round(tHrs)}</div><div class="lb">Hours</div></div>${hasOffTypes?`<div class="scd"><div class="n" style="color:var(--accent)">${offTots.LEAVE}</div><div class="lb">Leave</div></div><div class="scd"><div class="n" style="color:#F472B6">${offTots.SICK}</div><div class="lb">Sick</div></div><div class="scd"><div class="n" style="color:var(--wknd)">${offTots.PH}</div><div class="lb">PH</div></div>`:""}</div>`;
   h+=`<div class="ftw"><table class="ft"><thead><tr><th>Leader</th><th>Team</th><th>Work</th><th>Off</th>${hasOffTypes?'<th style="color:var(--accent)">Lv</th><th style="color:#F472B6">Sk</th><th style="color:var(--wknd)">PH</th>':''}<th>Hours</th><th>Avg h/d</th><th>Wk Avg</th><th>Wk</th><th>Issues</th></tr></thead><tbody>`;
   nm.forEach(n=>{const e=em[n];const st=cardStats(e);const anom=findAnomalies(e);
   const dates=e.filter(x=>x.date).map(x=>x.date.getTime());
@@ -4010,81 +4245,34 @@ dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("dov");})
 dz.addEventListener("dragleave",()=>dz.classList.remove("dov"));
 dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("dov");const f=e.dataTransfer?.files?.[0];if(f)proc(f);});
 
-/* ═══ CLIPBOARD PASTE ═══ */
+/* ═══ PASTE FROM EXCEL ═══ */
 async function pasteFromClip(){
   try{
     const text=await navigator.clipboard.readText();
-    if(!text||!text.trim()){toast("Clipboard empty. Copy cells from Excel first","warn");return;}
-    // Parse TSV (tab-separated, which is what Excel copies)
-    const rows=text.trim().split(/\r?\n/).map(r=>r.split("\t"));
-    if(rows.length<2){toast("Not enough data. Copy a full schedule range","warn");return;}
-    // Convert to SheetJS workbook format
-    const ws=XLSX.utils.aoa_to_sheet(rows);
-    const wb=XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb,"Pasted");
-    // Read it back through SheetJS to get proper date parsing
-    S.fn="Clipboard paste";S.wb=wb;S.shs=wb.SheetNames;S.sh="__all__";
-    load(S.sh);showMV();
+    if(!text||!text.trim()){toast("Clipboard is empty — copy cells from Excel first","warn");return;}
+    if(text.includes("\t")){_loadTSV(text);return;}
+    toast("Copy cells from Excel (not plain text)","warn");
   }catch(e){
-    // Clipboard API denied — try the invisible textarea fallback
-    const ta=document.createElement("textarea");
-    ta.style.cssText="position:fixed;top:0;left:0;opacity:0";
-    document.body.appendChild(ta);ta.focus();
-    toast("Paste your data (Ctrl+V) then wait a moment","info",5000);
-    setTimeout(()=>{
-      const text=ta.value;document.body.removeChild(ta);
-      if(!text.trim())return;
-      const rows=text.trim().split(/\r?\n/).map(r=>r.split("\t"));
-      const ws=XLSX.utils.aoa_to_sheet(rows);const wb=XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb,ws,"Pasted");
-      S.fn="Clipboard paste";S.wb=wb;S.shs=wb.SheetNames;S.sh="__all__";load(S.sh);showMV();
-    },100);
+    toast("Press Ctrl+V anywhere to paste Excel data","info",4000);
   }
 }
-// Also support Ctrl+V anywhere when no file is loaded
-document.addEventListener("paste",e=>{
-  if(S.wb)return; // already have a file loaded
-  const text=(e.clipboardData||window.clipboardData).getData("text");
-  if(!text||!text.includes("\t"))return; // not tabular data
-  e.preventDefault();
-  const rows=text.trim().split(/\r?\n/).map(r=>r.split("\t"));
-  if(rows.length<2)return;
-  const ws=XLSX.utils.aoa_to_sheet(rows);const wb=XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(wb,ws,"Pasted");
-  S.fn="Clipboard paste";S.wb=wb;S.shs=wb.SheetNames;S.sh="__all__";load(S.sh);showMV();
-});
 
-/* ═══ GOOGLE SHEETS ═══ */
-async function loadGSheet(){
-  const url=($("gsUrl")||{}).value||"";
-  if(!url){toast("Paste a Google Sheets URL first","warn");return;}
-  // Extract sheet ID from various URL formats
-  const m=url.match(/\/spreadsheets\/d\/([a-zA-Z0-9_-]+)/);
-  if(!m){toast("Invalid Google Sheets URL","err");return;}
-  const sheetId=m[1];
-  // Try published CSV export (works for sheets published to web)
-  const csvUrl=`https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
-  try{
-    const resp=await fetch(csvUrl);
-    if(!resp.ok)throw new Error("HTTP "+resp.status);
-    const csvText=await resp.text();
-    if(!csvText.trim()||csvText.includes("<!DOCTYPE")){throw new Error("Not a published sheet");}
-    const wb=XLSX.read(csvText,{type:"string"});
-    S.fn="Google Sheet";S.wb=wb;S.shs=wb.SheetNames;S.sh="__all__";load(S.sh);showMV();
-  }catch(e){
-    // Try the gviz endpoint as fallback
-    const gvizUrl=`https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
-    try{
-      const resp2=await fetch(gvizUrl);
-      if(!resp2.ok)throw new Error("gviz failed");
-      const csvText2=await resp2.text();
-      const wb2=XLSX.read(csvText2,{type:"string"});
-      S.fn="Google Sheet";S.wb=wb2;S.shs=wb2.SheetNames;S.sh="__all__";load(S.sh);showMV();
-    }catch(e2){
-      toast("Could not load sheet. Make sure it's published to web as CSV","err",5000);
-    }
-  }
+function _loadTSV(text){
+  const rows=text.trim().split(/\r?\n/).map(r=>r.split("\t"));
+  if(rows.length<2){toast("Not enough rows — copy a larger range","warn");return;}
+  const ws=XLSX.utils.aoa_to_sheet(rows);
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,"Pasted");
+  loadIntoWorkspace(wb,"Clipboard paste");
 }
+
+// Global Ctrl+V — intercept paste anywhere when no file loaded
+document.addEventListener("paste",e=>{
+  if(S.wb)return;
+  const text=(e.clipboardData||window.clipboardData).getData("text");
+  if(!text||!text.includes("\t"))return;
+  e.preventDefault();
+  _loadTSV(text);
+});
 
 /* ═══ EMAIL ROSTER GENERATOR ═══ */
 function genEmail(){
@@ -4167,8 +4355,7 @@ ren=function(){_origRen();saveSettings();};
 function toast(msg,type,dur){
   type=type||"info";dur=dur||3000;
   const wrap=document.getElementById("toasts");if(!wrap)return;
-  // 4.13: Max 3 visible — remove oldest
-  while(wrap.children.length>=3){const oldest=wrap.children[0];oldest.remove();}
+  while(wrap.children.length>=3){wrap.children[0].remove();}
   const el=document.createElement("div");
   el.className="toast t-"+type;el.textContent=msg;el.style.cursor="pointer";
   el.onclick=function(){dismiss();};
@@ -4176,6 +4363,8 @@ function toast(msg,type,dur){
   function dismiss(){el.style.opacity="0";el.style.transform="translateX(40px)";el.style.transition="all .2s";setTimeout(function(){if(el.parentNode)el.remove();},200);}
   setTimeout(dismiss,dur);
 }
+
+// Toast with action buttons — centred, stays until dismissed
 
 /* ═══ CLEAR ALL STORED DATA ═══ */
 function clearAllData(){
