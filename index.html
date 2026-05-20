@@ -2105,7 +2105,7 @@ mark.ex-saved-highlight {
 .ex-section-anchor { scroll-margin-top: 24px; }
 
 /* ============================================================
-   v2.5 — PRACTICE TAB layout
+   v2.5 - PRACTICE TAB layout
    ============================================================ */
 .ex-practice-page {
   max-width: 1100px; margin: 0 auto;
@@ -3898,7 +3898,7 @@ mark.ex-saved-highlight {
       <button class="ex-topbar__theme-btn" data-t="press" title="Press (dark editorial)"></button>
       <button class="ex-topbar__theme-btn is-active" data-t="cream" title="Cream (paper editorial)"></button>
     </div>
-    <div class="ex-topbar__version">v2.4</div>
+    <div class="ex-topbar__version">v2.6</div>
   </header>
   <div class="ex-toast" id="exToast"></div>
 
@@ -8889,6 +8889,31 @@ const MODULE_CONTENT = {
     ],
     references: ['7_8 Working Habits.pdf', '13_8 Working Habits.pdf'],
     related: ['m-mindset', 'm-growth'],
+    mistakes: [
+      'Trying to fix all 8 habits at once. Pick one. Build it. Then the next.',
+      'Confusing being busy with Maximum Effort. Effort is quality of attention, not hours logged.',
+      'Treating punctuality as optional "when things are hectic". That is exactly when it matters most.',
+      'Performing accountability in public while dodging it in private. Customers and colleagues see through it.',
+      'Forgetting Remember Your Purpose until burnout forces it. Revisit it on the good days too.',
+    ],
+    industry: {
+      b2b: 'In B2B, Be Prepared is the habit that wins. Walking into a meeting having researched the account separates the closer from the also-ran.',
+      retail: 'On a retail floor, Positive Energy is the differentiator. The customer feels your energy in the first three seconds.',
+      renewals: 'In renewals, Accountability shows up in your follow-through. Did you do what you said you would, by when you said it?',
+      contact_centre: 'In a contact-centre, Take Control is survival. Owning your queue, your breaks, your state, rather than being owned by the dialler.',
+    },
+    plays: [
+      { situation: 'You are slipping into a flat, going-through-the-motions afternoon.', response: 'Pick ONE habit to deliberately practise for the next hour. Just one. "I will be fully prepared for every call." Watch how it lifts the rest.' },
+      { situation: 'You missed a commitment to a customer.', response: 'Own it immediately and specifically. "I said I would call you Tuesday and I did not. That is on me. Here is what I am doing now." Accountability rebuilds trust faster than perfection.' },
+      { situation: 'You are running late and tempted to wing the next meeting.', response: 'Take two minutes to Be Prepared rather than zero. Two minutes of prep beats ten minutes of recovering from looking unprepared.' },
+    ],
+    checks: [
+      'Which of the 8 habits is my strongest? Which is my weakest?',
+      'Can I point to a specific time this week I gave Maximum Effort?',
+      'Am I on time, or am I "mostly on time"?',
+      'When did I last hold myself accountable without being asked?',
+      'What is my purpose, and when did I last remember it deliberately?',
+    ],
   },
 
   'm-callflow': {
@@ -9010,6 +9035,31 @@ const MODULE_CONTENT = {
     ],
     references: ['14_Rapport and Trust.pdf'],
     related: ['m-callflow', 'm-service'],
+    mistakes: [
+      'Treating rapport as small talk you "get out of the way" before the real conversation. It IS the conversation.',
+      'Asking discovery questions while clearly waiting to pitch. People feel the agenda underneath.',
+      'Mirroring so obviously it becomes mimicry. Genuine interest beats technique.',
+      'Promising more than you can deliver to seem agreeable. One broken small promise costs more than ten kept ones earn.',
+      'Skipping the follow-up. Rapport built and abandoned reads as manipulation.',
+    ],
+    industry: {
+      b2b: 'In B2B, rapport is built across the org, not just your champion. Know the names, the politics, the pressures on the people around your contact.',
+      retail: 'On a retail floor, rapport is fast and warm. A genuine compliment, a real question, remembering a returning customer.',
+      renewals: 'In renewals, you have history. Reference it specifically. "Last time we spoke you mentioned X" earns more trust than any script.',
+      contact_centre: 'In a contact-centre, rapport happens through tone and listening, not face. Slow down. Use their name. Acknowledge the wait or the frustration before solving.',
+    },
+    plays: [
+      { situation: 'Customer is guarded and giving short answers.', response: 'Drop your agenda visibly. "No pressure at all - I just want to understand your situation so I do not waste your time. Tell me what prompted you to look into this?"' },
+      { situation: 'You realise you over-promised on a previous call.', response: 'Get ahead of it. "I want to be straight with you - I said X last time and I was too optimistic. Here is the real picture." Honesty repairs faster than hoping they forget.' },
+      { situation: 'Long-standing customer, routine renewal.', response: 'Make it personal, not transactional. "Before we run through the numbers - how did the last year go for you? Anything change I should know about?"' },
+    ],
+    checks: [
+      'Do I build rapport genuinely, or as a technique to get to the pitch?',
+      'When did I last follow up with a customer just to check in, not to sell?',
+      'Do I keep my small promises - the "I will email you that" ones?',
+      'Can I recall a specific detail about my last three customers?',
+      'Do I listen more than I talk in the first few minutes?',
+    ],
   },
 
   'm-service': {
@@ -9030,6 +9080,31 @@ const MODULE_CONTENT = {
     ],
     references: ['1_Providing Awesome Service.pdf'],
     related: ['m-rapport', 'm-callflow'],
+    mistakes: [
+      'Being reactive instead of proactive. Waiting for the customer to chase you is not service.',
+      'Knowing the product but not the latest changes. Out-of-date knowledge erodes trust fast.',
+      'Friendliness without competence, or competence without friendliness. You need both.',
+      'Rigidly following process when the situation calls for flexibility.',
+      'Treating service as the after-sale afterthought. It is the whole relationship.',
+    ],
+    industry: {
+      b2b: 'In B2B, awesome service is account management: anticipating renewal needs, flagging risks before they bite, being the person they call first.',
+      retail: 'On a retail floor, service is presence and attentiveness. Noticing the customer who needs help before they have to ask.',
+      renewals: 'In renewals, proactive service is everything: reaching out before the deadline, not after the lapse.',
+      contact_centre: 'In a contact-centre, awesome service is first-contact resolution plus warmth. Solve it once, and make them feel looked-after while you do.',
+    },
+    plays: [
+      { situation: 'Customer has a problem outside your remit.', response: 'Own the hand-off. "That is not my area, but I am not going to bounce you around. Let me find the right person and brief them so you do not repeat yourself."' },
+      { situation: 'You spot a risk the customer has not noticed yet.', response: 'Be proactive. "While I have you - I noticed something that might affect you down the line. Want me to flag it now so it does not become a problem?"' },
+      { situation: 'A small request you could technically decline.', response: 'Go the extra mile when the cost is low. The goodwill compounds. "Technically that is outside the usual, but let me sort it for you."' },
+    ],
+    checks: [
+      'Am I responsive, or do customers have to chase me?',
+      'Am I up to date on the latest product and policy changes?',
+      'When did I last go above and beyond for a customer?',
+      'Do I anticipate needs, or only react to them?',
+      'Do I treat service as central, or as the bit after the sale?',
+    ],
   },
 
   'm-impulse': {
@@ -9165,6 +9240,31 @@ const MODULE_CONTENT = {
     ],
     references: ['1_The Sales Toolkit.pdf', '8_the sales toolkit.pdf', '9_Sales Toolkit Solo Presentation.pdf'],
     related: ['m-impulse', 'm-objections', 'm-rapport', 'm-service'],
+    mistakes: [
+      'Reaching for every tool on every call. The toolkit is a kit, not a checklist.',
+      'Memorising the tools without internalising when to use them.',
+      'Defaulting to your favourite technique regardless of the customer in front of you.',
+      'Using a tool mechanically so it reads as a script rather than a conversation.',
+      'Forgetting that the tools serve the customer outcome, not your close rate.',
+    ],
+    industry: {
+      b2b: 'In B2B, the toolkit is deployed over a long cycle. Different tools for discovery, for the proposal, for the negotiation, for the close.',
+      retail: 'On a retail floor, the toolkit compresses. You may use rapport, one impulse factor, and a clean close in 90 seconds.',
+      renewals: 'In renewals, your toolkit centres on rapport, value-reframing, and honest urgency around the renewal date.',
+      contact_centre: 'In a contact-centre, the toolkit is triage-first: solve the stated problem, then use the toolkit to add value if the moment is right.',
+    },
+    plays: [
+      { situation: 'You feel a call drifting without direction.', response: 'Mentally run the Call Flow stages. Where are you? Probably you skipped Discovery. Reach for that tool and re-anchor.' },
+      { situation: 'Customer is engaged but not deciding.', response: 'Reach for one impulse factor that is honestly true here. Just one. Then ask for the decision.' },
+      { situation: 'A complex situation you have not seen before.', response: 'Fall back to fundamentals: rapport, genuine discovery, honest recommendation. The toolkit is built on these. When in doubt, return to base.' },
+    ],
+    checks: [
+      'Can I name the main tools in the kit?',
+      'Do I choose tools based on the customer, or habit?',
+      'When did I last use a tool mechanically instead of naturally?',
+      'Do my tools serve the customer outcome or just my numbers?',
+      'Which tool do I overuse? Which do I avoid?',
+    ],
   },
 
   'm-comms': {
@@ -9187,6 +9287,31 @@ const MODULE_CONTENT = {
     ],
     references: ['12_The Art of Communication .pdf', '5_effective communication.pdf'],
     related: ['m-effective', 'm-rapport'],
+    mistakes: [
+      'Talking AT people instead of WITH them. Communication is two-way or it is not communication.',
+      'Using jargon to sound expert. It distances. Plain language is the expert move.',
+      'Ignoring body language and tone, focusing only on words. Most of the message is non-verbal.',
+      'Choosing the wrong medium: a hard conversation over email, a quick update over a meeting.',
+      'Not preparing. Winging an important conversation is a tax you pay in misunderstandings.',
+    ],
+    industry: {
+      b2b: 'In B2B, communication is multi-channel and multi-stakeholder. Match the medium to the message and the seniority of the audience.',
+      retail: 'On a retail floor, communication is mostly tone and body language. Warmth and clarity in seconds.',
+      renewals: 'In renewals, written follow-up clarity matters. The customer re-reads your message after the call. Make it unambiguous.',
+      contact_centre: 'In a contact-centre, communication is voice-only. Pace, tone, and active listening carry everything. Slow down and signpost.',
+    },
+    plays: [
+      { situation: 'You can feel the customer is not following you.', response: 'Stop. Simplify. "Let me put that more plainly." Then say it in one sentence a twelve-year-old would understand.' },
+      { situation: 'A sensitive issue is brewing over email.', response: 'Change the medium. "This feels like a quick conversation rather than a back-and-forth. Can I call you for five minutes?"' },
+      { situation: 'You are about to deliver something complex.', response: 'Prepare a one-line summary first. Lead with it. "The short version is X. Now let me give you the detail." Front-load the conclusion.' },
+    ],
+    checks: [
+      'Do I listen as much as I talk?',
+      'When did I last catch myself using jargon, and simplify?',
+      'Am I aware of my tone and body language, or only my words?',
+      'Do I choose the medium deliberately, or default to whatever is easy?',
+      'Do I prepare for important conversations, or wing them?',
+    ],
   },
 
   'm-conflict': {
@@ -9214,6 +9339,185 @@ const MODULE_CONTENT = {
     ],
     references: ['2_Strategies for Conflict Resolution .pdf'],
     related: ['m-styles', 'm-growth'],
+    mistakes: [
+      'Reacting to the symptom instead of identifying the source of the conflict.',
+      'Trying to "win" rather than resolve. A win that breaks the relationship is a loss.',
+      'Letting it escalate by avoiding it. Small frictions become big conflicts when ignored.',
+      'Responding from anger or frustration. The escalation is rarely worth it.',
+      'Skipping the find-common-ground step and jumping to compromise. Shared goals come first.',
+    ],
+    industry: {
+      b2b: 'In B2B, conflict is often about expectations and scope. Resolve by re-aligning on the shared goal before negotiating the detail.',
+      retail: 'On a retail floor, conflict is fast and emotional. Stay calm, acknowledge, de-escalate, then solve. Your composure sets the temperature.',
+      renewals: 'In renewals, conflict is usually price or value frustration. Identify what they actually feel cheated about - it is rarely just the number.',
+      contact_centre: 'In a contact-centre, conflict arrives pre-heated. The customer has often already waited. Acknowledge the wait and the feeling before the facts.',
+    },
+    plays: [
+      { situation: 'Customer is angry and escalating.', response: 'Lower your voice and slow down. "I can hear this has been really frustrating. I want to fix it. Let me make sure I understand exactly what happened." Acknowledge before solving.' },
+      { situation: 'A colleague conflict is affecting your work.', response: 'Address it early and privately. "Can we talk for a minute? I think we are pulling in different directions and I would rather sort it than let it fester."' },
+      { situation: 'You feel your own frustration rising mid-conflict.', response: 'Buy time. "Let me make sure I get this right for you - give me one moment." Use the pause to reset before you respond from emotion.' },
+    ],
+    checks: [
+      'Do I address conflict early, or avoid it until it grows?',
+      'When conflict arises, do I stay calm or react?',
+      'Do I look for the source, or treat the symptom?',
+      'Do I aim to resolve, or to win?',
+      'When did I last find genuine common ground in a disagreement?',
+    ],
+  },
+
+  'm-effective': {
+    title: 'Effective <span>Communication</span>',
+    subtitle: 'The everyday craft of being understood',
+    lede: 'We all know communication matters. Fewer of us are deliberate about it. Effective communication is a craft you can practise: talk and listen, watch your non-verbals, keep it simple, choose the right medium, and prepare. Small disciplines, large compounding returns.',
+    chapters: [
+      { heading: 'Talk AND Listen', body: ['Communication is a two-way street. Do not just transmit. Make space for the other person, and adjust based on what you hear back. The best communicators talk less than you think.'] },
+      { heading: 'Be Clear and Concise', body: ['Say what you mean in the fewest words that still carry the warmth. Front-load the point. Cut the preamble. Respect the listener\'s time and attention.'] },
+      { heading: 'Connection over Information', body: ['Communication is not just the transfer of facts. It is the creation of a connection with the person you are talking to. Aim for understanding, not just delivery.'] },
+    ],
+    references: ['5_effective communication.pdf'],
+    related: ['m-comms', 'm-rapport'],
+    mistakes: [
+      'Talking to fill silence instead of to communicate. Silence is a tool.',
+      'Front-loading context and burying the point. Lead with the conclusion.',
+      'Optimising the words while ignoring the tone that carries them.',
+      'Assuming you were understood instead of checking.',
+      'Treating clarity as coldness. You can be clear and warm at once.',
+    ],
+    industry: {
+      b2b: 'In B2B, clarity in writing wins. Decision-makers skim. Make the ask and the value obvious in the first two lines.',
+      retail: 'On a retail floor, warmth and brevity. Read the customer\'s pace and match it.',
+      renewals: 'In renewals, confirm understanding explicitly. "Just so we are on the same page, here is what happens next."',
+      contact_centre: 'In a contact-centre, signpost constantly. "Here is what I am going to do, then here is what you need to do." Remove uncertainty.',
+    },
+    plays: [
+      { situation: 'You are not sure the message landed.', response: 'Check, do not assume. "Just so I know I explained that well - what is your understanding of the next step?"' },
+      { situation: 'You catch yourself rambling.', response: 'Stop and restate in one sentence. "Let me get to the point: X." The reset is appreciated, not penalised.' },
+      { situation: 'An important message needs to be remembered.', response: 'Say it, then have them say it back, then follow up in writing. Three channels for the things that matter.' },
+    ],
+    checks: [
+      'Do I lead with the point or bury it?',
+      'Do I check understanding or assume it?',
+      'Is my tone matching my words?',
+      'Do I talk to communicate, or to fill space?',
+      'Could my last important message have been half the length?',
+    ],
+  },
+
+  'm-styles': {
+    title: 'Conflict Resolution <span>Styles</span>',
+    subtitle: 'Knowing your default, and when to flex',
+    lede: 'Conflict resolution is not about winning or losing. It is about finding a solution that works for everyone involved. Most of us have a default style we reach for under pressure. The skill is recognising yours, and choosing a different one when the situation calls for it.',
+    chapters: [
+      { heading: 'Know Your Default', body: ['Under stress, most people fall into a habitual style: competing, accommodating, avoiding, compromising, or collaborating. None is wrong everywhere. All are wrong somewhere. Awareness of your default is the first move.'] },
+      { heading: 'Match Style to Situation', body: ['A trivial disagreement does not warrant full collaboration. A relationship-defining issue does not warrant avoidance. Read the stakes and the relationship, then choose deliberately.'] },
+      { heading: 'Flexibility is the Skill', body: ['Being able to manage disagreements and differences effectively is crucial. The practitioners who handle conflict well are not the ones with one perfect style. They are the ones who can switch.'] },
+    ],
+    references: ['3_conflict resolution styles .pdf'],
+    related: ['m-conflict', 'm-growth'],
+    mistakes: [
+      'Using the same conflict style for every situation.',
+      'Defaulting to avoidance and calling it "keeping the peace".',
+      'Over-competing on issues that did not matter.',
+      'Compromising too early, before understanding what each side actually needs.',
+      'Mistaking accommodation for resolution. Giving in is not the same as resolving.',
+    ],
+    industry: {
+      b2b: 'In B2B, collaboration is usually right. The relationship outlives the single disagreement, so invest in a solution both sides own.',
+      retail: 'On a retail floor, fast accommodation or compromise often serves. The interaction is short and the goodwill matters.',
+      renewals: 'In renewals, compromise within honest limits. Find the version of "yes" that protects both the customer and the business.',
+      contact_centre: 'In a contact-centre, lead with accommodation on emotion (acknowledge fully) then collaborate on solution.',
+    },
+    plays: [
+      { situation: 'You notice you are competing to win a minor point.', response: 'Catch it. Ask yourself: does this matter enough to risk the relationship? Usually no. Switch to accommodate or compromise.' },
+      { situation: 'A high-stakes disagreement with a key customer or colleague.', response: 'Resist the urge to compromise quickly. Switch to collaborate: "Let us find something that genuinely works for both of us, not just a quick split."' },
+      { situation: 'You realise you have been avoiding a conflict for weeks.', response: 'Name it and approach it. Avoidance has a shelf life, and you are past it. "I have been sitting on something - can we talk?"' },
+    ],
+    checks: [
+      'What is my default conflict style under pressure?',
+      'When did I last deliberately choose a different style?',
+      'Do I avoid conflicts I should address?',
+      'Do I compete on things that do not matter?',
+      'Can I name the five styles and when each fits?',
+    ],
+  },
+
+  'm-growth': {
+    title: 'Skills for <span>Growth</span>',
+    subtitle: 'The transferable skills that travel with you',
+    lede: 'Sales and service professionals are the face of a business. Beyond individual technique, three skills compound across an entire career and across any industry: teamwork, conflict resolution, and communication. They are transferable, and they are what turn a good year into a good decade.',
+    chapters: [
+      { heading: 'Effective Teamwork', body: ['Work divides among team members so everyone moves toward a common goal. In a busy environment, good teamwork means there is always someone available to help the customer, wait times drop, and the whole operation lifts.'] },
+      { heading: 'Conflict Resolution', body: ['Handling disagreements and difficult situations professionally, with customers and colleagues alike, keeps the relationship intact while solving the problem. It is a skill, not a personality trait.'] },
+      { heading: 'Communication', body: ['Understanding needs, addressing concerns, reducing misunderstandings. Communication underpins both teamwork and conflict resolution. It is the meta-skill the others rest on.'] },
+      { heading: 'Transferability', body: ['These skills are not industry-locked. They move with you from retail to B2B to contact-centre to management. Investing in them is investing in every future role you will hold.'] },
+    ],
+    references: ['11_Skills for growth.pdf'],
+    related: ['m-conflict', 'm-comms', 'm-mindset'],
+    mistakes: [
+      'Treating growth as something that happens to you, not something you build.',
+      'Investing only in product knowledge, which dates, instead of transferable skills, which compound.',
+      'Hoarding knowledge instead of strengthening the team.',
+      'Waiting for formal training instead of practising deliberately on the job.',
+      'Thinking these skills only matter for promotion. They matter on every interaction today.',
+    ],
+    industry: {
+      b2b: 'In B2B, teamwork across functions (sales, delivery, support) is what makes accounts stick. Your growth is tied to how well you orchestrate the team around the customer.',
+      retail: 'On a retail floor, teamwork is visible minute to minute. Covering, sharing, lifting each other through the rush.',
+      renewals: 'In renewals, communication and conflict resolution are your daily growth gym. Every difficult call is a rep.',
+      contact_centre: 'In a contact-centre, the transferable skills are your exit velocity. They are what take you from the floor to team lead to wherever you are headed.',
+    },
+    plays: [
+      { situation: 'A teammate is drowning during a rush.', response: 'Step in without being asked. Teamwork is a habit you build by doing it before it is convenient. It comes back to you.' },
+      { situation: 'You want to grow but no formal training is on offer.', response: 'Build your own. Pick one skill per month. Practise it deliberately. Track it. Growth does not wait for permission.' },
+      { situation: 'You learned something that worked.', response: 'Share it with the team. Teaching cements your own skill and lifts everyone. Knowledge hoarded is knowledge half-learned.' },
+    ],
+    checks: [
+      'Am I investing in transferable skills, or only perishable product knowledge?',
+      'When did I last help a teammate without being asked?',
+      'Am I building my own growth, or waiting for it?',
+      'Do I share what I learn, or hoard it?',
+      'Which of the three core skills is my weakest right now?',
+    ],
+  },
+
+  'm-proposal': {
+    title: 'theGuide <span>Proposal</span>',
+    subtitle: 'Why this body of work exists',
+    lede: 'theGuide began as a proposal: a case for why standardised, practitioner-built sales and service training was worth investing in. The argument holds across any organisation. Consistent training, improved performance, empowered people, reduced managerial burden, and better retention. This is the thinking that started it all.',
+    chapters: [
+      { heading: 'The Gap', body: ['Most onboarding covers product, systems, and quality, but leaves out the actual craft of selling and serving. New joiners learn the hard way, on every interaction, for months. theGuide was built to close that gap.'] },
+      { heading: 'Consistent Training', body: ['A standardised resource means every new person receives the same foundational knowledge and skills. The onboarding process gets more consistent and more efficient, and the floor gets more predictable.'] },
+      { heading: 'Empowered People', body: ['A reference people can return to throughout their journey lets them own their own development. They improve continuously instead of plateauing after week two.'] },
+      { heading: 'Reduced Burden, Better Retention', body: ['When new joiners arrive equipped, team leaders spend less time on remedial coaching. And people who feel competent and supported stay. Training is a retention strategy, not just a performance one.'] },
+    ],
+    references: ['4_theGuide Prop.pdf'],
+    related: ['m-mindset', 'm-growth'],
+    mistakes: [
+      'Assuming training is a cost rather than a retention and performance investment.',
+      'Building training that is theoretical instead of practitioner-tested.',
+      'One-and-done onboarding instead of a resource people return to.',
+      'Measuring only product knowledge, never the craft.',
+      'Leaving the craft of selling to chance and "you will pick it up".',
+    ],
+    industry: {
+      b2b: 'In B2B, the case for theGuide is ramp time. Faster, more consistent ramp means revenue sooner and fewer expensive early mistakes.',
+      retail: 'In retail, the case is consistency across a high-turnover floor. Everyone delivers the same standard regardless of tenure.',
+      renewals: 'In renewals, the case is retention of both customers and staff. Equipped reps retain more business and stay longer themselves.',
+      contact_centre: 'In a contact-centre, the case is scale. A single reference that lifts hundreds of agents to the same baseline is leverage nothing else matches.',
+    },
+    plays: [
+      { situation: 'You are making the case for training investment.', response: 'Lead with retention and ramp time, not "nice to have". Frame it as the cheapest performance lever available.' },
+      { situation: 'A new joiner is struggling in their first weeks.', response: 'Point them to the Library. Self-serve learning beats waiting for the next formal session, and builds the habit of returning to the material.' },
+      { situation: 'You want to standardise how your team sells.', response: 'Use the 5 pillars as the shared language. When everyone references the same framework, coaching gets faster and feedback gets specific.' },
+    ],
+    checks: [
+      'Do I treat my own development as an investment or an afterthought?',
+      'Am I using theGuide as a resource I return to, or read once?',
+      'If I coach others, do I point them to shared material?',
+      'Do I measure my craft, or only my product knowledge?',
+      'What would change if my whole team used one framework?',
+    ],
   },
 };
 
