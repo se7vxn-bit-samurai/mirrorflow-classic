@@ -1283,56 +1283,151 @@ textarea.ex-input:focus, input.ex-input:focus, select.ex-input:focus {
 .ex-shell.is-reading-mode .ex-reading-exit { display: block; }
 
 /* Mobile-friendly improvements (v1.3.6) */
+/* ============================================================
+   v2.7 - COMPREHENSIVE MOBILE PASS
+   ============================================================ */
 @media (max-width: 900px) {
-  .ex-shell {
-    grid-template-rows: 48px auto 1fr;
-    grid-template-columns: 1fr;
+  html, body { overflow-x: hidden; }
+
+  /* Shell: single column, room for bottom nav.
+     Override the desktop "collapsed" state too (higher specificity). */
+  .ex-shell,
+  .ex-shell.is-sidebar-collapsed {
+    grid-template-rows: 52px 1fr !important;
+    grid-template-columns: 1fr !important;
+    padding-bottom: 60px;  /* clearance for bottom nav */
   }
+
+  /* Sidebar becomes a fixed bottom nav bar (thumb-reachable) */
   .ex-sidebar {
-    display: flex !important; flex-direction: row;
-    overflow-x: auto;
-    padding: 8px 12px;
-    gap: 4px;
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    top: auto;
+    z-index: 7000;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0;
+    gap: 0;
+    height: 56px;
     border-right: none;
-    border-bottom: 1px solid var(--ex-border);
+    border-top: 1px solid var(--ex-border);
+    background: var(--ex-surface);
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.12);
+    overflow: visible;
   }
-  .ex-sidebar__label, .ex-sidebar__divider, .ex-shortcuts-hint { display: none; }
+  .ex-sidebar__label, .ex-sidebar__divider, .ex-shortcuts-hint,
+  .ex-sidebar__toggle { display: none !important; }
   .ex-sidebar__item {
-    flex: 0 0 auto;
-    padding: 6px 12px;
-    border-left: none;
-    border-bottom: 2px solid transparent;
-    font-size: 12px;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: 2px;
+    padding: 6px 2px;
+    border-left: none !important;
+    border-bottom: none;
+    font-size: 9px;
     white-space: nowrap;
+    text-align: center;
+    justify-content: center;
+    min-width: 0;
+    color: var(--ex-text-muted);
   }
+  .ex-sidebar__item .ex-sidebar__icon { font-size: 18px; margin: 0; }
   .ex-sidebar__item.is-active {
-    border-left: none;
-    border-bottom-color: var(--ex-fire);
+    border-bottom: none;
+    color: var(--ex-fire);
+    background: color-mix(in srgb, var(--ex-fire) 8%, transparent);
   }
-  .ex-main { padding: 16px; }
-  .ex-analyse-grid {
-    grid-template-columns: 1fr !important;
+  .ex-sidebar__item.is-active::before { display: none; }
+
+  /* Topbar: condense */
+  .ex-topbar { padding: 0 12px; gap: 8px; }
+  .ex-topbar__brand { font-size: 16px; }
+  .ex-topbar__brand span { font-size: 16px; }
+  .ex-topbar__version { display: none; }
+  .ex-topbar__demo-btn, .ex-launcher__btn {
+    font-size: 10px; padding: 4px 7px; margin-right: 4px;
+    min-height: 32px;
   }
-  .ex-facilitate-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .ex-pillar-nav, .ex-facilitator-panel {
-    margin-bottom: 12px;
-  }
-  .ex-assess-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .ex-slide-editor-grid {
-    grid-template-columns: 1fr !important;
-  }
+  .ex-topbar__themes { gap: 4px; }
+  .ex-topbar__theme-btn { width: 22px; height: 22px; }
+
+  /* Main padding */
+  .ex-main { padding: 16px 14px; }
+
+  /* Stack ALL multi-column grids */
+  .ex-analyse-grid,
+  .ex-facilitate-grid,
+  .ex-assess-grid,
+  .ex-slide-editor-grid,
+  .ex-practice-grid,
+  .ex-reader-layout,
+  .ex-facilitate-catalog { grid-template-columns: 1fr !important; display: block !important; }
+
+  .ex-analyse-grid > *, .ex-facilitate-grid > *,
+  .ex-practice-grid > * { margin-bottom: 14px; }
+
+  .ex-facilitate-grid { height: auto !important; }
+  .ex-pillar-nav, .ex-facilitator-panel { margin-bottom: 14px; }
+  .ex-content-area { padding: 20px 16px !important; max-height: none !important; }
+
+  /* Build editor: palette/canvas/layers stack; cap heights */
   .ex-element-palette, .ex-layer-panel {
-    max-height: 200px;
-    overflow-y: auto;
+    max-height: 220px; overflow-y: auto; margin-bottom: 12px;
   }
-  .ex-landing-hero__title { font-size: 48px !important; }
-  .ex-about-page__title { font-size: 36px !important; }
-  .ex-content-area h2 { font-size: 24px !important; }
-  .ex-topbar__demo-btn { font-size: 10px; padding: 3px 8px; }
+  .ex-slide-canvas { margin-bottom: 12px; }
+
+  /* Library reader: hide side TOC (use top nav instead), full width main */
+  .ex-reader-side { display: none !important; }
+  .ex-reader-main { max-width: 100% !important; }
+  .ex-reader-masthead__title { font-size: 30px !important; }
+  .ex-chapter__heading { font-size: 22px !important; }
+
+  /* Catalog cards single column on phones handled below at 600 */
+  .ex-catalog-grid { grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); }
+
+  /* Toolbars wrap */
+  .ex-slides-toolbar, .ex-build-tabs, .ex-cohort-tabs,
+  .ex-catalog-filters, .ex-fac-view-toggle { flex-wrap: wrap; }
+
+  /* Full-width modals + drawers */
+  .ex-notes-drawer { width: 100%; right: -100%; top: 52px; }
+  .ex-cmd-palette { width: 92vw; }
+  .ex-brandkit-modal, .ex-md-import { width: 92vw; }
+  .ex-find-bar { width: 92vw; right: 4vw; left: 4vw; }
+
+  /* Touch targets */
+  .ex-btn, .ex-cohort-tab, .ex-catalog-filter, .ex-fac-view-btn,
+  .ex-practice-pillar-btn, .ex-pillar-btn { min-height: 40px; }
+
+  /* Typography scaling */
+  .ex-landing-hero__title { font-size: 44px !important; }
+  .ex-about-page__title, .ex-catalog-masthead__title,
+  .ex-practice-masthead__title { font-size: 34px !important; }
+  .ex-content-area h2 { font-size: 26px !important; }
+  .ex-landing-pillars__grid, .ex-landing-modes__grid { grid-template-columns: 1fr 1fr !important; }
+
+  /* Decorative elements that crowd small screens */
+  .ex-deco-fleur, .ex-deco-compass, #panelFacilitate::before,
+  #panelFacilitate::after, .ex-deco-frame-corners { display: none !important; }
+}
+
+/* Phone-specific (<= 600px) */
+@media (max-width: 600px) {
+  .ex-catalog-grid { grid-template-columns: 1fr !important; }
+  .ex-landing-pillars__grid, .ex-landing-modes__grid { grid-template-columns: 1fr !important; }
+  .ex-landing-hero__title { font-size: 36px !important; }
+  .ex-about-page__title, .ex-catalog-masthead__title,
+  .ex-practice-masthead__title { font-size: 28px !important; }
+  .ex-landing-hero__cta { flex-direction: column; align-items: stretch; }
+  .ex-landing-hero__cta .ex-btn { width: 100%; justify-content: center; }
+  .ex-reader-topbar { flex-wrap: wrap; gap: 6px; }
+  .ex-topbar__brand span { display: none; }  /* show just "Excelsior" */
+  /* Hide some secondary topbar buttons to reduce clutter */
+  #brandKitBtn, #notesOpenBtn { display: none; }
+  .ex-cohort-table { font-size: 11px; }
+  .ex-cohort-table th, .ex-cohort-table td { padding: 5px 6px; }
 }
 
 /* Cross-app launcher (v1.3.9) */
@@ -3898,7 +3993,7 @@ mark.ex-saved-highlight {
       <button class="ex-topbar__theme-btn" data-t="press" title="Press (dark editorial)"></button>
       <button class="ex-topbar__theme-btn is-active" data-t="cream" title="Cream (paper editorial)"></button>
     </div>
-    <div class="ex-topbar__version">v2.6</div>
+    <div class="ex-topbar__version">v2.7</div>
   </header>
   <div class="ex-toast" id="exToast"></div>
 
