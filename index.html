@@ -2918,7 +2918,69 @@ mark.ex-saved-highlight {
   color: var(--ex-text-muted);
   font-family: var(--ex-font-sans);
 }
-
+/* ── Global Resources view ─────────────────────────────── */
+.ex-resources-controls {
+  max-width: 900px;
+  margin: 0 auto 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.ex-res-type-toggle {
+  display: flex;
+  gap: 8px;
+}
+.ex-res-type-btn {
+  padding: 7px 18px;
+  border: 1px solid var(--ex-border);
+  border-radius: var(--ex-radius);
+  background: none;
+  color: var(--ex-text-muted);
+  font-family: var(--ex-font-sans);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.ex-res-type-btn.is-active {
+  border-color: var(--ex-fire);
+  color: var(--ex-fire);
+  background: color-mix(in srgb, var(--ex-fire) 8%, transparent);
+}
+.ex-res-type-btn:hover:not(.is-active) {
+  border-color: var(--ex-text-muted);
+  color: var(--ex-text);
+}
+.ex-global-refs {
+  max-width: 900px;
+  margin: 0 auto;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.ex-global-refs li {
+  line-height: 1.6;
+}
+.ex-res-module-tag {
+  display: inline-block;
+  font-size: 10px;
+  font-family: var(--ex-font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  margin-bottom: 6px;
+  margin-right: 4px;
+}
+.ex-res-module-tag--foundation  { background: color-mix(in srgb, #e07b39 15%, transparent); color: #e07b39; }
+.ex-res-module-tag--conversation { background: color-mix(in srgb, #3997c6 15%, transparent); color: #3997c6; }
+.ex-res-module-tag--influence    { background: color-mix(in srgb, #c63939 15%, transparent); color: #c63939; }
+.ex-res-module-tag--communication{ background: color-mix(in srgb, #39a878 15%, transparent); color: #39a878; }
+.ex-res-module-tag--practice     { background: color-mix(in srgb, #8b39c6 15%, transparent); color: #8b39c6; }
+#resourcesContent .ex-video-grid {
+  max-width: 900px;
+  margin: 0 auto;
+}
 /* ── Video thumbnail → click-to-play ────────────────────── */
 .ex-video-thumb {
   cursor: pointer;
@@ -4811,6 +4873,7 @@ mark.ex-saved-highlight {
         <button class="ex-fac-view-btn is-active" data-lib-view="catalog">📚 Catalog</button>
         <button class="ex-fac-view-btn" data-lib-view="highlights">✦ Highlights</button>
         <button class="ex-fac-view-btn" data-lib-view="glossary">A-Z Glossary</button>
+        <button class="ex-fac-view-btn" data-lib-view="resources">🗂 Resources</button>
       </div>
       <!-- Catalog view (existing) -->
       <div class="ex-facilitate-catalog" id="facilitateCatalog" style="display:block;">
@@ -4818,7 +4881,7 @@ mark.ex-saved-highlight {
           <div class="ex-catalog-masthead">
             <div class="ex-catalog-masthead__kicker">theGuide · A Library of Practical Lessons</div>
             <h1 class="ex-catalog-masthead__title">The <span>Library</span></h1>
-            <div class="ex-catalog-masthead__lede">Browse the 5 pillars and 14 modules curated from theGuide. Star anything to come back to. Click any card to read it in-place. The Library is a self-contained reading room.</div>
+            <div class="ex-catalog-masthead__lede">Browse the 5 pillars and 18 modules curated from theGuide. Star anything to come back to. Click any card to read it in-place. The Library is a self-contained reading room.</div>
           </div>
           <div class="ex-catalog-filters">
             <button class="ex-catalog-filter is-active" data-filter="all">All</button>
@@ -4855,6 +4918,29 @@ mark.ex-saved-highlight {
           <input class="ex-catalog-search" id="glossarySearch" type="search" placeholder="Search definitions..." style="margin-left:0;width:100%;max-width:560px;"/>
         </div>
         <div style="max-width: 900px; margin: 0 auto;" id="glossaryGrid"></div>
+      </div>
+      <!-- Global Resources view (v3.0) -->
+      <div class="ex-facilitate-catalog" id="facilitateResources" style="display:none;">
+        <div class="ex-catalog-masthead">
+          <div class="ex-catalog-masthead__kicker">References &amp; videos across all 18 modules</div>
+          <h1 class="ex-catalog-masthead__title">All <span>Resources</span></h1>
+          <div class="ex-catalog-masthead__lede">Every academic reference and curated video from theGuide library in one place. Filter by pillar, toggle between references and viewing, or browse everything.</div>
+        </div>
+        <div class="ex-resources-controls">
+          <div class="ex-res-type-toggle">
+            <button class="ex-res-type-btn is-active" data-res-type="refs">📚 References</button>
+            <button class="ex-res-type-btn" data-res-type="videos">▶ Videos</button>
+          </div>
+          <div class="ex-catalog-filters" id="resourcesPillarFilters">
+            <button class="ex-catalog-filter is-active" data-res-pillar="all">All Pillars</button>
+            <button class="ex-catalog-filter" data-res-pillar="foundation">Foundation</button>
+            <button class="ex-catalog-filter" data-res-pillar="conversation">Conversation</button>
+            <button class="ex-catalog-filter" data-res-pillar="influence">Influence</button>
+            <button class="ex-catalog-filter" data-res-pillar="communication">Communication</button>
+            <button class="ex-catalog-filter" data-res-pillar="practice">Practice</button>
+          </div>
+        </div>
+        <div id="resourcesContent"></div>
       </div>
     </div>
 
@@ -5605,6 +5691,10 @@ const MODULE_LIBRARY = [
   { id:'m-styles',      pillar:'practice',     title:'Conflict Resolution Styles', tags:['conflict','styles','approach'],       source:'3_conflict resolution styles' },
   { id:'m-growth',      pillar:'practice',     title:'Skills for Growth',          tags:['teamwork','growth','skills'],         source:'11_Skills for growth' },
   { id:'m-proposal',    pillar:'foundation',   title:'theGuide Proposal',          tags:['vision','training','proposal'],       source:'4_theGuide Prop' },
+  { id:'m-goalsetting', pillar:'foundation',   title:'Goal Setting',               tags:['goals','smart','planning','vision'],  source:'theGuide · Goal Setting' },
+  { id:'m-timemanagement', pillar:'foundation',title:'Time Management',            tags:['time','productivity','focus','habits'],source:'theGuide · Time Management' },
+  { id:'m-resilience',  pillar:'practice',     title:'Mental Resilience',          tags:['resilience','stress','grit','recovery'],source:'theGuide · Mental Resilience' },
+  { id:'m-negotiation', pillar:'influence',    title:'The Art of Negotiation',     tags:['negotiation','influence','closing'],  source:'theGuide · Negotiation' },
 ];
 
 /* ──────────────────────────────────────────────────────────────
@@ -9757,6 +9847,376 @@ const MODULE_CONTENT = {
       'What would change if my whole team used one framework?',
     ],
   },
+
+  'm-goalsetting': {
+    title: 'Goal <span>Setting</span>',
+    subtitle: 'From vague wishes to concrete commitments',
+    lede: 'Most people mistake a wish for a goal. A wish is passive — "I want to earn more," "I want to improve." A goal is active: it has a deadline, a number, and a plan attached. The research on goal setting is one of the most replicated bodies of work in applied psychology. The conclusion is consistent: specific, challenging goals with clear timelines produce significantly better performance than vague intentions.',
+    chapters: [
+      {
+        heading: 'Why Goals Work',
+        body: [
+          'Goal-setting theory, developed by Edwin Locke and Gary Latham over four decades of research, shows that goals affect performance through four mechanisms: they direct attention toward goal-relevant activities, mobilise effort proportional to difficulty, sustain persistence over time, and prompt the discovery of strategies for achievement.',
+          'The key is specificity. "Do my best" is not a goal — it gives the brain nothing to lock onto. "Make 40 outbound contacts by 1pm today" activates a completely different neurological response: the brain starts scanning for what to do next.',
+        ],
+        pullquote: '"Do your best" is not a goal. Specificity is what the brain can act on.',
+        points: [
+          'Specific goals outperform vague goals consistently across 35+ years of research',
+          'Challenging goals produce more effort than easy goals — within the range of achievability',
+          'Goals work by narrowing attention, mobilising effort, and extending persistence',
+          'Written goals are significantly more likely to be achieved than mental ones',
+        ],
+      },
+      {
+        heading: 'SMART Goals in Practice',
+        body: [
+          'SMART is the most widely used goal-setting framework — Specific, Measurable, Achievable, Relevant, Time-bound. It is not a formula to follow robotically; it is a checklist for catching the vagueness that kills most goals before they start.',
+          'The most commonly violated element is "Time-bound." Goals without deadlines are dreams. Deadlines create pressure, and pressure — in the right dose — creates performance.',
+        ],
+        example: { label: 'Before and After', body: 'Vague: "I want to improve my call quality." SMART: "I will increase my conversion rate from 18% to 23% over the next 60 days by practicing one objection response daily."' },
+        points: [
+          'Specific: What exactly will you do, achieve, or produce?',
+          'Measurable: How will you know when you have succeeded?',
+          'Achievable: Stretch but realistic; too easy produces no growth, impossible produces no effort',
+          'Relevant: Does this goal connect to a larger purpose or outcome?',
+          'Time-bound: What is the deadline? Week, month, quarter?',
+        ],
+      },
+      {
+        heading: 'Goal vs System',
+        body: [
+          'A goal tells you where you are going. A system tells you what you will do each day to get there. Without a system, even a SMART goal becomes a wish with a deadline.',
+          'James Clear captures this in Atomic Habits: "You do not rise to the level of your goals. You fall to the level of your systems." This does not mean goals are unimportant — it means they are incomplete without the daily behaviours that make them possible.',
+        ],
+        pullquote: 'You fall to the level of your systems, not your goals.',
+        points: [
+          'Identify the daily input that connects to the outcome goal',
+          'Schedule the system before you need it — in advance, not in the moment',
+          'Track inputs (calls made, practices completed), not only outputs (deals closed)',
+          'Review your system weekly; goals monthly',
+        ],
+      },
+      {
+        heading: 'Accountability and Commitment',
+        body: [
+          'Social accountability dramatically increases goal follow-through. Telling someone else your goal, and agreeing to report back, raises completion rates significantly. This is why coaching, peer partnerships, and team check-ins produce results that self-tracking alone does not.',
+          'Written commitment strengthens the effect further. The act of writing a goal creates a psychological contract with yourself. Combined with a commitment to another person, it is one of the most powerful goal-completion techniques available.',
+        ],
+        points: [
+          'Write the goal down — do not rely on memory',
+          'Share it with at least one person who will ask you about it',
+          'Set a scheduled check-in date — not "whenever it comes up"',
+          'Pair with someone working on a similar goal for mutual accountability',
+        ],
+      },
+      {
+        heading: 'Reviewing and Adjusting',
+        body: [
+          'Goals require a review cadence. Without scheduled reviews, drift goes undetected. Weekly reviews keep tactics sharp; monthly reviews assess whether the goal itself still makes sense.',
+          'Adjusting a goal is not failure — it is information. The goal may have been set without data you now have. The timeline may need to shift. The number may need recalibrating. What matters is that the adjustment is intentional and deliberate, not an excuse to lower the bar because it got hard.',
+        ],
+        points: [
+          'Weekly: review inputs — are you hitting your daily/weekly system targets?',
+          'Monthly: review progress — are you on track toward the outcome goal?',
+          'Quarterly: review relevance — is this still the right goal given what you now know?',
+          'Distinguish between adjusting (intentional) and quitting (avoidance)',
+        ],
+      },
+    ],
+    references: ['theGuide · Goal Setting'],
+    related: ['m-mindset', 'm-habits', 'm-timemanagement'],
+    mistakes: [
+      'Setting goals without a supporting system. The goal needs a daily mechanism.',
+      'Making goals too easy to avoid the discomfort of failure.',
+      'Reviewing only when things go wrong, instead of on a regular cadence.',
+      'Keeping goals in your head. Written goals significantly outperform mental ones.',
+      'Treating a changed goal as a failure rather than as updated information.',
+    ],
+    checks: [
+      'Can I state my primary goal in one sentence with a number and a deadline?',
+      'What is the daily input that directly connects to my outcome goal?',
+      'Who knows about this goal and will ask me about it?',
+      'When is my next scheduled goal review?',
+      'Am I tracking the inputs or only hoping for the output?',
+    ],
+  },
+
+  'm-timemanagement': {
+    title: 'Time <span>Management</span>',
+    subtitle: 'You cannot manage time — only what you do with it',
+    lede: 'Everyone has the same 168 hours a week. The difference between high performers and everyone else is not intelligence or talent — it is what they choose to do with each hour. Time management is not about fitting more activity into the day. It is about ensuring the hours you have go toward the things that actually move the needle.',
+    chapters: [
+      {
+        heading: 'Energy, Not Just Time',
+        body: [
+          'Most time management advice focuses on scheduling. But a calendar block is only as productive as the energy state you bring to it. You have limited high-energy hours each day — the window when your focus is sharp, your creativity is active, and your decision-making is at its best. That window varies by person but typically runs 2–4 hours.',
+          'Protecting your peak energy hours for your most demanding work is the single highest-leverage time management move available. Admin, email, low-stakes meetings — these belong in the lower-energy parts of your day.',
+        ],
+        pullquote: 'Schedule your hardest work in your sharpest hours.',
+        points: [
+          'Identify your personal peak energy window — morning, mid-morning, or afternoon',
+          'Reserve peak hours for your highest-leverage activities: prospecting, complex calls, skill development',
+          'Move low-cognitive tasks (email, admin, data entry) to your energy valleys',
+          'Protect peak time ruthlessly from meetings and reactive demands',
+        ],
+      },
+      {
+        heading: 'The Eisenhower Matrix',
+        body: [
+          'The Eisenhower Matrix divides tasks into four quadrants based on urgency and importance. Quadrant 1 (urgent + important) requires immediate attention — genuine crises. Quadrant 2 (not urgent + important) is where your most valuable work lives: development, planning, relationship building, preparation.',
+          'Most people live in Quadrants 1 and 3 (urgent tasks, whether important or not) and never spend enough time in Quadrant 2. The result: they are permanently reactive, always responding, rarely developing. Deliberate Q2 time is what separates professionals who grow from those who maintain.',
+        ],
+        example: { label: 'Quadrant Map', body: 'Q1 (urgent + important): Customer complaint requiring resolution today. Q2 (not urgent + important): Practicing a new objection response, reading this module. Q3 (urgent + not important): Most emails, most messages. Q4 (neither): Browsing, social media during work time.' },
+        points: [
+          'Q1: Do immediately — but reduce these through better Q2 work',
+          'Q2: Schedule first — this is where growth happens',
+          'Q3: Delegate or batch — do not let urgency manufacture importance',
+          'Q4: Eliminate — these are the hours that disappear without trace',
+        ],
+      },
+      {
+        heading: 'Deep Work and Distraction',
+        body: [
+          'Cal Newport defines deep work as professional activities performed in a state of distraction-free concentration that push your cognitive capabilities to their limit. The ability to do deep work is becoming increasingly rare — and increasingly valuable.',
+          'In sales, deep work time is when you do the preparation that separates good calls from great ones. It is where you study the product, practice the conversation, and review what went wrong. Thirty minutes of genuine deep work beats two hours of distracted pseudo-work every time.',
+        ],
+        points: [
+          'Set a clear start and end time for focused blocks — open-ended focus sessions drift',
+          'Remove all notification sources during deep work: phone, email, browser tabs',
+          'Single-task: do one thing, finish it, then move to the next',
+          'Start with 25 minutes; extend the block as your focus stamina develops',
+        ],
+      },
+      {
+        heading: 'The Cost of Context-Switching',
+        body: [
+          'Multitasking is a myth. What the brain does instead is rapid context-switching — flipping between tasks at high cognitive cost. Research consistently shows that switching tasks degrades performance on both tasks and that it takes an average of 23 minutes to return to full focus after an interruption.',
+          'On a call floor, context-switching looks like checking messages between calls, responding to chat during a pitch, or mentally preparing next week\'s plan while talking to a customer. Each switch bleeds attention from the moment that matters.',
+        ],
+        pullquote: 'It takes an average of 23 minutes to return to full focus after an interruption.',
+        points: [
+          'Batch similar tasks together — calls, then email, then admin',
+          'Close irrelevant tabs and silence non-urgent notifications during calls',
+          'Before each call: one-minute reset. Be fully present before you pick up.',
+          'After each call: 30-second debrief note before moving to the next',
+        ],
+      },
+      {
+        heading: 'Systems and Routines',
+        body: [
+          'The most reliable time management tool is a weekly planning ritual. Fifteen minutes at the end of each week to review what happened, capture commitments, and plan the next week ahead removes the cognitive overhead of deciding what to do next in real time.',
+          'Daily routines — a consistent start time, a morning focus block, an end-of-day shutdown — reduce decision fatigue and preserve energy for the work itself. Systems do not eliminate uncertainty; they absorb it, so you can perform inside it.',
+        ],
+        points: [
+          'Weekly planning ritual: every Friday or Sunday, 15–30 minutes',
+          'End-of-day shutdown: close loops, capture tomorrow\'s three priorities, log off',
+          'Morning anchor: the first thing you do should signal "work mode" to your brain',
+          'Capture system: any idea, task, or commitment gets recorded immediately — do not rely on memory',
+        ],
+      },
+    ],
+    references: ['theGuide · Time Management'],
+    related: ['m-habits', 'm-goalsetting', 'm-mindset'],
+    mistakes: [
+      'Confusing busyness with productivity. A full calendar is not evidence of effective work.',
+      'Spending peak energy hours on low-importance tasks.',
+      'Treating email and notifications as ambient background — they fracture focus continuously.',
+      'Planning in your head instead of on paper or a system. Captured tasks get done; remembered tasks drift.',
+      'Not scheduling Q2 work. If development time isn\'t in the calendar, it will not happen.',
+    ],
+    checks: [
+      'Do I know my peak energy hours? Am I protecting them?',
+      'Where do I spend most of my time — Q1, Q2, Q3, or Q4?',
+      'What is the last uninterrupted 60-minute block of focused work I completed?',
+      'Do I have a weekly planning ritual? If not, when will I start one?',
+      'What is the single highest-leverage task I should be doing that I keep postponing?',
+    ],
+  },
+
+  'm-resilience': {
+    title: 'Mental <span>Resilience</span>',
+    subtitle: 'The ability to absorb pressure and continue forward',
+    lede: 'Resilience is not the absence of difficulty. It is the capacity to be shaped by difficulty without being defined by it. In high-volume, high-rejection environments — sales floors, contact centres, coaching relationships — resilience is not optional. It is the baseline from which everything else is built. The good news: it is trainable.',
+    chapters: [
+      {
+        heading: 'What Resilience Actually Is',
+        body: [
+          'The most common misconception about resilience is that it means not being affected by setbacks. It does not. Resilient people feel the rejection, the frustration, the difficult day — they just do not stay there. The bounce is faster. The narrative they attach to the setback is different.',
+          'Psychologist Martin Seligman identified three explanatory styles that determine resilience: permanence (is this setback temporary or permanent?), pervasiveness (is this one area or everything?), and personalization (is this about me or about circumstances?). Resilient people default to "temporary, limited, circumstantial." Non-resilient people default to "permanent, pervasive, personal."',
+        ],
+        pullquote: 'Resilience is not the absence of being affected. It is the speed of the recovery.',
+        points: [
+          'Resilience is a trainable skill, not a fixed personality trait',
+          'The key variable is not what happens to you, but the story you attach to it',
+          'Temporary, limited, circumstantial — the three defaults of resilient thinking',
+          'Emotional acknowledgement is part of resilience, not a failure of it',
+        ],
+      },
+      {
+        heading: 'Recovery Routines',
+        body: [
+          'Resilience is built into the structure of your day, not summoned on demand. Pre-call routines prime your state before the conversation begins. Post-rejection routines prevent residue from carrying into the next call. End-of-day routines ensure you do not take the day home with you.',
+          'These do not need to be elaborate. A 60-second stand-up and breath reset between difficult calls is enough to interrupt the emotional carry-over. The key is consistency — doing it every time, not only when it feels bad.',
+        ],
+        example: { label: '60-Second Reset', body: 'Stand up. Three slow breaths. Look at something 6 feet away for 10 seconds. Say one thing that went right in the last call. Then dial the next number. Sounds trivial. Most reps skip it, and it costs them.' },
+        points: [
+          'Pre-call: one-minute anchor that puts you in a resourceful state before you engage',
+          'Post-rejection: interrupt the emotional carry-over before the next interaction',
+          'End-of-day: close the loop — write one win and one learning, then leave the day at the desk',
+          'Weekly: review patterns in difficulty; where do you lose ground most consistently?',
+        ],
+      },
+      {
+        heading: 'The Role of Narrative',
+        body: [
+          'Every setback comes with a story attached. The story is not the setback — it is your interpretation of it. Two reps can have the same difficult call and tell themselves completely different stories about what it means.',
+          'Cognitive reframing is the practice of deliberately questioning the default narrative and replacing it with one that is accurate — not falsely positive, not catastrophic. "That was a hard call" is accurate. "I am bad at this" is a story. Learning to tell the difference is a foundational resilience skill.',
+        ],
+        pullquote: 'The setback is fact. The story about it is a choice.',
+        points: [
+          'Notice when you\'re narrating, not observing — "I can\'t sell" is a story, not a fact',
+          'Ask: is this interpretation useful? Is it accurate? What else could be true?',
+          'Practice non-catastrophic language: "that was hard" vs. "I always fail at this"',
+          'Write the story down when it is spiralling — externalising it reduces its power',
+        ],
+      },
+      {
+        heading: 'Physical Foundations',
+        body: [
+          'Mental resilience is not purely psychological. It is built on physical infrastructure. Sleep deprivation degrades emotional regulation before it degrades cognitive performance. Exercise consistently shows up in resilience research as one of the most effective stress-management tools available. Nutrition shapes the neurochemical environment in which every decision and recovery happens.',
+          'This is not wellness culture — it is performance science. The rep who consistently sleeps well, moves their body daily, and eats adequately is running on better hardware for the demands of a high-contact role.',
+        ],
+        points: [
+          'Sleep: 7–9 hours consistently; sleep debt accumulates and impairs emotional regulation',
+          'Exercise: 20–30 minutes of movement daily measurably reduces stress reactivity',
+          'Nutrition: stable blood sugar stabilises mood; hunger amplifies every stressor',
+          'Recovery: scheduled rest is not laziness — it is maintenance for a high-output system',
+        ],
+      },
+      {
+        heading: 'Building Resilience in Others',
+        body: [
+          'If you coach, train, or manage others, resilience building is part of your job — even if no one calls it that. Framing setbacks as data. Normalising difficulty as part of the process. Asking "what did you learn?" instead of "what went wrong?" — these are small language shifts with large cultural effects.',
+          'The most resilient teams are those where failure is treated as information, not evidence of inadequacy. This norm is set by the person with the most authority in the room. Your language about difficulty teaches your team how to feel about it.',
+        ],
+        points: [
+          'Normalise struggle: "This part is hard for everyone. Here\'s how I got through it."',
+          'Debrief on learning, not blame: "What did this call teach us?"',
+          'Celebrate recovery, not just success: resilience is worth recognising',
+          'Model the recovery routine — if you reset publicly, others will learn to reset',
+        ],
+      },
+    ],
+    references: ['theGuide · Mental Resilience'],
+    related: ['m-mindset', 'm-growth', 'm-habits'],
+    mistakes: [
+      'Confusing resilience with stoicism. Feeling the difficulty is fine; staying in it is the problem.',
+      'Skipping recovery routines on good days. Routines built only on bad days are not routines.',
+      'Treating physical wellbeing as separate from mental performance. It is the same system.',
+      'Coaching for output only. Reps who never get coached on recovery eventually stop performing.',
+      'Interpreting every setback as personal. Some calls are just hard; it is not always about you.',
+    ],
+    checks: [
+      'What is my current recovery routine between difficult calls?',
+      'What story do I typically attach to a rejection? Is it permanent or temporary?',
+      'Am I sleeping, moving, and eating in a way that supports high performance?',
+      'Do I treat setbacks as data, or as verdicts?',
+      'If I coach others: am I normalising difficulty and modelling recovery?',
+    ],
+  },
+
+  'm-negotiation': {
+    title: 'The Art of <span>Negotiation</span>',
+    subtitle: 'Moving from positions to interests',
+    lede: 'Negotiation is not about winning. It is about finding the arrangement that both parties can commit to — and execute on. Bad negotiation produces short-term wins that become long-term losses. Good negotiation creates durable outcomes that hold up over time. In sales and service, negotiation happens in every conversation: on price, on timeline, on terms, on expectations.',
+    chapters: [
+      {
+        heading: 'Positions vs Interests',
+        body: [
+          'Most people negotiate on positions: "I want the price lower." "I need this by Tuesday." Positional bargaining produces conflict because the positions themselves are in competition. Interest-based negotiation asks a different question: why does this person want what they are saying they want?',
+          'Behind every position is an interest — a need, a fear, a constraint. When you understand the interest, new solutions become visible. The person who wants a lower price might actually need to stay within a budget ceiling. Finding that ceiling — and a payment structure that fits it — solves their real problem, not just their stated position.',
+        ],
+        pullquote: 'Behind every position is an interest. Find the interest and the solution space expands.',
+        points: [
+          'Positions are what people say they want; interests are why they want it',
+          'Ask "can you help me understand what\'s driving that?" to uncover the interest',
+          'Most interests can be met in multiple ways — only one of which is the stated position',
+          'Interest-based negotiation produces more durable agreements than positional bargaining',
+        ],
+      },
+      {
+        heading: 'BATNA — Your Walk-Away Position',
+        body: [
+          'Your Best Alternative to a Negotiated Agreement (BATNA) is the most important concept in negotiation. It defines how much power you have. If your BATNA is strong — you have good alternatives if this deal falls through — you can negotiate calmly and walk away if the deal doesn\'t serve you. If your BATNA is weak, pressure will force you into bad agreements.',
+          'Knowing the other party\'s BATNA matters equally. If they have no alternatives, they need you more than you need them. If their alternatives are strong, your offer needs to be genuinely compelling. Understanding the power dynamic honestly shapes how you negotiate.',
+        ],
+        points: [
+          'Always know your BATNA before you negotiate — never enter blind',
+          'Strengthen your BATNA before negotiating, not during',
+          'If no agreement is better than a bad agreement, say so — clearly and without aggression',
+          'Try to understand the other party\'s BATNA: it reveals their flexibility',
+        ],
+      },
+      {
+        heading: 'Anchoring and First Offers',
+        body: [
+          'The first number put on the table — the anchor — has a disproportionate influence on the final outcome, regardless of how rational the subsequent negotiation is. Research consistently shows that the initial anchor shapes the entire negotiation range.',
+          'If you are the first to offer, anchor high (for selling) or low (for buying) — but with a rationale. An anchor with no justification is easily dismissed. An anchor attached to a reason — "based on industry standard for this type of product…" — sticks.',
+        ],
+        example: { label: 'Anchoring in Practice', body: '"Our standard policy rate for this coverage level is R850/month, and that\'s based on your profile and the risk category." Even if you ultimately settle at R720, the conversation now lives between 850 and the customer\'s counter — not at 600 where they started.' },
+        points: [
+          'The first number disproportionately influences the final outcome',
+          'Anchor first when you can; attach a rationale to make it stick',
+          'Counter-anchoring: when someone anchors against you, do not immediately concede — introduce a counteroffer',
+          'Use specific numbers (R847, not R850) — they suggest you have done the analysis',
+        ],
+      },
+      {
+        heading: 'Tactical Empathy',
+        body: [
+          'Chris Voss — former FBI hostage negotiator — introduced tactical empathy as the most powerful tool in high-stakes negotiation. Tactical empathy means demonstrating understanding of the other person\'s perspective, not agreement with it. It disarms defensiveness and builds the trust needed for candid conversation.',
+          'Two core techniques: mirroring (repeating the last 1–3 words the person said as a question, which prompts them to elaborate) and labelling (naming the apparent emotion: "It sounds like you\'re concerned about…"). Both techniques keep the other person talking and create the sense of being genuinely understood.',
+        ],
+        pullquote: 'Tactical empathy is demonstrating understanding, not agreement.',
+        points: [
+          'Mirror: repeat the last 1–3 words as a question to invite elaboration',
+          'Label: "It sounds like…" or "It seems like…" — name the emotion you observe',
+          'Pause after labelling — the silence gives space for correction or confirmation',
+          'Never say "I understand how you feel" — it is dismissive; label specifically instead',
+        ],
+      },
+      {
+        heading: 'Win-Win vs Win-Lose',
+        body: [
+          'A win-lose outcome — where you get everything you wanted and the other party feels robbed — tends not to survive. The customer who felt forced will not renew. The deal that felt coerced will attract scrutiny and complaint. Durable commercial relationships require both parties to feel the outcome was fair.',
+          'Win-win does not mean splitting every difference. It means finding arrangements that meet both parties\' core interests — even if those interests are different. You may care about price. They may care about timing. An arrangement that honours both is a genuine win-win.',
+        ],
+        points: [
+          'Ask what the other party needs the agreement to do for them',
+          'Identify which terms you are genuinely flexible on and where your limits are',
+          'Look for trades: give something low-cost to you that is high-value to them',
+          'After agreement: confirm both parties\' understanding in writing to prevent scope creep',
+        ],
+      },
+    ],
+    references: ['theGuide · Negotiation'],
+    related: ['m-objections', 'm-impulse', 'm-callflow'],
+    mistakes: [
+      'Negotiating on positions instead of digging for interests.',
+      'Entering a negotiation without knowing your BATNA.',
+      'Conceding too quickly under silence pressure. Silence is not a demand — learn to hold it.',
+      'Treating every negotiation as adversarial. Most become collaborative once interests are on the table.',
+      'Failing to confirm the agreement in writing. Verbal deals drift in memory.',
+    ],
+    checks: [
+      'Do I know the difference between someone\'s position and their underlying interest?',
+      'Before my next negotiation: what is my BATNA if this falls through?',
+      'Am I comfortable holding silence after making an offer?',
+      'Have I practised mirroring and labelling in a low-stakes conversation recently?',
+      'When I close a deal: do I confirm the key terms in writing before we hang up?',
+    ],
+  },
+
 };
 
 /* ──────────────────────────────────────────────────────────────
@@ -9863,6 +10323,34 @@ const MODULE_REFS = {
     { citation: 'Kirkpatrick, D. L., & Kirkpatrick, J. D. (2006). <em>Evaluating Training Programs: The Four Levels</em> (3rd ed.). Berrett-Koehler.', annotation: 'The four-level evaluation model — reaction, learning, behaviour, results — for measuring whether training actually worked.' },
     { citation: 'ATD. (2023). <em>2023 State of the Industry: Talent Development Benchmarks and Trends</em>. Association for Talent Development.', url: 'https://www.td.org/research-reports/2023-state-of-the-industry', annotation: 'The most current industry benchmarks for training investment, delivery formats, and measurable impact.' },
   ],
+  'm-goalsetting': [
+    { citation: 'Locke, E. A., & Latham, G. P. (2002). Building a practically useful theory of goal setting and task motivation: A 35-year odyssey. <em>American Psychologist, 57</em>(9), 705–717.', url: 'https://doi.org/10.1037/0003-066X.57.9.705', annotation: 'The definitive empirical foundation for goal-setting theory, synthesising 35 years of research across hundreds of studies.' },
+    { citation: 'Doran, G. T. (1981). There\'s a S.M.A.R.T. way to write management\'s goals and objectives. <em>Management Review, 70</em>(11), 35–36.', annotation: 'The original paper that introduced the SMART acronym — now the most widely used goal-setting framework in the world.' },
+    { citation: 'Clear, J. (2018). <em>Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</em>. Avery.', annotation: 'The systems-over-goals argument: why the daily inputs matter more than the outcome target — and how to build them.' },
+    { citation: 'Oettingen, G. (2014). <em>Rethinking Positive Thinking: Inside the New Science of Motivation</em>. Penguin Books.', annotation: 'The WOOP framework (Wish, Outcome, Obstacle, Plan) — why mental contrasting with implementation intentions outperforms pure positive visualisation.' },
+    { citation: 'Covey, S. R. (1989). <em>The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change</em>. Free Press.', annotation: '"Begin with the end in mind" — the second habit establishes the foundational role of goal clarity in personal effectiveness.' },
+  ],
+  'm-timemanagement': [
+    { citation: 'Newport, C. (2016). <em>Deep Work: Rules for Focused Success in a Distracted World</em>. Grand Central Publishing.', annotation: 'The most influential modern argument for focused, distraction-free work as the primary driver of professional value.' },
+    { citation: 'Allen, D. (2001). <em>Getting Things Done: The Art of Stress-Free Productivity</em>. Viking.', annotation: 'GTD remains the gold standard capture-and-review system; the trusted system that externalises cognitive overhead.' },
+    { citation: 'Baumeister, R. F., & Tierney, J. (2011). <em>Willpower: Rediscovering the Greatest Human Strength</em>. Penguin Press.', annotation: 'The science of decision fatigue and ego depletion: why structuring the day reduces the mental cost of every choice in it.' },
+    { citation: 'Covey, S. R. (1989). <em>The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change</em>. Free Press.', annotation: 'Habit 3 ("Put First Things First") introduces the Eisenhower Matrix — the foundational prioritisation model for time allocation.' },
+    { citation: 'Schwartz, T., & McCarthy, C. (2007). Manage your energy, not your time. <em>Harvard Business Review, 85</em>(10), 63–73.', url: 'https://hbr.org/2007/10/manage-your-energy-not-your-time', annotation: 'The landmark HBR piece that reframes performance as an energy management challenge, not a scheduling one.' },
+  ],
+  'm-resilience': [
+    { citation: 'Seligman, M. E. P. (2011). <em>Flourish: A Visionary New Understanding of Happiness and Well-being</em>. Free Press.', annotation: 'Introduces PERMA and the three explanatory styles — permanence, pervasiveness, personalisation — that determine resilience.' },
+    { citation: 'Southwick, S. M., & Charney, D. S. (2012). <em>Resilience: The Science of Mastering Life\'s Greatest Challenges</em>. Cambridge University Press.', annotation: 'A comprehensive synthesis of resilience research across military veterans, trauma survivors, and high-performance professionals.' },
+    { citation: 'Duckworth, A. (2016). <em>Grit: The Power of Passion and Perseverance</em>. Scribner.', annotation: 'Establishes that long-term resilience — the ability to keep going over months and years — is more predictive of success than talent.' },
+    { citation: 'McGonigal, K. (2015). <em>The Upside of Stress: Why Stress Is Good for You, and How to Get Good at It</em>. Avery.', annotation: 'The counter-intuitive research showing that the belief stress is harmful is more damaging than the stress itself — reframing changes outcomes.' },
+    { citation: 'Beck, A. T. (1979). <em>Cognitive Therapy of Depression</em>. Guilford Press.', annotation: 'The foundational text for cognitive reframing techniques — the theoretical basis for changing the narratives we attach to adversity.' },
+  ],
+  'm-negotiation': [
+    { citation: 'Fisher, R., Ury, W. L., & Patton, B. (2011). <em>Getting to Yes: Negotiating Agreement Without Giving In</em> (3rd ed.). Penguin Books.', annotation: 'The most widely read negotiation book in the world; introduces principled negotiation, BATNA, and the positions-vs-interests distinction.' },
+    { citation: 'Voss, C., & Raz, T. (2016). <em>Never Split the Difference: Negotiating as if Your Life Depended on It</em>. Harper Business.', annotation: 'The FBI hostage negotiation framework applied to business — tactical empathy, mirroring, and labelling as high-leverage techniques.' },
+    { citation: 'Cialdini, R. B. (1984). <em>Influence: The Psychology of Persuasion</em>. William Morrow.', annotation: 'The six principles of influence — reciprocity, commitment, social proof, authority, liking, scarcity — that underpin ethical persuasion.' },
+    { citation: 'Malhotra, D., & Bazerman, M. H. (2007). <em>Negotiation Genius: How to Overcome Obstacles and Achieve Brilliant Results at the Bargaining Table and Beyond</em>. Bantam Books.', annotation: 'Research-backed negotiation strategies covering anchoring, framing, contingent contracts, and managing the other party\'s interests.' },
+    { citation: 'Thompson, L. L. (2014). <em>The Mind and Heart of the Negotiator</em> (6th ed.). Pearson.', annotation: 'The standard academic text on negotiation; covers integrative vs. distributive bargaining, cognitive biases, and multi-party negotiations.' },
+  ],
 };
 
 /* Curated YouTube videos per module — 2 per module, TED-first.
@@ -9967,6 +10455,34 @@ const MODULE_VIDEOS = {
     { id: 'gjHv4pM8WEQ', title: 'Watch Me Close on the PHONE', channel: 'Grant Cardone', duration: '9 min' },
     { id: '1CiYGZ6-Z80', title: 'How to Handle Any Objection', channel: 'Jordan Belfort · Sales School', duration: '14 min' },
   ],
+  'm-goalsetting': [
+    { id: 'qp0HIF3SfI4', title: 'How Great Leaders Inspire Action (Start With Why)', channel: 'TED · Simon Sinek', duration: '18 min' },
+    { id: 'H14bBuluwB8', title: 'Grit: The Power of Passion and Perseverance', channel: 'TED · Angela Duckworth', duration: '6 min' },
+    { id: 'atMbyqguMhU', title: 'Wake Up to Your Potential', channel: 'Les Brown', duration: '9 min' },
+    { id: '1_F0xfAPnZg', title: 'Discipline Equals Freedom — Mental Blueprint', channel: 'Jocko Willink', duration: '8 min' },
+    { id: '_pUy6PLP03s', title: 'burn all the boats.', channel: 'PunchProductions', duration: '3 min' },
+  ],
+  'm-timemanagement': [
+    { id: 'rrkrvAUbU9Y', title: 'The Puzzle of Motivation', channel: 'TED · Dan Pink', duration: '18 min' },
+    { id: 'fLJsdqxnZb0', title: 'The Happy Secret to Better Work', channel: 'TED · Shawn Achor', duration: '12 min' },
+    { id: 'ZxieigJ_0WU', title: 'Small Daily Habits That Create Massive Success', channel: 'Jim Rohn Motivation', duration: '10 min' },
+    { id: 'DocA2ttTyD4', title: 'GOOD! — Discipline Mindset vs Your Excuses', channel: 'Jocko Willink', duration: '7 min' },
+    { id: '9OF06n1jNkM', title: 'Why Discipline Must Come From Within', channel: 'Jocko Willink', duration: '6 min' },
+  ],
+  'm-resilience': [
+    { id: 'iCvmsMzlF7o', title: 'The Power of Vulnerability', channel: 'TED · Brené Brown', duration: '20 min' },
+    { id: '_X0mgOOSpLU', title: 'The Power of Believing That You Can Improve', channel: 'TED · Carol Dweck', duration: '10 min' },
+    { id: '4QxiCvOi3UU', title: "CAN'T HURT ME — Powerful Motivational Speech", channel: 'David Goggins', duration: '5 min' },
+    { id: 'Vk2NQjw6PqM', title: "Les Brown's Most Powerful Speech", channel: 'Les Brown', duration: '25 min' },
+    { id: 'CaVaF6TkSUU', title: 'Desiderata — A Life-Changing Poem for Hard Times', channel: 'RedFrost Motivation', duration: '5 min' },
+  ],
+  'm-negotiation': [
+    { id: '6PTmIz9SQJI', title: 'The Walk from No to Yes', channel: 'TED · William Ury', duration: '19 min' },
+    { id: 'hrEfTxsyfhA', title: 'How to INFLUENCE ANYONE', channel: 'Tony Robbins', duration: '18 min' },
+    { id: '1CiYGZ6-Z80', title: 'How to Handle Any Objection', channel: 'Jordan Belfort · Sales School', duration: '14 min' },
+    { id: 'gjHv4pM8WEQ', title: 'Watch Me Close on the PHONE', channel: 'Grant Cardone', duration: '9 min' },
+    { id: 'n9AaNnEr9B8', title: 'How to Overcome Every Objection', channel: 'Andy Elliott', duration: '22 min' },
+  ],
 };
 
 /* Fallback module content from CURRICULUM for modules without expanded content */
@@ -10040,6 +10556,7 @@ function deleteHighlight(id) {
 const facCatalogView = document.getElementById('facilitateCatalog');
 const facHighlightsView = document.getElementById('facilitateHighlights');
 const facGlossaryView = document.getElementById('facilitateGlossary');
+const facResourcesView = document.getElementById('facilitateResources');
 let _libView = persistGet('lib-view', 'catalog');
 
 function setLibView(view) {
@@ -10049,12 +10566,81 @@ function setLibView(view) {
   facCatalogView.style.display = (view === 'catalog') ? 'block' : 'none';
   facHighlightsView.style.display = (view === 'highlights') ? 'block' : 'none';
   facGlossaryView.style.display = (view === 'glossary') ? 'block' : 'none';
+  facResourcesView.style.display = (view === 'resources') ? 'block' : 'none';
   if (view === 'catalog') renderCatalog();
   else if (view === 'highlights') renderHighlightsView();
   else if (view === 'glossary') renderGlossaryGrid();
+  else if (view === 'resources') renderResourcesView();
 }
 document.querySelectorAll('[data-lib-view]').forEach(b => {
   b.addEventListener('click', () => setLibView(b.dataset.libView));
+});
+
+/* ── Global Resources view ─────────────────────────────── */
+let _resType = 'refs';
+let _resPillar = 'all';
+
+function renderResourcesView() {
+  const content = document.getElementById('resourcesContent');
+  if (!content) return;
+
+  const items = [];
+  MODULE_LIBRARY.forEach(m => {
+    if (_resPillar !== 'all' && m.pillar !== _resPillar) return;
+    if (_resType === 'refs') {
+      (MODULE_REFS[m.id] || []).forEach(r => items.push({ module: m, item: r }));
+    } else {
+      (MODULE_VIDEOS[m.id] || []).forEach(v => items.push({ module: m, item: v }));
+    }
+  });
+
+  if (_resType === 'refs') {
+    content.innerHTML = `<ol class="ex-refs ex-global-refs">${items.map(({ module: m, item: r }) => `
+      <li>
+        <span class="ex-res-module-tag ex-res-module-tag--${m.pillar}">${escapeHtml(m.title)}</span>
+        ${r.citation}${r.url ? ` <a class="ex-ref-link" href="${r.url}" target="_blank" rel="noopener noreferrer">↗</a>` : ''}
+        ${r.annotation ? `<div class="ex-ref-annotation">${r.annotation}</div>` : ''}
+      </li>`).join('')}</ol>`;
+  } else {
+    content.innerHTML = `<div class="ex-video-grid">${items.map(({ module: m, item: v }) => `
+      <div class="ex-video-card">
+        <div class="ex-video-embed ex-video-thumb" data-vid="${v.id}" data-vid-title="${escapeHtml(v.title)}" role="button" tabindex="0" aria-label="Play ${escapeHtml(v.title)}">
+          <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${escapeHtml(v.title)}" loading="lazy">
+          <div class="ex-video-thumb__play" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <div class="ex-video-meta">
+          <div class="ex-video-meta__title">${escapeHtml(v.title)}</div>
+          <div class="ex-video-meta__channel">${escapeHtml(v.channel)}${v.duration ? ' · ' + v.duration : ''}</div>
+          <span class="ex-res-module-tag ex-res-module-tag--${m.pillar}">${escapeHtml(m.title)}</span>
+        </div>
+      </div>`).join('')}</div>`;
+    content.querySelectorAll('[data-vid]').forEach(thumb => {
+      const activate = () => {
+        const id = thumb.dataset.vid, title = thumb.dataset.vidTitle || '';
+        thumb.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0&autoplay=1" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+        thumb.classList.remove('ex-video-thumb');
+      };
+      thumb.addEventListener('click', activate);
+      thumb.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+    });
+  }
+}
+
+document.querySelectorAll('[data-res-type]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    _resType = btn.dataset.resType;
+    document.querySelectorAll('[data-res-type]').forEach(b => b.classList.toggle('is-active', b.dataset.resType === _resType));
+    renderResourcesView();
+  });
+});
+document.querySelectorAll('[data-res-pillar]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    _resPillar = btn.dataset.resPillar;
+    document.querySelectorAll('[data-res-pillar]').forEach(b => b.classList.toggle('is-active', b.dataset.resPillar === _resPillar));
+    renderResourcesView();
+  });
 });
 
 /* v2.5 - Facilitate sub-views: each sub-tab unique and purposeful
