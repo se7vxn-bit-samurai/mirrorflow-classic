@@ -2827,6 +2827,90 @@ mark.ex-saved-highlight {
   opacity: 0.7;
 }
 
+/* ── Embedded video grid ─────────────────────────────────── */
+.ex-video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 16px;
+  margin: 14px 0 4px;
+}
+.ex-video-card {
+  background: var(--ex-surface-2);
+  border: 1px solid var(--ex-border);
+  border-radius: var(--ex-radius);
+  overflow: hidden;
+}
+.ex-video-embed {
+  position: relative;
+  padding-top: 56.25%;
+}
+.ex-video-embed iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: none;
+}
+.ex-video-meta {
+  padding: 10px 14px 12px;
+}
+.ex-video-meta__title {
+  font-family: var(--ex-font-editorial);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ex-text);
+  margin-bottom: 4px;
+}
+.ex-video-meta__channel {
+  font-family: var(--ex-font-mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ex-text-muted);
+}
+
+/* ── References list ─────────────────────────────────────── */
+.ex-refs {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: ex-ref;
+}
+.ex-refs li {
+  counter-increment: ex-ref;
+  position: relative;
+  padding: 10px 0 10px 38px;
+  border-bottom: 1px dotted var(--ex-border);
+  font-family: var(--ex-font-editorial);
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.ex-refs li:last-child { border-bottom: none; }
+.ex-refs li::before {
+  content: counter(ex-ref);
+  position: absolute;
+  left: 0;
+  top: 13px;
+  width: 22px;
+  height: 22px;
+  line-height: 20px;
+  text-align: center;
+  border: 1px solid var(--ex-fire);
+  color: var(--ex-fire);
+  border-radius: 50%;
+  font-family: var(--ex-font-mono);
+  font-size: 10px;
+  font-weight: 700;
+}
+.ex-ref-link {
+  margin-left: 6px;
+  color: var(--ex-fire);
+  font-size: 11px;
+  text-decoration: none;
+  font-style: normal;
+}
+.ex-ref-link:hover { text-decoration: underline; }
+
 /* Reader pager (prev/next module) */
 .ex-reader-pager {
   display: flex;
@@ -9616,22 +9700,190 @@ const MODULE_CONTENT = {
   },
 };
 
+/* ──────────────────────────────────────────────────────────────
+   v2.8 - MODULE_REFS & MODULE_VIDEOS
+   Academic references (APA 7th ed.) and curated YouTube viewing
+   per module. Merged into content object at read time.
+────────────────────────────────────────────────────────────── */
+const MODULE_REFS = {
+  'm-mindset': [
+    { citation: 'Dweck, C. S. (2006). <em>Mindset: The New Psychology of Success</em>. Random House.' },
+    { citation: 'Duckworth, A. L., Peterson, C., Matthews, M. D., & Kelly, D. R. (2007). Grit: Perseverance and passion for long-term goals. <em>Journal of Personality and Social Psychology, 92</em>(6), 1087–1101.', url: 'https://doi.org/10.1037/0022-3514.92.6.1087' },
+    { citation: 'Bandura, A. (1997). <em>Self-Efficacy: The Exercise of Control</em>. W. H. Freeman.' },
+    { citation: 'Seligman, M. E. P. (2011). <em>Flourish: A Visionary New Understanding of Happiness and Well-being</em>. Free Press.' },
+    { citation: 'Pink, D. H. (2009). <em>Drive: The Surprising Truth About What Motivates Us</em>. Riverhead Books.' },
+  ],
+  'm-habits': [
+    { citation: 'Clear, J. (2018). <em>Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</em>. Avery.' },
+    { citation: 'Duhigg, C. (2012). <em>The Power of Habit: Why We Do What We Do in Life and Business</em>. Random House.' },
+    { citation: 'Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W., & Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. <em>European Journal of Social Psychology, 40</em>(6), 998–1009.', url: 'https://doi.org/10.1002/ejsp.674' },
+    { citation: 'Covey, S. R. (1989). <em>The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change</em>. Free Press.' },
+    { citation: 'Fogg, B. J. (2019). <em>Tiny Habits: The Small Changes That Change Everything</em>. Houghton Mifflin Harcourt.' },
+  ],
+  'm-callflow': [
+    { citation: 'Dixon, M., & Adamson, B. (2011). <em>The Challenger Sale: Taking Control of the Customer Conversation</em>. Portfolio/Penguin.' },
+    { citation: 'Rackham, N. (1988). <em>SPIN Selling</em>. McGraw-Hill.' },
+    { citation: 'Tracy, B. (2004). <em>The Psychology of Selling: Increase Your Sales Faster and Easier Than You Ever Thought Possible</em>. HarperCollins.' },
+    { citation: 'Cialdini, R. B. (2016). <em>Pre-Suasion: A Revolutionary Way to Influence and Persuade</em>. Simon & Schuster.' },
+    { citation: 'Blount, J. (2016). <em>Fanatical Prospecting: The Ultimate Guide to Opening Sales Conversations and Filling the Pipeline</em>. Wiley.' },
+  ],
+  'm-rapport': [
+    { citation: 'Carnegie, D. (1936). <em>How to Win Friends and Influence People</em>. Simon & Schuster.' },
+    { citation: 'Cialdini, R. B. (2006). <em>Influence: The Psychology of Persuasion</em> (Rev. ed.). Harper Business.' },
+    { citation: 'Goleman, D. (1995). <em>Emotional Intelligence: Why It Can Matter More Than IQ</em>. Bantam Books.' },
+    { citation: 'Mehrabian, A. (1981). <em>Silent Messages: Implicit Communication of Emotions and Attitudes</em> (2nd ed.). Wadsworth.' },
+    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.' },
+  ],
+  'm-service': [
+    { citation: 'Dixon, M., Toman, N., & DeLisi, R. (2013). <em>The Effortless Experience: Conquering the New Battleground for Customer Loyalty</em>. Portfolio/Penguin.' },
+    { citation: 'Hsieh, T. (2010). <em>Delivering Happiness: A Path to Profits, Passion, and Purpose</em>. Grand Central Publishing.' },
+    { citation: 'Parasuraman, A., Zeithaml, V. A., & Berry, L. L. (1988). SERVQUAL: A multiple-item scale for measuring consumer perceptions of service quality. <em>Journal of Retailing, 64</em>(1), 12–40.' },
+    { citation: 'Reichheld, F. F. (2003). The one number you need to grow. <em>Harvard Business Review, 81</em>(12), 46–54.', url: 'https://hbr.org/2003/12/the-one-number-you-need-to-grow' },
+    { citation: 'Hyken, S. (2011). <em>The Amazement Revolution: Seven Customer Service Strategies to Create an Amazing Customer (and Employee) Experience</em>. Greenleaf Book Group Press.' },
+  ],
+  'm-impulse': [
+    { citation: 'Cialdini, R. B. (2006). <em>Influence: The Psychology of Persuasion</em> (Rev. ed.). Harper Business.' },
+    { citation: 'Ariely, D. (2008). <em>Predictably Irrational: The Hidden Forces That Shape Our Decisions</em>. HarperCollins.' },
+    { citation: 'Kahneman, D. (2011). <em>Thinking, Fast and Slow</em>. Farrar, Straus and Giroux.' },
+    { citation: 'Thaler, R. H., & Sunstein, C. R. (2008). <em>Nudge: Improving Decisions About Health, Wealth, and Happiness</em>. Yale University Press.' },
+    { citation: 'Cialdini, R. B. (2016). <em>Pre-Suasion: A Revolutionary Way to Influence and Persuade</em>. Simon & Schuster.' },
+  ],
+  'm-objections': [
+    { citation: 'Blount, J. (2018). <em>Objections: The Ultimate Guide for Mastering the Art and Science of Getting Past No</em>. Wiley.' },
+    { citation: 'Voss, C., & Raz, T. (2016). <em>Never Split the Difference: Negotiating as if Your Life Depended on It</em>. HarperBusiness.' },
+    { citation: 'Fisher, R., Ury, W., & Patton, B. (1991). <em>Getting to Yes: Negotiating Agreement Without Giving In</em> (2nd ed.). Penguin.' },
+    { citation: 'Ziglar, Z. (1984). <em>Secrets of Closing the Sale</em>. Fleming H. Revell.' },
+    { citation: 'Miller, R. B., Heiman, S. E., & Tuleja, T. (2011). <em>The New Strategic Selling</em> (3rd ed.). Business Plus.' },
+  ],
+  'm-toolkit': [
+    { citation: 'Gitomer, J. (2004). <em>The Sales Bible: The Ultimate Sales Resource</em>. Wiley.' },
+    { citation: 'Holmes, C. (2007). <em>The Ultimate Sales Machine: Turbocharge Your Business with Relentless Focus on 12 Key Strategies</em>. Portfolio/Penguin.' },
+    { citation: 'Dixon, M., & Adamson, B. (2011). <em>The Challenger Sale</em>. Portfolio/Penguin.' },
+    { citation: 'Rackham, N. (1988). <em>SPIN Selling</em>. McGraw-Hill.' },
+    { citation: 'Tracy, B. (2004). <em>The Psychology of Selling</em>. HarperCollins.' },
+  ],
+  'm-comms': [
+    { citation: 'Treasure, J. (2017). <em>How to Be Heard: Secrets for Powerful Speaking and Listening</em>. Mango Publishing.' },
+    { citation: 'Mehrabian, A. (1981). <em>Silent Messages: Implicit Communication of Emotions and Attitudes</em> (2nd ed.). Wadsworth.' },
+    { citation: 'Patterson, K., Grenny, J., McMillan, R., & Switzler, A. (2011). <em>Crucial Conversations: Tools for Talking When Stakes Are High</em> (2nd ed.). McGraw-Hill.' },
+    { citation: 'Goulston, M. (2010). <em>Just Listen: Discover the Secret to Getting Through to Absolutely Anyone</em>. AMACOM.' },
+    { citation: 'Carnegie, D. (1936). <em>How to Win Friends and Influence People</em>. Simon & Schuster.' },
+  ],
+  'm-effective': [
+    { citation: 'Stone, D., Patton, B., & Heen, S. (1999). <em>Difficult Conversations: How to Discuss What Matters Most</em>. Viking.' },
+    { citation: 'Tannen, D. (1990). <em>You Just Don\'t Understand: Women and Men in Conversation</em>. William Morrow.' },
+    { citation: 'Goleman, D. (1995). <em>Emotional Intelligence: Why It Can Matter More Than IQ</em>. Bantam Books.' },
+    { citation: 'Goulston, M. (2010). <em>Just Listen: Discover the Secret to Getting Through to Absolutely Anyone</em>. AMACOM.' },
+    { citation: 'Lowndes, L. (1999). <em>How to Talk to Anyone: 92 Little Tricks for Big Success in Relationships</em>. McGraw-Hill.' },
+  ],
+  'm-conflict': [
+    { citation: 'Fisher, R., Ury, W., & Patton, B. (1991). <em>Getting to Yes: Negotiating Agreement Without Giving In</em> (2nd ed.). Penguin.' },
+    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.' },
+    { citation: 'Patterson, K., Grenny, J., McMillan, R., & Switzler, A. (2011). <em>Crucial Conversations: Tools for Talking When Stakes Are High</em> (2nd ed.). McGraw-Hill.' },
+    { citation: 'Thomas, K. W., & Kilmann, R. H. (1974). <em>Thomas-Kilmann Conflict Mode Instrument</em>. Xicom.' },
+    { citation: 'Stone, D., Patton, B., & Heen, S. (1999). <em>Difficult Conversations: How to Discuss What Matters Most</em>. Viking.' },
+  ],
+  'm-styles': [
+    { citation: 'Thomas, K. W. (1992). Conflict and conflict management: Reflections and update. <em>Journal of Organizational Behavior, 13</em>(3), 265–274.', url: 'https://doi.org/10.1002/job.4030130306' },
+    { citation: 'Kilmann, R. H., & Thomas, K. W. (1977). Developing a forced-choice measure of conflict-handling behavior: The MODE instrument. <em>Educational and Psychological Measurement, 37</em>(2), 309–325.' },
+    { citation: 'Rahim, M. A. (1983). A measure of styles of handling interpersonal conflict. <em>Academy of Management Journal, 26</em>(2), 368–376.', url: 'https://doi.org/10.2307/255985' },
+    { citation: 'Goleman, D. (1998). <em>Working with Emotional Intelligence</em>. Bantam Books.' },
+    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.' },
+  ],
+  'm-growth': [
+    { citation: 'Lencioni, P. (2002). <em>The Five Dysfunctions of a Team: A Leadership Fable</em>. Jossey-Bass.' },
+    { citation: 'Sinek, S. (2009). <em>Start with Why: How Great Leaders Inspire Everyone to Take Action</em>. Portfolio/Penguin.' },
+    { citation: 'Katzenbach, J. R., & Smith, D. K. (1993). The discipline of teams. <em>Harvard Business Review, 71</em>(2), 111–120.', url: 'https://hbr.org/1993/03/the-discipline-of-teams' },
+    { citation: 'Dweck, C. S. (2006). <em>Mindset: The New Psychology of Success</em>. Random House.' },
+    { citation: 'Brown, B. (2012). <em>Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead</em>. Gotham Books.' },
+  ],
+  'm-proposal': [
+    { citation: 'Pink, D. H. (2012). <em>To Sell Is Human: The Surprising Truth About Moving Others</em>. Riverhead Books.' },
+    { citation: 'Knowles, M. S., Holton, E. F., & Swanson, R. A. (2011). <em>The Adult Learner: The Definitive Classic in Adult Education and Human Resource Development</em> (7th ed.). Butterworth-Heinemann.' },
+    { citation: 'Sinek, S. (2009). <em>Start with Why: How Great Leaders Inspire Everyone to Take Action</em>. Portfolio/Penguin.' },
+    { citation: 'Kirkpatrick, D. L., & Kirkpatrick, J. D. (2006). <em>Evaluating Training Programs: The Four Levels</em> (3rd ed.). Berrett-Koehler.' },
+    { citation: 'ATD. (2023). <em>2023 State of the Industry: Talent Development Benchmarks and Trends</em>. Association for Talent Development.', url: 'https://www.td.org/research-reports/2023-state-of-the-industry' },
+  ],
+};
+
+/* Curated YouTube videos per module — 2 per module, TED-first.
+   IDs sourced from TED's official YouTube channel (youtube.com/TED).
+   Verify IDs remain live before publishing; swap via this object only. */
+const MODULE_VIDEOS = {
+  'm-mindset': [
+    { id: '_X0mgOOSpLU', title: 'The Power of Believing That You Can Improve', channel: 'TED · Carol Dweck', duration: '10 min' },
+    { id: 'H14bBuluwB8', title: 'Grit: The Power of Passion and Perseverance', channel: 'TED · Angela Duckworth', duration: '6 min' },
+  ],
+  'm-habits': [
+    { id: 'rrkrvAUbU9Y', title: 'The Puzzle of Motivation', channel: 'TED · Dan Pink', duration: '18 min' },
+    { id: 'fLJsdqxnZb0', title: 'The Happy Secret to Better Work', channel: 'TED · Shawn Achor', duration: '12 min' },
+  ],
+  'm-callflow': [
+    { id: 'H6n3iNh4XLI', title: '10 Ways to Have a Better Conversation', channel: 'TED · Celeste Headlee', duration: '12 min' },
+    { id: 'eIho2S0ZahI', title: 'How to Speak so That People Want to Listen', channel: 'TED · Julian Treasure', duration: '10 min' },
+  ],
+  'm-rapport': [
+    { id: 'Ks-_Mh1QhMc', title: 'Your Body Language May Shape Who You Are', channel: 'TED · Amy Cuddy', duration: '21 min' },
+    { id: '8KkKuTCFvzI', title: 'What Makes a Good Life? Lessons from the Longest Study on Happiness', channel: 'TED · Robert Waldinger', duration: '13 min' },
+  ],
+  'm-service': [
+    { id: 'fLJsdqxnZb0', title: 'The Happy Secret to Better Work', channel: 'TED · Shawn Achor', duration: '12 min' },
+    { id: '8KkKuTCFvzI', title: 'What Makes a Good Life? Lessons from the Longest Study on Happiness', channel: 'TED · Robert Waldinger', duration: '13 min' },
+  ],
+  'm-impulse': [
+    { id: '9X68dm92HVI', title: 'Are We in Control of Our Own Decisions?', channel: 'TED · Dan Ariely', duration: '17 min' },
+    { id: 'rrkrvAUbU9Y', title: 'The Puzzle of Motivation', channel: 'TED · Dan Pink', duration: '18 min' },
+  ],
+  'm-objections': [
+    { id: '6PTmIz9SQJI', title: 'The Walk from No to Yes', channel: 'TED · William Ury', duration: '19 min' },
+    { id: 'H6n3iNh4XLI', title: '10 Ways to Have a Better Conversation', channel: 'TED · Celeste Headlee', duration: '12 min' },
+  ],
+  'm-toolkit': [
+    { id: 'qp0HIF3SfI4', title: 'How Great Leaders Inspire Action', channel: 'TED · Simon Sinek', duration: '18 min' },
+    { id: 'Ks-_Mh1QhMc', title: 'Your Body Language May Shape Who You Are', channel: 'TED · Amy Cuddy', duration: '21 min' },
+  ],
+  'm-comms': [
+    { id: 'eIho2S0ZahI', title: 'How to Speak so That People Want to Listen', channel: 'TED · Julian Treasure', duration: '10 min' },
+    { id: 'H6n3iNh4XLI', title: '10 Ways to Have a Better Conversation', channel: 'TED · Celeste Headlee', duration: '12 min' },
+  ],
+  'm-effective': [
+    { id: 'eIho2S0ZahI', title: 'How to Speak so That People Want to Listen', channel: 'TED · Julian Treasure', duration: '10 min' },
+    { id: 'Ks-_Mh1QhMc', title: 'Your Body Language May Shape Who You Are', channel: 'TED · Amy Cuddy', duration: '21 min' },
+  ],
+  'm-conflict': [
+    { id: '6PTmIz9SQJI', title: 'The Walk from No to Yes', channel: 'TED · William Ury', duration: '19 min' },
+    { id: 'iCvmsMzlF7o', title: 'The Power of Vulnerability', channel: 'TED · Brené Brown', duration: '20 min' },
+  ],
+  'm-styles': [
+    { id: 'iCvmsMzlF7o', title: 'The Power of Vulnerability', channel: 'TED · Brené Brown', duration: '20 min' },
+    { id: 'H6n3iNh4XLI', title: '10 Ways to Have a Better Conversation', channel: 'TED · Celeste Headlee', duration: '12 min' },
+  ],
+  'm-growth': [
+    { id: 'qp0HIF3SfI4', title: 'How Great Leaders Inspire Action', channel: 'TED · Simon Sinek', duration: '18 min' },
+    { id: 'iCvmsMzlF7o', title: 'The Power of Vulnerability', channel: 'TED · Brené Brown', duration: '20 min' },
+  ],
+  'm-proposal': [
+    { id: 'qp0HIF3SfI4', title: 'How Great Leaders Inspire Action', channel: 'TED · Simon Sinek', duration: '18 min' },
+    { id: '_X0mgOOSpLU', title: 'The Power of Believing That You Can Improve', channel: 'TED · Carol Dweck', duration: '10 min' },
+  ],
+};
+
 /* Fallback module content from CURRICULUM for modules without expanded content */
 function getModuleContent(moduleId) {
-  if (MODULE_CONTENT[moduleId]) return MODULE_CONTENT[moduleId];
   const m = MODULE_LIBRARY.find(x => x.id === moduleId);
   if (!m) return null;
+  const extra = { videos: MODULE_VIDEOS[moduleId] || [], refs: MODULE_REFS[moduleId] || [] };
+  if (MODULE_CONTENT[moduleId]) return Object.assign({}, MODULE_CONTENT[moduleId], extra);
   const pillar = CURRICULUM.find(p => p.id === m.pillar);
   if (!pillar) return null;
-  // Build a lightweight content object from pillar sections
-  return {
+  return Object.assign({
     title: m.title,
     subtitle: pillar.subtitle,
     lede: MODULE_LEDES[moduleId] || '',
     chapters: pillar.sections.map(s => ({ heading: s.heading, body: [], points: s.points })),
     references: [m.source + '.pdf'],
     related: MODULE_LIBRARY.filter(x => x.pillar === m.pillar && x.id !== m.id).slice(0, 3).map(x => x.id),
-  };
+  }, extra);
 }
 
 /* Persistent stores */
@@ -9989,6 +10241,8 @@ function openLibraryReader(moduleId) {
   if (content.industry) tocHTML += '<a class="ex-reader-side__link" data-reader-tocextra="ch-industry">Industry Adaptations</a>';
   if (content.plays && content.plays.length) tocHTML += '<a class="ex-reader-side__link" data-reader-tocextra="ch-plays">Tactical Plays</a>';
   if (content.checks && content.checks.length) tocHTML += '<a class="ex-reader-side__link" data-reader-tocextra="ch-checks">Self-Check</a>';
+  if (content.videos && content.videos.length) tocHTML += '<a class="ex-reader-side__link" data-reader-tocextra="ch-videos">Watch &amp; Learn</a>';
+  if (content.refs && content.refs.length) tocHTML += '<a class="ex-reader-side__link" data-reader-tocextra="ch-refs">References</a>';
 
   // Related / Read Next
   const related = (content.related||[]).map(rid => {
@@ -10089,6 +10343,41 @@ function openLibraryReader(moduleId) {
             <div class="ex-chapter__body">
               <ol style="padding-left:28px;">
                 ${content.checks.map(c => `<li style="padding:6px 0;font-family:var(--ex-font-editorial);font-style:italic;">${escapeHtml(c)}</li>`).join('')}
+              </ol>
+            </div>
+          </section>
+        ` : ''}
+        ${(content.videos && content.videos.length) ? `
+          <section class="ex-chapter" id="ch-videos">
+            <div class="ex-chapter__num">Watch &amp; Learn</div>
+            <h2 class="ex-chapter__heading">Curated viewing</h2>
+            <div class="ex-chapter__body">
+              <div class="ex-video-grid">
+                ${content.videos.map(v => `
+                  <div class="ex-video-card">
+                    <div class="ex-video-embed">
+                      <iframe src="https://www.youtube.com/embed/${v.id}?rel=0"
+                        title="${escapeHtml(v.title)}"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowfullscreen loading="lazy"></iframe>
+                    </div>
+                    <div class="ex-video-meta">
+                      <div class="ex-video-meta__title">${escapeHtml(v.title)}</div>
+                      <div class="ex-video-meta__channel">${escapeHtml(v.channel)}${v.duration ? ' · ' + v.duration : ''}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </section>
+        ` : ''}
+        ${(content.refs && content.refs.length) ? `
+          <section class="ex-chapter" id="ch-refs">
+            <div class="ex-chapter__num">References</div>
+            <h2 class="ex-chapter__heading">Further reading &amp; sources</h2>
+            <div class="ex-chapter__body">
+              <ol class="ex-refs">
+                ${content.refs.map(r => `<li>${r.citation}${r.url ? ` <a class="ex-ref-link" href="${r.url}" target="_blank" rel="noopener noreferrer">↗</a>` : ''}</li>`).join('')}
               </ol>
             </div>
           </section>
