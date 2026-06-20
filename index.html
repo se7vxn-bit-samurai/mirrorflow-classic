@@ -2910,6 +2910,65 @@ mark.ex-saved-highlight {
   font-style: normal;
 }
 .ex-ref-link:hover { text-decoration: underline; }
+.ex-ref-annotation {
+  margin-top: 5px;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ex-text-muted);
+  font-family: var(--ex-font-sans);
+}
+
+/* ── Video thumbnail → click-to-play ────────────────────── */
+.ex-video-thumb {
+  cursor: pointer;
+  background: #111;
+}
+.ex-video-thumb img {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  opacity: 0.82;
+  transition: opacity 0.2s;
+}
+.ex-video-thumb:hover img { opacity: 1; }
+.ex-video-thumb__play {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 52px; height: 52px;
+  background: rgba(0,0,0,0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  pointer-events: none;
+  transition: background 0.18s, transform 0.15s;
+}
+.ex-video-thumb:hover .ex-video-thumb__play {
+  background: var(--ex-fire);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+
+/* ── Collapsible sections ────────────────────────────────── */
+.ex-chapter__toggle {
+  float: right;
+  background: none;
+  border: 1px solid var(--ex-border);
+  border-radius: 3px;
+  cursor: pointer;
+  font-family: var(--ex-font-mono);
+  font-size: 10px;
+  color: var(--ex-text-muted);
+  padding: 3px 9px;
+  letter-spacing: 0.05em;
+  margin-top: 2px;
+  transition: border-color 0.15s, color 0.15s;
+}
+.ex-chapter__toggle:hover { border-color: var(--ex-fire); color: var(--ex-fire); }
+.ex-chapter--collapsed .ex-chapter__body { display: none; }
 
 /* Reader pager (prev/next module) */
 .ex-reader-pager {
@@ -9707,102 +9766,102 @@ const MODULE_CONTENT = {
 ────────────────────────────────────────────────────────────── */
 const MODULE_REFS = {
   'm-mindset': [
-    { citation: 'Dweck, C. S. (2006). <em>Mindset: The New Psychology of Success</em>. Random House.' },
-    { citation: 'Duckworth, A. L., Peterson, C., Matthews, M. D., & Kelly, D. R. (2007). Grit: Perseverance and passion for long-term goals. <em>Journal of Personality and Social Psychology, 92</em>(6), 1087–1101.', url: 'https://doi.org/10.1037/0022-3514.92.6.1087' },
-    { citation: 'Bandura, A. (1997). <em>Self-Efficacy: The Exercise of Control</em>. W. H. Freeman.' },
-    { citation: 'Seligman, M. E. P. (2011). <em>Flourish: A Visionary New Understanding of Happiness and Well-being</em>. Free Press.' },
-    { citation: 'Pink, D. H. (2009). <em>Drive: The Surprising Truth About What Motivates Us</em>. Riverhead Books.' },
+    { citation: 'Dweck, C. S. (2006). <em>Mindset: The New Psychology of Success</em>. Random House.', annotation: 'The foundational text behind the growth mindset framework; the single most cited work in this module.' },
+    { citation: 'Duckworth, A. L., Peterson, C., Matthews, M. D., & Kelly, D. R. (2007). Grit: Perseverance and passion for long-term goals. <em>Journal of Personality and Social Psychology, 92</em>(6), 1087–1101.', url: 'https://doi.org/10.1037/0022-3514.92.6.1087', annotation: 'The empirical paper that quantified how perseverance predicts success better than talent across multiple domains.' },
+    { citation: 'Bandura, A. (1997). <em>Self-Efficacy: The Exercise of Control</em>. W. H. Freeman.', annotation: 'Establishes why belief in your own capability — not just raw ability — determines what you attempt and sustain.' },
+    { citation: 'Seligman, M. E. P. (2011). <em>Flourish: A Visionary New Understanding of Happiness and Well-being</em>. Free Press.', annotation: 'The positive psychology framework behind sustained wellbeing and motivation; underpins the Self-Care section.' },
+    { citation: 'Pink, D. H. (2009). <em>Drive: The Surprising Truth About What Motivates Us</em>. Riverhead Books.', annotation: 'Deconstructs intrinsic vs. extrinsic motivation; the research behind why purpose outlasts any incentive.' },
   ],
   'm-habits': [
-    { citation: 'Clear, J. (2018). <em>Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</em>. Avery.' },
-    { citation: 'Duhigg, C. (2012). <em>The Power of Habit: Why We Do What We Do in Life and Business</em>. Random House.' },
-    { citation: 'Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W., & Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. <em>European Journal of Social Psychology, 40</em>(6), 998–1009.', url: 'https://doi.org/10.1002/ejsp.674' },
-    { citation: 'Covey, S. R. (1989). <em>The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change</em>. Free Press.' },
-    { citation: 'Fogg, B. J. (2019). <em>Tiny Habits: The Small Changes That Change Everything</em>. Houghton Mifflin Harcourt.' },
+    { citation: 'Clear, J. (2018). <em>Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</em>. Avery.', annotation: 'The modern playbook for habit formation; the 1% improvement framework applied directly to the 8 Working Habits.' },
+    { citation: 'Duhigg, C. (2012). <em>The Power of Habit: Why We Do What We Do in Life and Business</em>. Random House.', annotation: 'Identifies the cue–routine–reward loop that drives all habitual behaviour, professional and personal.' },
+    { citation: 'Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W., & Wardle, J. (2010). How are habits formed: Modelling habit formation in the real world. <em>European Journal of Social Psychology, 40</em>(6), 998–1009.', url: 'https://doi.org/10.1002/ejsp.674', annotation: 'The peer-reviewed study that found habits take 18–254 days to form — the research that debunks the "21 days" myth.' },
+    { citation: 'Covey, S. R. (1989). <em>The 7 Habits of Highly Effective People: Powerful Lessons in Personal Change</em>. Free Press.', annotation: 'The original framework for character-based effectiveness; a direct ancestor of theGuide\'s 8 Working Habits.' },
+    { citation: 'Fogg, B. J. (2019). <em>Tiny Habits: The Small Changes That Change Everything</em>. Houghton Mifflin Harcourt.', annotation: 'The case for starting small: reliable habit installation through minimal viable behaviours, not willpower.' },
   ],
   'm-callflow': [
-    { citation: 'Dixon, M., & Adamson, B. (2011). <em>The Challenger Sale: Taking Control of the Customer Conversation</em>. Portfolio/Penguin.' },
-    { citation: 'Rackham, N. (1988). <em>SPIN Selling</em>. McGraw-Hill.' },
-    { citation: 'Tracy, B. (2004). <em>The Psychology of Selling: Increase Your Sales Faster and Easier Than You Ever Thought Possible</em>. HarperCollins.' },
-    { citation: 'Cialdini, R. B. (2016). <em>Pre-Suasion: A Revolutionary Way to Influence and Persuade</em>. Simon & Schuster.' },
-    { citation: 'Blount, J. (2016). <em>Fanatical Prospecting: The Ultimate Guide to Opening Sales Conversations and Filling the Pipeline</em>. Wiley.' },
+    { citation: 'Dixon, M., & Adamson, B. (2011). <em>The Challenger Sale: Taking Control of the Customer Conversation</em>. Portfolio/Penguin.', annotation: 'Overturns relationship-selling orthodoxy; argues that insight-led conversations close more than rapport alone.' },
+    { citation: 'Rackham, N. (1988). <em>SPIN Selling</em>. McGraw-Hill.', annotation: 'The data behind structured discovery: situation, problem, implication, and need-payoff questions — in that order.' },
+    { citation: 'Tracy, B. (2004). <em>The Psychology of Selling: Increase Your Sales Faster and Easier Than You Ever Thought Possible</em>. HarperCollins.', annotation: 'Practical sales psychology applied to phone and face-to-face; directly supports stages 2 (Discovery) and 5 (Objections).' },
+    { citation: 'Cialdini, R. B. (2016). <em>Pre-Suasion: A Revolutionary Way to Influence and Persuade</em>. Simon & Schuster.', annotation: 'How the setup before the pitch — your opener and first questions — shapes everything that follows.' },
+    { citation: 'Blount, J. (2016). <em>Fanatical Prospecting: The Ultimate Guide to Opening Sales Conversations and Filling the Pipeline</em>. Wiley.', annotation: 'The case for treating call flow as a discipline: consistency over inspiration, always.' },
   ],
   'm-rapport': [
-    { citation: 'Carnegie, D. (1936). <em>How to Win Friends and Influence People</em>. Simon & Schuster.' },
-    { citation: 'Cialdini, R. B. (2006). <em>Influence: The Psychology of Persuasion</em> (Rev. ed.). Harper Business.' },
-    { citation: 'Goleman, D. (1995). <em>Emotional Intelligence: Why It Can Matter More Than IQ</em>. Bantam Books.' },
-    { citation: 'Mehrabian, A. (1981). <em>Silent Messages: Implicit Communication of Emotions and Attitudes</em> (2nd ed.). Wadsworth.' },
-    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.' },
+    { citation: 'Carnegie, D. (1936). <em>How to Win Friends and Influence People</em>. Simon & Schuster.', annotation: 'The original text on relational influence; still the most practical guide to building genuine human connection in print.' },
+    { citation: 'Cialdini, R. B. (2006). <em>Influence: The Psychology of Persuasion</em> (Rev. ed.). Harper Business.', annotation: 'The six principles of persuasion; liking and social proof are the two most directly relevant to rapport-building.' },
+    { citation: 'Goleman, D. (1995). <em>Emotional Intelligence: Why It Can Matter More Than IQ</em>. Bantam Books.', annotation: 'The research basis for empathy as a learnable skill, not a fixed personality trait.' },
+    { citation: 'Mehrabian, A. (1981). <em>Silent Messages: Implicit Communication of Emotions and Attitudes</em> (2nd ed.). Wadsworth.', annotation: 'The source of the words–tone–body language framework; most of what you communicate is how, not what.' },
+    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.', annotation: 'Rapport as strategy: how relational warmth creates the conditions for agreement even under pressure.' },
   ],
   'm-service': [
-    { citation: 'Dixon, M., Toman, N., & DeLisi, R. (2013). <em>The Effortless Experience: Conquering the New Battleground for Customer Loyalty</em>. Portfolio/Penguin.' },
-    { citation: 'Hsieh, T. (2010). <em>Delivering Happiness: A Path to Profits, Passion, and Purpose</em>. Grand Central Publishing.' },
-    { citation: 'Parasuraman, A., Zeithaml, V. A., & Berry, L. L. (1988). SERVQUAL: A multiple-item scale for measuring consumer perceptions of service quality. <em>Journal of Retailing, 64</em>(1), 12–40.' },
-    { citation: 'Reichheld, F. F. (2003). The one number you need to grow. <em>Harvard Business Review, 81</em>(12), 46–54.', url: 'https://hbr.org/2003/12/the-one-number-you-need-to-grow' },
-    { citation: 'Hyken, S. (2011). <em>The Amazement Revolution: Seven Customer Service Strategies to Create an Amazing Customer (and Employee) Experience</em>. Greenleaf Book Group Press.' },
+    { citation: 'Dixon, M., Toman, N., & DeLisi, R. (2013). <em>The Effortless Experience: Conquering the New Battleground for Customer Loyalty</em>. Portfolio/Penguin.', annotation: 'The research finding that reducing customer effort — not delighting them — is what actually drives loyalty. Challenges conventional wisdom.' },
+    { citation: 'Hsieh, T. (2010). <em>Delivering Happiness: A Path to Profits, Passion, and Purpose</em>. Grand Central Publishing.', annotation: 'The Zappos story: how customer service as culture, not process, becomes the product itself.' },
+    { citation: 'Parasuraman, A., Zeithaml, V. A., & Berry, L. L. (1988). SERVQUAL: A multiple-item scale for measuring consumer perceptions of service quality. <em>Journal of Retailing, 64</em>(1), 12–40.', annotation: 'The most widely used framework for measuring service quality across five dimensions: tangibles, reliability, responsiveness, assurance, empathy.' },
+    { citation: 'Reichheld, F. F. (2003). The one number you need to grow. <em>Harvard Business Review, 81</em>(12), 46–54.', url: 'https://hbr.org/2003/12/the-one-number-you-need-to-grow', annotation: 'Introduces Net Promoter Score — the simplest metric for whether your service earns recommendation or erodes it.' },
+    { citation: 'Hyken, S. (2011). <em>The Amazement Revolution: Seven Customer Service Strategies to Create an Amazing Customer (and Employee) Experience</em>. Greenleaf Book Group Press.', annotation: 'Seven strategies for shifting service from transactional to remarkable; built on real case studies, not theory.' },
   ],
   'm-impulse': [
-    { citation: 'Cialdini, R. B. (2006). <em>Influence: The Psychology of Persuasion</em> (Rev. ed.). Harper Business.' },
-    { citation: 'Ariely, D. (2008). <em>Predictably Irrational: The Hidden Forces That Shape Our Decisions</em>. HarperCollins.' },
-    { citation: 'Kahneman, D. (2011). <em>Thinking, Fast and Slow</em>. Farrar, Straus and Giroux.' },
-    { citation: 'Thaler, R. H., & Sunstein, C. R. (2008). <em>Nudge: Improving Decisions About Health, Wealth, and Happiness</em>. Yale University Press.' },
-    { citation: 'Cialdini, R. B. (2016). <em>Pre-Suasion: A Revolutionary Way to Influence and Persuade</em>. Simon & Schuster.' },
+    { citation: 'Cialdini, R. B. (2006). <em>Influence: The Psychology of Persuasion</em> (Rev. ed.). Harper Business.', annotation: 'The foundational text; the 6 Impulse Factors map directly to Cialdini\'s six principles of influence.' },
+    { citation: 'Ariely, D. (2008). <em>Predictably Irrational: The Hidden Forces That Shape Our Decisions</em>. HarperCollins.', annotation: 'Behavioural economics research showing that irrational buying decisions are not random — they are systematic and predictable.' },
+    { citation: 'Kahneman, D. (2011). <em>Thinking, Fast and Slow</em>. Farrar, Straus and Giroux.', annotation: 'System 1 (fast, emotional) vs. System 2 (slow, rational) thinking; impulse factors work because they target System 1.' },
+    { citation: 'Thaler, R. H., & Sunstein, C. R. (2008). <em>Nudge: Improving Decisions About Health, Wealth, and Happiness</em>. Yale University Press.', annotation: 'How the framing and presentation of choices changes decisions without changing the options available.' },
+    { citation: 'Cialdini, R. B. (2016). <em>Pre-Suasion: A Revolutionary Way to Influence and Persuade</em>. Simon & Schuster.', annotation: 'How timing and context prime people to be receptive before you even make the ask.' },
   ],
   'm-objections': [
-    { citation: 'Blount, J. (2018). <em>Objections: The Ultimate Guide for Mastering the Art and Science of Getting Past No</em>. Wiley.' },
-    { citation: 'Voss, C., & Raz, T. (2016). <em>Never Split the Difference: Negotiating as if Your Life Depended on It</em>. HarperBusiness.' },
-    { citation: 'Fisher, R., Ury, W., & Patton, B. (1991). <em>Getting to Yes: Negotiating Agreement Without Giving In</em> (2nd ed.). Penguin.' },
-    { citation: 'Ziglar, Z. (1984). <em>Secrets of Closing the Sale</em>. Fleming H. Revell.' },
-    { citation: 'Miller, R. B., Heiman, S. E., & Tuleja, T. (2011). <em>The New Strategic Selling</em> (3rd ed.). Business Plus.' },
+    { citation: 'Blount, J. (2018). <em>Objections: The Ultimate Guide for Mastering the Art and Science of Getting Past No</em>. Wiley.', annotation: 'The most direct text on this module\'s topic; reframes objections as requests for more information, not rejection.' },
+    { citation: 'Voss, C., & Raz, T. (2016). <em>Never Split the Difference: Negotiating as if Your Life Depended on It</em>. HarperBusiness.', annotation: 'FBI negotiation techniques applied to sales; tactical empathy as the primary tool for handling resistance without discounting.' },
+    { citation: 'Fisher, R., Ury, W., & Patton, B. (1991). <em>Getting to Yes: Negotiating Agreement Without Giving In</em> (2nd ed.). Penguin.', annotation: 'Principled negotiation: separate the person from the problem to find outcomes both parties can live with.' },
+    { citation: 'Ziglar, Z. (1984). <em>Secrets of Closing the Sale</em>. Fleming H. Revell.', annotation: 'The classic closing playbook; objection-handling techniques that have held up for four decades in practice.' },
+    { citation: 'Miller, R. B., Heiman, S. E., & Tuleja, T. (2011). <em>The New Strategic Selling</em> (3rd ed.). Business Plus.', annotation: 'Managing multiple decision-makers and their distinct objections in complex or multi-stakeholder deals.' },
   ],
   'm-toolkit': [
-    { citation: 'Gitomer, J. (2004). <em>The Sales Bible: The Ultimate Sales Resource</em>. Wiley.' },
-    { citation: 'Holmes, C. (2007). <em>The Ultimate Sales Machine: Turbocharge Your Business with Relentless Focus on 12 Key Strategies</em>. Portfolio/Penguin.' },
-    { citation: 'Dixon, M., & Adamson, B. (2011). <em>The Challenger Sale</em>. Portfolio/Penguin.' },
-    { citation: 'Rackham, N. (1988). <em>SPIN Selling</em>. McGraw-Hill.' },
-    { citation: 'Tracy, B. (2004). <em>The Psychology of Selling</em>. HarperCollins.' },
+    { citation: 'Gitomer, J. (2004). <em>The Sales Bible: The Ultimate Sales Resource</em>. Wiley.', annotation: 'The practical compendium — covers prospecting, rapport, objections, and closing in a single, field-tested volume.' },
+    { citation: 'Holmes, C. (2007). <em>The Ultimate Sales Machine: Turbocharge Your Business with Relentless Focus on 12 Key Strategies</em>. Portfolio/Penguin.', annotation: 'The 12-strategy system for sales excellence; the "pig-headed discipline" framework applied across every tool in the kit.' },
+    { citation: 'Dixon, M., & Adamson, B. (2011). <em>The Challenger Sale</em>. Portfolio/Penguin.', annotation: 'The toolkit\'s philosophical anchor: insight and honest challenge close more consistently than likability.' },
+    { citation: 'Rackham, N. (1988). <em>SPIN Selling</em>. McGraw-Hill.', annotation: 'The question-sequence framework that underpins structured discovery; a core tool in any complete sales conversation.' },
+    { citation: 'Tracy, B. (2004). <em>The Psychology of Selling</em>. HarperCollins.', annotation: 'The psychological dimension of the toolkit: how buyers think and how to align your approach to that reality.' },
   ],
   'm-comms': [
-    { citation: 'Treasure, J. (2017). <em>How to Be Heard: Secrets for Powerful Speaking and Listening</em>. Mango Publishing.' },
-    { citation: 'Mehrabian, A. (1981). <em>Silent Messages: Implicit Communication of Emotions and Attitudes</em> (2nd ed.). Wadsworth.' },
-    { citation: 'Patterson, K., Grenny, J., McMillan, R., & Switzler, A. (2011). <em>Crucial Conversations: Tools for Talking When Stakes Are High</em> (2nd ed.). McGraw-Hill.' },
-    { citation: 'Goulston, M. (2010). <em>Just Listen: Discover the Secret to Getting Through to Absolutely Anyone</em>. AMACOM.' },
-    { citation: 'Carnegie, D. (1936). <em>How to Win Friends and Influence People</em>. Simon & Schuster.' },
+    { citation: 'Treasure, J. (2017). <em>How to Be Heard: Secrets for Powerful Speaking and Listening</em>. Mango Publishing.', annotation: 'The practitioner\'s guide to voice, tone, and presence from the world\'s most-watched speaker on sound and communication.' },
+    { citation: 'Mehrabian, A. (1981). <em>Silent Messages: Implicit Communication of Emotions and Attitudes</em> (2nd ed.). Wadsworth.', annotation: 'The research behind the finding that body language and tone carry more meaning than words in emotional contexts.' },
+    { citation: 'Patterson, K., Grenny, J., McMillan, R., & Switzler, A. (2011). <em>Crucial Conversations: Tools for Talking When Stakes Are High</em> (2nd ed.). McGraw-Hill.', annotation: 'Techniques for maintaining productive dialogue when stakes are high, emotions run hot, and opinions sharply differ.' },
+    { citation: 'Goulston, M. (2010). <em>Just Listen: Discover the Secret to Getting Through to Absolutely Anyone</em>. AMACOM.', annotation: 'Neuroscience-based listening techniques; why feeling heard must precede being influenced — in any conversation.' },
+    { citation: 'Carnegie, D. (1936). <em>How to Win Friends and Influence People</em>. Simon & Schuster.', annotation: 'The communication classic: genuine interest in others and active listening remain the most powerful tools available.' },
   ],
   'm-effective': [
-    { citation: 'Stone, D., Patton, B., & Heen, S. (1999). <em>Difficult Conversations: How to Discuss What Matters Most</em>. Viking.' },
-    { citation: 'Tannen, D. (1990). <em>You Just Don\'t Understand: Women and Men in Conversation</em>. William Morrow.' },
-    { citation: 'Goleman, D. (1995). <em>Emotional Intelligence: Why It Can Matter More Than IQ</em>. Bantam Books.' },
-    { citation: 'Goulston, M. (2010). <em>Just Listen: Discover the Secret to Getting Through to Absolutely Anyone</em>. AMACOM.' },
-    { citation: 'Lowndes, L. (1999). <em>How to Talk to Anyone: 92 Little Tricks for Big Success in Relationships</em>. McGraw-Hill.' },
+    { citation: 'Stone, D., Patton, B., & Heen, S. (1999). <em>Difficult Conversations: How to Discuss What Matters Most</em>. Viking.', annotation: 'A framework for conversations about identity, blame, and feelings — the three layers beneath every difficult communication.' },
+    { citation: 'Tannen, D. (1990). <em>You Just Don\'t Understand: Women and Men in Conversation</em>. William Morrow.', annotation: 'Research on how different communication styles cause systematic, predictable misunderstanding — not bad intent.' },
+    { citation: 'Goleman, D. (1995). <em>Emotional Intelligence: Why It Can Matter More Than IQ</em>. Bantam Books.', annotation: 'Why emotional self-awareness is the precondition for effective communication, especially under pressure.' },
+    { citation: 'Goulston, M. (2010). <em>Just Listen: Discover the Secret to Getting Through to Absolutely Anyone</em>. AMACOM.', annotation: 'The 9-step listening model with practical techniques for getting through to anyone, in any context.' },
+    { citation: 'Lowndes, L. (1999). <em>How to Talk to Anyone: 92 Little Tricks for Big Success in Relationships</em>. McGraw-Hill.', annotation: '92 specific, field-tested communication techniques for social and professional contexts at every level.' },
   ],
   'm-conflict': [
-    { citation: 'Fisher, R., Ury, W., & Patton, B. (1991). <em>Getting to Yes: Negotiating Agreement Without Giving In</em> (2nd ed.). Penguin.' },
-    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.' },
-    { citation: 'Patterson, K., Grenny, J., McMillan, R., & Switzler, A. (2011). <em>Crucial Conversations: Tools for Talking When Stakes Are High</em> (2nd ed.). McGraw-Hill.' },
-    { citation: 'Thomas, K. W., & Kilmann, R. H. (1974). <em>Thomas-Kilmann Conflict Mode Instrument</em>. Xicom.' },
-    { citation: 'Stone, D., Patton, B., & Heen, S. (1999). <em>Difficult Conversations: How to Discuss What Matters Most</em>. Viking.' },
+    { citation: 'Fisher, R., Ury, W., & Patton, B. (1991). <em>Getting to Yes: Negotiating Agreement Without Giving In</em> (2nd ed.). Penguin.', annotation: 'The original principled negotiation framework; the most practical and widely used guide to conflict resolution available.' },
+    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.', annotation: 'The sequel to Getting to Yes: what to do when the other party refuses to engage — a five-step strategy for breakthrough.' },
+    { citation: 'Patterson, K., Grenny, J., McMillan, R., & Switzler, A. (2011). <em>Crucial Conversations: Tools for Talking When Stakes Are High</em> (2nd ed.). McGraw-Hill.', annotation: 'How to create safety and mutual purpose when a conversation has already turned difficult or defensive.' },
+    { citation: 'Thomas, K. W., & Kilmann, R. H. (1974). <em>Thomas-Kilmann Conflict Mode Instrument</em>. Xicom.', annotation: 'The assessment instrument behind the five conflict-handling modes; the empirical foundation for conflict style theory.' },
+    { citation: 'Stone, D., Patton, B., & Heen, S. (1999). <em>Difficult Conversations: How to Discuss What Matters Most</em>. Viking.', annotation: 'How to address conversations where identity, blame, and feelings are the real issue underneath the surface disagreement.' },
   ],
   'm-styles': [
-    { citation: 'Thomas, K. W. (1992). Conflict and conflict management: Reflections and update. <em>Journal of Organizational Behavior, 13</em>(3), 265–274.', url: 'https://doi.org/10.1002/job.4030130306' },
-    { citation: 'Kilmann, R. H., & Thomas, K. W. (1977). Developing a forced-choice measure of conflict-handling behavior: The MODE instrument. <em>Educational and Psychological Measurement, 37</em>(2), 309–325.' },
-    { citation: 'Rahim, M. A. (1983). A measure of styles of handling interpersonal conflict. <em>Academy of Management Journal, 26</em>(2), 368–376.', url: 'https://doi.org/10.2307/255985' },
-    { citation: 'Goleman, D. (1998). <em>Working with Emotional Intelligence</em>. Bantam Books.' },
-    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.' },
+    { citation: 'Thomas, K. W. (1992). Conflict and conflict management: Reflections and update. <em>Journal of Organizational Behavior, 13</em>(3), 265–274.', url: 'https://doi.org/10.1002/job.4030130306', annotation: 'The academic review that established the assertiveness × cooperativeness model underlying all five conflict styles.' },
+    { citation: 'Kilmann, R. H., & Thomas, K. W. (1977). Developing a forced-choice measure of conflict-handling behavior: The MODE instrument. <em>Educational and Psychological Measurement, 37</em>(2), 309–325.', annotation: 'The original development paper for the most widely used conflict style instrument in organisational research and practice.' },
+    { citation: 'Rahim, M. A. (1983). A measure of styles of handling interpersonal conflict. <em>Academy of Management Journal, 26</em>(2), 368–376.', url: 'https://doi.org/10.2307/255985', annotation: 'An alternative five-style model that adds useful nuance to the TKI framework for research and coaching contexts.' },
+    { citation: 'Goleman, D. (1998). <em>Working with Emotional Intelligence</em>. Bantam Books.', annotation: 'How emotional intelligence determines which conflict style you reach for under pressure — and how to expand your range.' },
+    { citation: 'Ury, W. (1993). <em>Getting Past No: Negotiating Your Way from Confrontation to Cooperation</em>. Bantam Books.', annotation: 'The negotiation practitioner\'s guide to flexing style when your default approach is not producing the outcome you need.' },
   ],
   'm-growth': [
-    { citation: 'Lencioni, P. (2002). <em>The Five Dysfunctions of a Team: A Leadership Fable</em>. Jossey-Bass.' },
-    { citation: 'Sinek, S. (2009). <em>Start with Why: How Great Leaders Inspire Everyone to Take Action</em>. Portfolio/Penguin.' },
-    { citation: 'Katzenbach, J. R., & Smith, D. K. (1993). The discipline of teams. <em>Harvard Business Review, 71</em>(2), 111–120.', url: 'https://hbr.org/1993/03/the-discipline-of-teams' },
-    { citation: 'Dweck, C. S. (2006). <em>Mindset: The New Psychology of Success</em>. Random House.' },
-    { citation: 'Brown, B. (2012). <em>Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead</em>. Gotham Books.' },
+    { citation: 'Lencioni, P. (2002). <em>The Five Dysfunctions of a Team: A Leadership Fable</em>. Jossey-Bass.', annotation: 'The team health framework; the absence of trust is dysfunction #1 and the root cause of every other failure.' },
+    { citation: 'Sinek, S. (2009). <em>Start with Why: How Great Leaders Inspire Everyone to Take Action</em>. Portfolio/Penguin.', annotation: 'Why shared purpose — not rules or incentives — is what makes teams perform and individuals keep growing.' },
+    { citation: 'Katzenbach, J. R., & Smith, D. K. (1993). The discipline of teams. <em>Harvard Business Review, 71</em>(2), 111–120.', url: 'https://hbr.org/1993/03/the-discipline-of-teams', annotation: 'The HBR study that defined what separates a real team from a working group — and why the distinction matters.' },
+    { citation: 'Dweck, C. S. (2006). <em>Mindset: The New Psychology of Success</em>. Random House.', annotation: 'A growth mindset at the individual level is the precondition for sustained growth at the team level.' },
+    { citation: 'Brown, B. (2012). <em>Daring Greatly: How the Courage to Be Vulnerable Transforms the Way We Live, Love, Parent, and Lead</em>. Gotham Books.', annotation: 'The case for vulnerability as a professional strength; how psychological safety enables both productive conflict and creativity.' },
   ],
   'm-proposal': [
-    { citation: 'Pink, D. H. (2012). <em>To Sell Is Human: The Surprising Truth About Moving Others</em>. Riverhead Books.' },
-    { citation: 'Knowles, M. S., Holton, E. F., & Swanson, R. A. (2011). <em>The Adult Learner: The Definitive Classic in Adult Education and Human Resource Development</em> (7th ed.). Butterworth-Heinemann.' },
-    { citation: 'Sinek, S. (2009). <em>Start with Why: How Great Leaders Inspire Everyone to Take Action</em>. Portfolio/Penguin.' },
-    { citation: 'Kirkpatrick, D. L., & Kirkpatrick, J. D. (2006). <em>Evaluating Training Programs: The Four Levels</em> (3rd ed.). Berrett-Koehler.' },
-    { citation: 'ATD. (2023). <em>2023 State of the Industry: Talent Development Benchmarks and Trends</em>. Association for Talent Development.', url: 'https://www.td.org/research-reports/2023-state-of-the-industry' },
+    { citation: 'Pink, D. H. (2012). <em>To Sell Is Human: The Surprising Truth About Moving Others</em>. Riverhead Books.', annotation: 'The argument that moving people — persuading, coaching, training — is a universal human skill, not a specialist one.' },
+    { citation: 'Knowles, M. S., Holton, E. F., & Swanson, R. A. (2011). <em>The Adult Learner: The Definitive Classic in Adult Education and Human Resource Development</em> (7th ed.). Butterworth-Heinemann.', annotation: 'The andragogy framework: why adult learning requires self-direction, prior experience, and immediate practical relevance.' },
+    { citation: 'Sinek, S. (2009). <em>Start with Why: How Great Leaders Inspire Everyone to Take Action</em>. Portfolio/Penguin.', annotation: 'Training without a why becomes compliance; training with a why becomes identity. The case theGuide is built on.' },
+    { citation: 'Kirkpatrick, D. L., & Kirkpatrick, J. D. (2006). <em>Evaluating Training Programs: The Four Levels</em> (3rd ed.). Berrett-Koehler.', annotation: 'The four-level evaluation model — reaction, learning, behaviour, results — for measuring whether training actually worked.' },
+    { citation: 'ATD. (2023). <em>2023 State of the Industry: Talent Development Benchmarks and Trends</em>. Association for Talent Development.', url: 'https://www.td.org/research-reports/2023-state-of-the-industry', annotation: 'The most current industry benchmarks for training investment, delivery formats, and measurable impact.' },
   ],
 };
 
@@ -10130,6 +10189,8 @@ function catalogCard(m) {
   const mins = MODULE_MINUTES[m.id] || 5;
   const sectionCount = pillar ? pillar.sections.length : 0;
   const progress = pillarProgress(m.pillar);
+  const refCount = (MODULE_REFS[m.id] || []).length;
+  const vidCount = (MODULE_VIDEOS[m.id] || []).length;
   return `
     <div class="ex-catalog-card" data-cat-module="${m.id}">
       <div class="ex-catalog-card__kicker">
@@ -10141,6 +10202,8 @@ function catalogCard(m) {
       <div class="ex-catalog-card__meta">
         <span class="ex-catalog-card__meta__item">⏱ ${mins} min</span>
         <span class="ex-catalog-card__meta__item">§ ${sectionCount}</span>
+        ${refCount ? `<span class="ex-catalog-card__meta__item" title="${refCount} references">📚 ${refCount}</span>` : ''}
+        ${vidCount ? `<span class="ex-catalog-card__meta__item" title="${vidCount} videos">▶ ${vidCount}</span>` : ''}
         <span class="ex-catalog-card__meta__item" style="margin-left:auto;font-size:9px;opacity:0.7;">${m.source}.pdf</span>
       </div>
       <div class="ex-catalog-card__progress"><div class="ex-catalog-card__progress-fill" style="width:${progress}%;"></div></div>
@@ -10348,18 +10411,18 @@ function openLibraryReader(moduleId) {
           </section>
         ` : ''}
         ${(content.videos && content.videos.length) ? `
-          <section class="ex-chapter" id="ch-videos">
+          <section class="ex-chapter ex-chapter--collapsible ex-chapter--collapsed" id="ch-videos">
             <div class="ex-chapter__num">Watch &amp; Learn</div>
-            <h2 class="ex-chapter__heading">Curated viewing</h2>
+            <h2 class="ex-chapter__heading">Curated viewing <button class="ex-chapter__toggle" data-collapse-toggle="ch-videos">Show</button></h2>
             <div class="ex-chapter__body">
               <div class="ex-video-grid">
                 ${content.videos.map(v => `
                   <div class="ex-video-card">
-                    <div class="ex-video-embed">
-                      <iframe src="https://www.youtube.com/embed/${v.id}?rel=0"
-                        title="${escapeHtml(v.title)}"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowfullscreen loading="lazy"></iframe>
+                    <div class="ex-video-embed ex-video-thumb" data-vid="${v.id}" data-vid-title="${escapeHtml(v.title)}" role="button" tabindex="0" aria-label="Play ${escapeHtml(v.title)}">
+                      <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${escapeHtml(v.title)}" loading="lazy">
+                      <div class="ex-video-thumb__play" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="30" height="30" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                      </div>
                     </div>
                     <div class="ex-video-meta">
                       <div class="ex-video-meta__title">${escapeHtml(v.title)}</div>
@@ -10372,12 +10435,12 @@ function openLibraryReader(moduleId) {
           </section>
         ` : ''}
         ${(content.refs && content.refs.length) ? `
-          <section class="ex-chapter" id="ch-refs">
+          <section class="ex-chapter ex-chapter--collapsible ex-chapter--collapsed" id="ch-refs">
             <div class="ex-chapter__num">References</div>
-            <h2 class="ex-chapter__heading">Further reading &amp; sources</h2>
+            <h2 class="ex-chapter__heading">Further reading &amp; sources <button class="ex-chapter__toggle" data-collapse-toggle="ch-refs">Show</button></h2>
             <div class="ex-chapter__body">
               <ol class="ex-refs">
-                ${content.refs.map(r => `<li>${r.citation}${r.url ? ` <a class="ex-ref-link" href="${r.url}" target="_blank" rel="noopener noreferrer">↗</a>` : ''}</li>`).join('')}
+                ${content.refs.map(r => `<li>${r.citation}${r.url ? ` <a class="ex-ref-link" href="${r.url}" target="_blank" rel="noopener noreferrer">↗</a>` : ''}${r.annotation ? `<div class="ex-ref-annotation">${r.annotation}</div>` : ''}</li>`).join('')}
               </ol>
             </div>
           </section>
@@ -10448,6 +10511,27 @@ function openLibraryReader(moduleId) {
       const on = toggleBookmark(btn.dataset.catBookmark);
       btn.classList.toggle('is-on', on);
       btn.textContent = on ? '★' : '☆';
+    });
+  });
+  // Thumbnail → iframe swap on click
+  libraryReader.querySelectorAll('[data-vid]').forEach(thumb => {
+    const activate = () => {
+      const id = thumb.dataset.vid;
+      const title = thumb.dataset.vidTitle || '';
+      thumb.innerHTML = `<iframe src="https://www.youtube.com/embed/${id}?rel=0&autoplay=1" title="${title}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+      thumb.classList.remove('ex-video-thumb');
+    };
+    thumb.addEventListener('click', activate);
+    thumb.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); } });
+  });
+  // Collapse/expand toggles for videos and refs sections
+  libraryReader.querySelectorAll('[data-collapse-toggle]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const sec = document.getElementById(btn.dataset.collapseToggle);
+      if (!sec) return;
+      const collapsed = sec.classList.toggle('ex-chapter--collapsed');
+      btn.textContent = collapsed ? 'Show' : 'Hide';
     });
   });
 }
