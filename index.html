@@ -4156,6 +4156,86 @@ mark.ex-saved-highlight {
   .ex-main { padding: 0; overflow: visible; }
   .ex-card { break-inside: avoid; }
 }
+
+/* ── Build panel — Canva-lite UX (v2.5) ──────────────────── */
+.ex-tb-group { display:flex; gap:3px; align-items:center; flex-shrink:0; }
+.ex-tb-sep { width:1px; height:20px; background:var(--ex-border); margin:0 6px; flex-shrink:0; }
+.ex-slides-toolbar { flex-wrap:wrap; gap:6px 4px; }
+
+.ex-slide-type-picker { position:relative; }
+.ex-slide-type-popover {
+  position:absolute; top:calc(100% + 6px); left:0; z-index:300;
+  background:var(--ex-surface); border:1px solid var(--ex-border);
+  border-radius:8px; padding:14px;
+  display:none; grid-template-columns:repeat(4,1fr); gap:8px;
+  min-width:340px; box-shadow:0 8px 32px rgba(0,0,0,0.22);
+}
+.ex-slide-type-popover.is-open { display:grid; }
+.ex-slide-type-card {
+  border:1px solid var(--ex-border); border-radius:5px;
+  padding:7px 5px; background:var(--ex-bg); cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; gap:5px;
+  transition:all 0.12s; color:inherit;
+}
+.ex-slide-type-card:hover { border-color:var(--ex-fire); background:color-mix(in srgb,var(--ex-fire) 5%,transparent); }
+.ex-slide-type-card.is-selected { border-color:var(--ex-fire); background:color-mix(in srgb,var(--ex-fire) 12%,transparent); }
+.ex-stc-thumb {
+  width:60px; height:38px; background:var(--ex-surface);
+  border:1px solid var(--ex-border); border-radius:3px;
+  padding:5px; display:flex; flex-direction:column; gap:2px; overflow:hidden;
+}
+.ex-stc-line { height:2px; background:currentColor; opacity:0.2; border-radius:1px; }
+.ex-stc-line--h { height:5px; opacity:0.5; }
+.ex-stc-line--wide { width:100%; }
+.ex-stc-line--med  { width:70%; }
+.ex-stc-line--sm   { width:45%; }
+.ex-stc-cols { display:flex; gap:2px; flex:1; }
+.ex-stc-col  { flex:1; background:currentColor; opacity:0.12; border-radius:1px; }
+.ex-stc-label {
+  font-size:9px; font-family:var(--ex-font-mono); text-transform:uppercase;
+  letter-spacing:0.05em; color:var(--ex-text-muted); text-align:center; line-height:1.2;
+}
+
+.ex-element-palette { width:116px; min-width:116px; }
+.ex-element-palette__grid { display:grid; grid-template-columns:1fr 1fr; gap:4px; }
+.ex-element-palette__tile {
+  display:flex; flex-direction:column; align-items:center; gap:3px;
+  padding:8px 4px; border:1px solid var(--ex-border); border-radius:5px;
+  background:var(--ex-bg); cursor:pointer; color:var(--ex-text-muted);
+  font-size:9px; font-family:var(--ex-font-mono); text-transform:uppercase;
+  letter-spacing:0.04em; text-align:center; line-height:1.2;
+  transition:all 0.12s; width:100%;
+}
+.ex-element-palette__tile:hover {
+  background:color-mix(in srgb,var(--ex-fire) 8%,transparent);
+  border-color:var(--ex-fire); color:var(--ex-fire);
+}
+.ex-element-palette__tile-icon { font-size:15px; line-height:1; }
+
+.ex-inspector-tabs {
+  display:flex; border-bottom:1px solid var(--ex-border);
+  margin-bottom:12px; flex-shrink:0;
+}
+.ex-inspector-tab {
+  flex:1; padding:7px 2px; font-size:9px; font-family:var(--ex-font-mono);
+  text-transform:uppercase; letter-spacing:0.05em; color:var(--ex-text-muted);
+  background:none; border:none; border-bottom:2px solid transparent;
+  cursor:pointer; transition:all 0.12s; white-space:nowrap;
+}
+.ex-inspector-tab.is-active { color:var(--ex-fire); border-bottom-color:var(--ex-fire); }
+.ex-inspector-tab:hover:not(.is-active) { color:var(--ex-text); }
+.ex-inspector-pane--hidden { display:none !important; }
+.ex-inspector-pane > .ex-bg-inspector,
+.ex-inspector-pane > .ex-clippings,
+.ex-inspector-pane > .ex-text-controls { margin-top:0; }
+
+.ex-doc-title-row { display:flex; gap:8px; align-items:center; margin-bottom:8px; }
+.ex-doc-title-input {
+  flex:1; font-family:var(--ex-font-serif,'Georgia',serif); font-size:15px;
+  background:transparent; border:none; border-bottom:1px solid var(--ex-border);
+  color:var(--ex-text); padding:4px 2px; outline:none;
+}
+.ex-doc-title-input:focus { border-bottom-color:var(--ex-fire); }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -4433,61 +4513,123 @@ mark.ex-saved-highlight {
       <!-- Slides sub-panel -->
       <div class="ex-build-panel" id="buildSlides">
         <div class="ex-slides-toolbar">
-          <select class="ex-input" id="slideLayout" style="width:auto;">
-            <option value="title">+ Title Slide</option>
-            <option value="agenda">+ Agenda</option>
-            <option value="content">+ Content</option>
-            <option value="discussion">+ Discussion</option>
-            <option value="practice">+ Practice</option>
-            <option value="summary">+ Summary</option>
-            <option value="blank">+ Blank</option>
+          <!-- Layout picker -->
+          <div class="ex-tb-group">
+            <div class="ex-slide-type-picker" id="slideTypePicker">
+              <button class="ex-btn" id="slideTypeBtn">+ Slide ▾</button>
+              <div class="ex-slide-type-popover" id="slideTypePopover">
+                <button class="ex-slide-type-card" data-layout="title">
+                  <div class="ex-stc-thumb"><div class="ex-stc-line ex-stc-line--h ex-stc-line--med" style="margin:auto auto 2px;"></div><div class="ex-stc-line ex-stc-line--sm" style="margin:0 auto;"></div></div>
+                  <div class="ex-stc-label">Title</div>
+                </button>
+                <button class="ex-slide-type-card" data-layout="agenda">
+                  <div class="ex-stc-thumb"><div class="ex-stc-line ex-stc-line--h ex-stc-line--wide"></div><div class="ex-stc-line ex-stc-line--wide"></div><div class="ex-stc-line ex-stc-line--wide"></div><div class="ex-stc-line ex-stc-line--med"></div></div>
+                  <div class="ex-stc-label">Agenda</div>
+                </button>
+                <button class="ex-slide-type-card" data-layout="content">
+                  <div class="ex-stc-thumb"><div class="ex-stc-line ex-stc-line--h ex-stc-line--wide"></div><div class="ex-stc-line ex-stc-line--wide"></div><div class="ex-stc-line ex-stc-line--sm"></div></div>
+                  <div class="ex-stc-label">Content</div>
+                </button>
+                <button class="ex-slide-type-card" data-layout="discussion">
+                  <div class="ex-stc-thumb"><div class="ex-stc-line ex-stc-line--h ex-stc-line--wide"></div><div class="ex-stc-cols" style="margin-top:3px;"><div class="ex-stc-col"></div><div class="ex-stc-col"></div></div></div>
+                  <div class="ex-stc-label">Discuss</div>
+                </button>
+                <button class="ex-slide-type-card" data-layout="practice">
+                  <div class="ex-stc-thumb"><div class="ex-stc-line ex-stc-line--h ex-stc-line--wide"></div><div class="ex-stc-line ex-stc-line--wide" style="opacity:0.35;margin-top:4px;height:8px;"></div></div>
+                  <div class="ex-stc-label">Practice</div>
+                </button>
+                <button class="ex-slide-type-card" data-layout="summary">
+                  <div class="ex-stc-thumb"><div class="ex-stc-line ex-stc-line--h ex-stc-line--med"></div><div class="ex-stc-line ex-stc-line--wide"></div><div class="ex-stc-line ex-stc-line--wide"></div><div class="ex-stc-line ex-stc-line--sm"></div></div>
+                  <div class="ex-stc-label">Summary</div>
+                </button>
+                <button class="ex-slide-type-card" data-layout="blank">
+                  <div class="ex-stc-thumb"></div>
+                  <div class="ex-stc-label">Blank</div>
+                </button>
+              </div>
+            </div>
+          </div>
+          <!-- Hidden original controls (driven by the visual picker) -->
+          <select class="ex-input" id="slideLayout" style="display:none;">
+            <option value="title">Title</option>
+            <option value="agenda">Agenda</option>
+            <option value="content">Content</option>
+            <option value="discussion">Discussion</option>
+            <option value="practice">Practice</option>
+            <option value="summary">Summary</option>
+            <option value="blank">Blank</option>
           </select>
-          <button class="ex-btn" id="addSlideBtn">Add Slide</button>
-          <button class="ex-btn" id="dupSlideBtn" title="Duplicate current">⎘</button>
-          <button class="ex-btn" id="moveUpBtn" title="Move up">↑</button>
-          <button class="ex-btn" id="moveDnBtn" title="Move down">↓</button>
-          <button class="ex-btn" id="deleteSlideBtn" title="Delete slide">✕</button>
-          <button class="ex-btn ex-history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>↶</button>
-          <button class="ex-btn ex-history-btn" id="redoBtn" title="Redo (Ctrl+Shift+Z)" disabled>↷</button>
-          <button class="ex-btn" id="gridToggleBtn" title="Toggle grid + snap">▦</button>
-          <button class="ex-btn" id="findBtn" title="Find & Replace (Ctrl+F)">⌕</button>
-          <select class="ex-input" id="transitionSel" title="Slide transition" style="width:auto;font-size:11px;padding:4px 8px;">
-            <option value="cut">Cut</option>
-            <option value="fade">Fade</option>
-            <option value="slide-left">Slide L</option>
-            <option value="slide-right">Slide R</option>
-            <option value="zoom">Zoom</option>
-          </select>
+          <button id="addSlideBtn" style="display:none;">Add Slide</button>
+          <span class="ex-tb-sep"></span>
+          <!-- Slide management -->
+          <div class="ex-tb-group">
+            <button class="ex-btn" id="dupSlideBtn" title="Duplicate slide">⎘</button>
+            <button class="ex-btn" id="moveUpBtn" title="Move slide up">↑</button>
+            <button class="ex-btn" id="moveDnBtn" title="Move slide down">↓</button>
+            <button class="ex-btn" id="deleteSlideBtn" title="Delete slide">✕</button>
+          </div>
+          <span class="ex-tb-sep"></span>
+          <!-- History -->
+          <div class="ex-tb-group">
+            <button class="ex-btn ex-history-btn" id="undoBtn" title="Undo (Ctrl+Z)" disabled>↶</button>
+            <button class="ex-btn ex-history-btn" id="redoBtn" title="Redo (Ctrl+Shift+Z)" disabled>↷</button>
+          </div>
+          <span class="ex-tb-sep"></span>
+          <!-- View & transitions -->
+          <div class="ex-tb-group">
+            <button class="ex-btn" id="gridToggleBtn" title="Toggle snap grid">▦</button>
+            <button class="ex-btn" id="findBtn" title="Find & Replace (Ctrl+F)">⌕</button>
+            <select class="ex-input" id="transitionSel" title="Slide transition" style="width:auto;font-size:11px;padding:4px 8px;">
+              <option value="cut">✂ Cut</option>
+              <option value="fade">◎ Fade</option>
+              <option value="slide-left">← Slide L</option>
+              <option value="slide-right">→ Slide R</option>
+              <option value="zoom">⊕ Zoom</option>
+            </select>
+          </div>
           <button class="ex-btn ex-btn--fire" id="presentBtn" title="Present (F5)">▶ Present</button>
           <span style="flex:1;"></span>
-          <button class="ex-btn" id="copyDeckBtn">Copy</button>
-          <button class="ex-btn ex-btn--primary" id="printDeckBtn">⎙ Print Deck</button>
-          <button class="ex-btn" id="exportDeckBtn">.txt</button>
-          <button class="ex-btn" id="clearDeckBtn">Clear</button>
+          <!-- Export -->
+          <div class="ex-tb-group">
+            <button class="ex-btn" id="copyDeckBtn" title="Copy as text">Copy</button>
+            <button class="ex-btn ex-btn--primary" id="printDeckBtn" title="Print deck">⎙ Print</button>
+            <button class="ex-btn" id="exportDeckBtn" title="Export .txt">.txt</button>
+            <button class="ex-btn" id="clearDeckBtn" title="Clear all slides">Clear</button>
+          </div>
         </div>
         <div class="ex-slide-editor-grid">
           <aside class="ex-element-palette" id="elementPalette">
-            <div class="ex-element-palette__title">Add Element</div>
+            <div class="ex-element-palette__title">Elements</div>
             <div class="ex-element-palette__section">Text</div>
-            <button class="ex-element-palette__btn" data-add="heading"><span class="ex-element-palette__icon">H1</span> Heading</button>
-            <button class="ex-element-palette__btn" data-add="subheading"><span class="ex-element-palette__icon">H2</span> Subheading</button>
-            <button class="ex-element-palette__btn" data-add="body"><span class="ex-element-palette__icon">¶</span> Body Text</button>
-            <button class="ex-element-palette__btn" data-add="dropcap"><span class="ex-element-palette__icon">D</span> Drop-cap Para</button>
-            <button class="ex-element-palette__btn" data-add="pullquote"><span class="ex-element-palette__icon">"</span> Pull-quote</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-add="heading"><span class="ex-element-palette__tile-icon">H1</span>Heading</button>
+              <button class="ex-element-palette__tile" data-add="subheading"><span class="ex-element-palette__tile-icon">H2</span>Sub</button>
+              <button class="ex-element-palette__tile" data-add="body"><span class="ex-element-palette__tile-icon">¶</span>Body</button>
+              <button class="ex-element-palette__tile" data-add="dropcap"><span class="ex-element-palette__tile-icon">D</span>Drop-cap</button>
+              <button class="ex-element-palette__tile" data-add="pullquote"><span class="ex-element-palette__tile-icon">"</span>Quote</button>
+            </div>
             <div class="ex-element-palette__section">Lists</div>
-            <button class="ex-element-palette__btn" data-add="bullets"><span class="ex-element-palette__icon">§</span> Bullet List</button>
-            <button class="ex-element-palette__btn" data-add="numbered"><span class="ex-element-palette__icon">1.</span> Numbered List</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-add="bullets"><span class="ex-element-palette__tile-icon">≡</span>Bullets</button>
+              <button class="ex-element-palette__tile" data-add="numbered"><span class="ex-element-palette__tile-icon">1.</span>Numbered</button>
+            </div>
             <div class="ex-element-palette__section">Layout</div>
-            <button class="ex-element-palette__btn" data-add="columns"><span class="ex-element-palette__icon">‖</span> Two Columns</button>
-            <button class="ex-element-palette__btn" data-add="callout"><span class="ex-element-palette__icon">!</span> Callout Card</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-add="columns"><span class="ex-element-palette__tile-icon">‖</span>Columns</button>
+              <button class="ex-element-palette__tile" data-add="callout"><span class="ex-element-palette__tile-icon">!</span>Callout</button>
+            </div>
             <div class="ex-element-palette__section">Ornaments</div>
-            <button class="ex-element-palette__btn" data-add="divider"><span class="ex-element-palette__icon">-</span> Section Rule</button>
-            <button class="ex-element-palette__btn" data-add="ornament"><span class="ex-element-palette__icon">✦</span> Diamond Scroll</button>
-            <button class="ex-element-palette__btn" data-add="sunburst"><span class="ex-element-palette__icon">※</span> Sunburst</button>
-            <button class="ex-element-palette__btn" data-add="fleur"><span class="ex-element-palette__icon">⚜</span> Fleur-de-lis</button>
-            <button class="ex-element-palette__btn" data-add="sourcetag"><span class="ex-element-palette__icon">PDF</span> Source Tag</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-add="divider"><span class="ex-element-palette__tile-icon">—</span>Rule</button>
+              <button class="ex-element-palette__tile" data-add="ornament"><span class="ex-element-palette__tile-icon">✦</span>Diamond</button>
+              <button class="ex-element-palette__tile" data-add="sunburst"><span class="ex-element-palette__tile-icon">※</span>Sunburst</button>
+              <button class="ex-element-palette__tile" data-add="fleur"><span class="ex-element-palette__tile-icon">⚜</span>Fleur</button>
+              <button class="ex-element-palette__tile" data-add="sourcetag"><span class="ex-element-palette__tile-icon">⊞</span>Source</button>
+            </div>
             <div class="ex-element-palette__section">Media</div>
-            <button class="ex-element-palette__btn" data-add="image"><span class="ex-element-palette__icon">IMG</span> Image</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-add="image"><span class="ex-element-palette__tile-icon">🖼</span>Image</button>
+            </div>
             <div class="ex-element-palette__section" id="presetsSectionLabel" style="display:flex;justify-content:space-between;align-items:center;">
               <span>My Presets</span>
               <button class="ex-element-palette__btn" id="saveSelAsPreset" title="Save current slide as preset" style="padding:1px 6px;font-size:9px;width:auto;">+ save</button>
@@ -4501,7 +4643,14 @@ mark.ex-saved-highlight {
             <div class="ex-marquee" id="marquee"></div>
             <div class="ex-slide-canvas__hint">Select a slide or add one to begin</div>
           </div>
-          <div>
+          <div id="inspectorRail">
+            <div class="ex-inspector-tabs">
+              <button class="ex-inspector-tab is-active" data-inspector="layers">Layers</button>
+              <button class="ex-inspector-tab" data-inspector="bg">BG</button>
+              <button class="ex-inspector-tab" data-inspector="clips">Clips</button>
+              <button class="ex-inspector-tab" data-inspector="style">Style</button>
+            </div>
+            <div class="ex-inspector-pane" id="inspPaneLayers">
             <div class="ex-layer-panel">
               <div class="ex-layer-panel__title">
                 <span>Layers</span>
@@ -4509,6 +4658,8 @@ mark.ex-saved-highlight {
               </div>
               <div id="layerList"></div>
             </div>
+            </div>
+            <div class="ex-inspector-pane ex-inspector-pane--hidden" id="inspPaneBg">
             <div class="ex-bg-inspector" id="bgInspector">
               <div class="ex-bg-inspector__title">Slide Background</div>
               <div class="ex-bg-inspector__row">
@@ -4563,6 +4714,8 @@ mark.ex-saved-highlight {
                 </div>
               </div>
             </div>
+            </div><!-- /inspPaneBg -->
+            <div class="ex-inspector-pane ex-inspector-pane--hidden" id="inspPaneClips">
             <div class="ex-clippings" id="clippingsPanel">
               <div class="ex-clippings__title">
                 <span>Clippings · drag into slide</span>
@@ -4572,6 +4725,8 @@ mark.ex-saved-highlight {
                 <div class="ex-clippings__empty">Send items from Analyse / Library / Facilitate to land them here.</div>
               </div>
             </div>
+            </div><!-- /inspPaneClips -->
+            <div class="ex-inspector-pane ex-inspector-pane--hidden" id="inspPaneStyle">
             <div class="ex-text-controls" id="textControls">
               <div class="ex-text-controls__title">Text Style</div>
               <div class="ex-text-controls__row">
@@ -4634,7 +4789,8 @@ mark.ex-saved-highlight {
                 <button class="ex-btn" id="icShadow" style="padding:2px 8px;font-size:10px;">Toggle</button>
               </div>
             </div>
-          </div>
+            </div><!-- /inspPaneStyle -->
+          </div><!-- /inspectorRail -->
         </div>
         <div class="ex-slide-deck" id="slideDeck"></div>
         <div class="ex-speaker-notes" id="speakerNotes">
@@ -4659,43 +4815,59 @@ mark.ex-saved-highlight {
 
       <!-- Doc sub-panel -->
       <div class="ex-build-panel" id="buildDoc">
+        <div class="ex-doc-title-row">
+          <input class="ex-doc-title-input" id="docTitleInput" type="text" placeholder="Document title…"/>
+        </div>
         <div class="ex-slides-toolbar">
-          <button class="ex-btn" id="docAddPara">+ Paragraph</button>
-          <button class="ex-btn" id="docAddHeading">+ Heading</button>
-          <button class="ex-btn" id="docAddDivider">+ Rule</button>
+          <div class="ex-tb-group">
+            <button class="ex-btn" id="docAddPara">+ Para</button>
+            <button class="ex-btn" id="docAddHeading">+ Heading</button>
+            <button class="ex-btn" id="docAddDivider">+ Rule</button>
+          </div>
+          <span class="ex-tb-sep"></span>
+          <button class="ex-btn" id="mdImportBtn" style="font-size:11px;">↑ Markdown</button>
           <span style="flex:1;"></span>
-          <button class="ex-btn" id="docCopyBtn">Copy</button>
-          <button class="ex-btn ex-btn--primary" id="docPrintBtn">⎙ Print Doc</button>
-          <button class="ex-btn" id="docClearBtn">Clear</button>
+          <div class="ex-tb-group">
+            <button class="ex-btn" id="docCopyBtn">Copy</button>
+            <button class="ex-btn ex-btn--primary" id="docPrintBtn">⎙ Print</button>
+            <button class="ex-btn" id="docClearBtn">Clear</button>
+          </div>
         </div>
         <div class="ex-slide-editor-grid">
           <aside class="ex-element-palette">
             <div class="ex-element-palette__title">Add to Doc</div>
             <div class="ex-element-palette__section">Text</div>
-            <button class="ex-element-palette__btn" data-doc-add="heading"><span class="ex-element-palette__icon">H1</span> Heading</button>
-            <button class="ex-element-palette__btn" data-doc-add="subheading"><span class="ex-element-palette__icon">H2</span> Subheading</button>
-            <button class="ex-element-palette__btn" data-doc-add="body"><span class="ex-element-palette__icon">¶</span> Body</button>
-            <button class="ex-element-palette__btn" data-doc-add="dropcap"><span class="ex-element-palette__icon">D</span> Drop-cap</button>
-            <button class="ex-element-palette__btn" data-doc-add="pullquote"><span class="ex-element-palette__icon">"</span> Pull-quote</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-doc-add="heading"><span class="ex-element-palette__tile-icon">H1</span>Heading</button>
+              <button class="ex-element-palette__tile" data-doc-add="subheading"><span class="ex-element-palette__tile-icon">H2</span>Sub</button>
+              <button class="ex-element-palette__tile" data-doc-add="body"><span class="ex-element-palette__tile-icon">¶</span>Body</button>
+              <button class="ex-element-palette__tile" data-doc-add="dropcap"><span class="ex-element-palette__tile-icon">D</span>Drop-cap</button>
+              <button class="ex-element-palette__tile" data-doc-add="pullquote"><span class="ex-element-palette__tile-icon">"</span>Quote</button>
+            </div>
             <div class="ex-element-palette__section">Lists</div>
-            <button class="ex-element-palette__btn" data-doc-add="bullets"><span class="ex-element-palette__icon">§</span> Bullet List</button>
-            <button class="ex-element-palette__btn" data-doc-add="numbered"><span class="ex-element-palette__icon">1.</span> Numbered List</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-doc-add="bullets"><span class="ex-element-palette__tile-icon">≡</span>Bullets</button>
+              <button class="ex-element-palette__tile" data-doc-add="numbered"><span class="ex-element-palette__tile-icon">1.</span>Numbered</button>
+            </div>
             <div class="ex-element-palette__section">Layout</div>
-            <button class="ex-element-palette__btn" data-doc-add="columns"><span class="ex-element-palette__icon">‖</span> Two Columns</button>
-            <button class="ex-element-palette__btn" data-doc-add="callout"><span class="ex-element-palette__icon">!</span> Callout</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-doc-add="columns"><span class="ex-element-palette__tile-icon">‖</span>Columns</button>
+              <button class="ex-element-palette__tile" data-doc-add="callout"><span class="ex-element-palette__tile-icon">!</span>Callout</button>
+            </div>
             <div class="ex-element-palette__section">Ornaments</div>
-            <button class="ex-element-palette__btn" data-doc-add="divider"><span class="ex-element-palette__icon">-</span> Section Rule</button>
-            <button class="ex-element-palette__btn" data-doc-add="ornament"><span class="ex-element-palette__icon">✦</span> Diamond Scroll</button>
-            <button class="ex-element-palette__btn" data-doc-add="sourcetag"><span class="ex-element-palette__icon">PDF</span> Source Tag</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-doc-add="divider"><span class="ex-element-palette__tile-icon">—</span>Rule</button>
+              <button class="ex-element-palette__tile" data-doc-add="ornament"><span class="ex-element-palette__tile-icon">✦</span>Diamond</button>
+              <button class="ex-element-palette__tile" data-doc-add="sourcetag"><span class="ex-element-palette__tile-icon">⊞</span>Source</button>
+            </div>
             <div class="ex-element-palette__section">Media</div>
-            <button class="ex-element-palette__btn" data-doc-add="image"><span class="ex-element-palette__icon">IMG</span> Image</button>
+            <div class="ex-element-palette__grid">
+              <button class="ex-element-palette__tile" data-doc-add="image"><span class="ex-element-palette__tile-icon">🖼</span>Image</button>
+            </div>
           </aside>
           <article class="ex-doc-page" id="docPage">
             <div class="ex-slide-canvas__hint">Empty doc - add elements from the palette →</div>
           </article>
-        </div>
-        <div style="display:flex;gap:6px;margin-top:8px;">
-          <button class="ex-btn" id="mdImportBtn" style="font-size:11px;">↑ Import Markdown</button>
         </div>
       </div>
     </div>
@@ -12054,9 +12226,66 @@ document.addEventListener('mouseout', (e) => {
 });
 
 /* ──────────────────────────────────────────────────────────────
+   BUILD PANEL — Canva-lite UX (v2.5)
+────────────────────────────────────────────────────────────── */
+
+// Slide-type visual picker
+(function () {
+  const _stBtn = document.getElementById('slideTypeBtn');
+  const _stPop = document.getElementById('slideTypePopover');
+  if (!_stBtn || !_stPop) return;
+  _stBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    _stPop.classList.toggle('is-open');
+  });
+  document.querySelectorAll('.ex-slide-type-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const sel = document.getElementById('slideLayout');
+      const btn = document.getElementById('addSlideBtn');
+      if (sel) sel.value = card.dataset.layout;
+      if (btn) btn.click();
+      _stPop.classList.remove('is-open');
+      document.querySelectorAll('.ex-slide-type-card').forEach(c => c.classList.remove('is-selected'));
+      card.classList.add('is-selected');
+    });
+  });
+  document.addEventListener('click', e => {
+    if (!e.target.closest('#slideTypePicker')) _stPop.classList.remove('is-open');
+  }, true);
+})();
+
+// Inspector rail — tab switching + auto-switch on element select
+(function () {
+  const _panes = {
+    layers: document.getElementById('inspPaneLayers'),
+    bg:     document.getElementById('inspPaneBg'),
+    clips:  document.getElementById('inspPaneClips'),
+    style:  document.getElementById('inspPaneStyle'),
+  };
+  const _tabs = document.querySelectorAll('.ex-inspector-tab');
+  function _switchTab(target) {
+    _tabs.forEach(t => t.classList.toggle('is-active', t.dataset.inspector === target));
+    Object.entries(_panes).forEach(([k, p]) => {
+      if (p) p.classList.toggle('ex-inspector-pane--hidden', k !== target);
+    });
+  }
+  _tabs.forEach(tab => tab.addEventListener('click', () => _switchTab(tab.dataset.inspector)));
+  // Auto-switch to Style when a text or image element is selected
+  const _tc = document.getElementById('textControls');
+  const _ic = document.getElementById('imageControls');
+  if (_tc) {
+    new MutationObserver(() => {
+      if (_tc.classList.contains('is-visible') || (_ic && _ic.classList.contains('is-visible'))) {
+        _switchTab('style');
+      }
+    }).observe(_tc, { attributes: true, attributeFilter: ['class'] });
+  }
+})();
+
+/* ──────────────────────────────────────────────────────────────
    INIT
 ────────────────────────────────────────────────────────────── */
-console.log('Excelsior Coach v2.4 loaded - Library top-level · Analyse folded into Facilitate · Glossary page · 4 new content layers');
+console.log('Excelsior Coach v2.5 loaded - Canva-lite Build panel · visual slide picker · inspector tabs · tile palettes');
 
 })();
 </script>
